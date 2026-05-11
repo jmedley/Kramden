@@ -1,0 +1,25 @@
+{
+  "name": "kramden",
+  "version": "0.0.1",
+  "description": "A Chrome extension to help job seekers manage their applications and stay organized.",
+  "keywords": [
+    "employment",
+    "'job",
+    "search'"
+  ],
+  "homepage": "https://github.com/jmedley/Kramden#readme",
+  "bugs": {
+    "url": "https://github.com/jmedley/Kramden/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmedley/Kramden.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Joseph Medley",
+  "type": "private",
+  "main": "entry.js",
+  "scripts": {
+    "test": "test"
+  }
+}
