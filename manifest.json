@@ -5,7 +5,8 @@
     "description": "__MSG_extensionDescription__",
     "default_locale": "en",
     "permissions": [
-        "identity"
+        "identity",
+        "activeTab"
     ],
     "oauth2": {
         "client_id": "1020910266604-f9cgs0r7rdlc4dl75dsblbs4ktiv2hfr.apps.googleusercontent.com",

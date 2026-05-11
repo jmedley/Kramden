@@ -46,6 +46,11 @@ function showError(msg) {
   followError.style.display = msg ? 'block' : 'none';
 }
 
+function isEmailOpen(str) {
+  const regex = /#inbox\/\w{32}/;
+  return regex.test(str);
+}
+
 // -------------------------------------------------------------------------
 // Handlers
 // -------------------------------------------------------------------------
@@ -69,5 +74,25 @@ btnFollow.addEventListener('click', async () => {
     showError(err?.message ?? 'Something went wrong. Please try again.');
   } finally {
     setLoading(false);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const targetSubstring = "https://mail.google.com/mail";
+
+  // Query for the active tab in the current window
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  if (tab && tab.url) {
+    // Check if the URL contains the target string
+    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url)) {
+      btnFollow.disabled = false;
+      btnFollow.classList.remove('deactivated');
+      console.log("Match found: Button activated.");
+    } else {
+      btnFollow.disabled = true;
+      btnFollow.classList.add('deactivated');
+      console.log("No match: Button deactivated.");
+    }
   }
 });
