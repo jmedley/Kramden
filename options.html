@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Daily Job Search Report",
+  "schemaVersion": 1,
+  "description": "Daily job search email report for April 29–30, 2026, with Open and Copy buttons for each job URL."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Search Report — April 29–30, 2026</title>
+<script src="kramden.js"></script> 
+<style type="text/css" href="style.css"></style>
+</head>
+<body>
+
+<h1>📬 Job Search Email Report</h1>
+<p class="subtitle">April 29–30, 2026 &nbsp;·&nbsp; Scanned from Gmail "Job Search" label</p>
+
+<script>
+const sections = [
+  {
+    label: "Technical Writer",
+    jobs: [
+      { title: "Technical Writer (contract)", company: "Microsoft", location: "Redmond, WA", url: "https://www.linkedin.com/jobs/view/4406580431/" },
+      { title: "Senior Technical Writer", company: "Datacor, Inc.", location: "United States", url: "https://www.linkedin.com/jobs/view/4406905225/" },
+      { title: "Technical Writer", company: "RemoteHunter", location: "United States", url: "https://www.linkedin.com/jobs/view/4406903673/" },
+      { title: "Principal Technical Writer", company: "Toast", location: "United States", url: "https://www.linkedin.com/jobs/view/4408082084/" },
+      { title: "Technical Writer", company: "Aegis Sortation", location: "United States", url: "https://www.linkedin.com/jobs/view/4405567954/" },
+      { title: "Technical Writer & Documentation Specialist", company: "Heven AeroTech", location: "Bingen, WA", url: "https://www.linkedin.com/jobs/view/4407848738/" },
+      { title: "Lead/Principal Technical Writer (Trailhead) – Missionforce", company: "griddable.io", location: "San Francisco, CA", url: "https://www.linkedin.com/jobs/view/4408099345/" },
+      { title: "Technical Writer", company: "TransUnion", location: "Chicago, IL", url: "https://www.linkedin.com/jobs/view/4406929803/" },
+      { title: "Technical Writer 3", company: "DGN Technologies Inc", location: "Sunnyvale, CA", url: "https://www.linkedin.com/jobs/view/4406591484/" },
+      { title: "Technical Writer", company: "Jobs via Dice", location: "Alpharetta, GA", url: "https://www.linkedin.com/jobs/view/4406585172/" },
+      { title: "Technical Writer", company: "Efinix, Inc.", location: "Cupertino, CA", url: "https://www.linkedin.com/jobs/view/4406246235/" },
+      { title: "Technical Writer - Cybersecurity", company: "ECS", location: "Portland, OR", url: "https://www.linkedin.com/jobs/view/4407557541/" },
+      { title: "Technical Writer", company: "Randstad Digital Americas", location: "Tallahassee, FL", url: "https://www.linkedin.com/jobs/view/4406275010/" },
+      { title: "Technical Writer", company: "Anduril Industries", location: "Atlanta, GA", url: "https://www.linkedin.com/jobs/view/4386308708/" },
+      { title: "Technical Writer, Intelligence Systems", company: "Anduril Industries", location: "Reston, VA", url: "https://www.linkedin.com/jobs/view/4316386584/" },
+      { title: "Senior Technical Writer", company: "Kratos Defense & Security Solutions", location: "Colorado Springs, CO", url: "https://www.linkedin.com/jobs/view/4407498643/" },
+      { title: "Technical Writer", company: "Adaptiva", location: "Kirkland, WA", url: "https://www.linkedin.com/jobs/view/4407473462/" },
+      { title: "Lead Technical Writer – AI-Driven Documentation", company: "Not disclosed", location: "Seattle, WA ($143K–$217K)", url: "https://www.jobleads.com/user/kuuid?m=d9d2befa-1966-4ed6-bcd4-03ad3963f6df&u=62627885&t=id_1752225913&redirectBack=https%3A%2F%2Fwww.jobleads.com%2Fsearch%2Fjobs%3Fkuuid%3D106dffaa7603730b5ce23583e9fb35b5%26saved_search_email_id%3D019d8949-de14-74b2-a270-bbf5e2c7b4c5%26view%3Dsearch%26promotedJobs%3Dexternal-b58586c5ac1c516efe567ba7b44153c5%26utm_source%3Dvdb_is_saved_search%26utm_medium%3Demail&kuuid=106dffaa7603730b5ce23583e9fb35b5" },
+      { title: "Technical Writing Lead: AI Content & Docs", company: "Not disclosed", location: "Seattle, WA ($143K–$217K)", url: "https://www.jobleads.com/user/kuuid?m=d9d2befa-1966-4ed6-bcd4-03ad3963f6df&u=62627885&t=id_1752225913&redirectBack=https%3A%2F%2Fwww.jobleads.com%2Fsearch%2Fjobs%3Fkuuid%3D106dffaa7603730b5ce23583e9fb35b5%26saved_search_email_id%3D019d8949-de14-74b2-a270-bbf5e2c7b4c5%26view%3Dsearch%26promotedJobs%3Dexternal-60f83d4297e81e54f4fce650b753808f&kuuid=106dffaa7603730b5ce23583e9fb35b5" },
+      { title: "Technical Writing Lead", company: "Not disclosed", location: "Bellevue, WA ($143K–$217K)", url: "https://www.jobleads.com/user/kuuid?m=d9d2befa-1966-4ed6-bcd4-03ad3963f6df&u=62627885&t=id_1752225913&redirectBack=https%3A%2F%2Fwww.jobleads.com%2Fsearch%2Fjobs%3Fkuuid%3D106dffaa7603730b5ce23583e9fb35b5%26saved_search_email_id%3D019d8949-de14-74b2-a270-bbf5e2c7b4c5%26view%3Dsearch%26promotedJobs%3Dexternal-5c28efd580359d8457e8be0aeddef10d&kuuid=106dffaa7603730b5ce23583e9fb35b5" },
+      { title: "Technical Writing Lead", company: "Not disclosed", location: "Seattle, WA ($143K–$217K)", url: "https://www.jobleads.com/user/kuuid?m=d9d2befa-1966-4ed6-bcd4-03ad3963f6df&u=62627885&t=id_1752225913&redirectBack=https%3A%2F%2Fwww.jobleads.com%2Fsearch%2Fjobs%3Fkuuid%3D106dffaa7603730b5ce23583e9fb35b5%26saved_search_email_id%3D019d8949-de14-74b2-a270-bbf5e2c7b4c5%26view%3Dsearch%26promotedJobs%3Dexternal-a787e3dddd26edacd1789a24ea93ddef&kuuid=106dffaa7603730b5ce23583e9fb35b5" },
+      { title: "Senior Technical Writer", company: "Not disclosed", location: "Seattle, WA ($90K–$154K)", url: "https://www.jobleads.com/user/kuuid?m=d9d2befa-1966-4ed6-bcd4-03ad3963f6df&u=62627885&t=id_1752225913&redirectBack=https%3A%2F%2Fwww.jobleads.com%2Fsearch%2Fjobs%3Fkuuid%3D106dffaa7603730b5ce23583e9fb35b5%26saved_search_email_id%3D019d8949-de14-74b2-a270-bbf5e2c7b4c5%26view%3Dsearch%26promotedJobs%3Dexternal-d770401efa89504189b4831fb6c1e71f&kuuid=106dffaa7603730b5ce23583e9fb35b5" }
+    ]
+  },
+  {
+    label: "Content",
+    jobs: [
+      { title: "Integrated Campaigns - Content Strategist, IDC CX", company: "Amazon Web Services (AWS)", location: "Seattle, WA", url: "https://www.linkedin.com/jobs/view/4408007407/" },
+      { title: "Integrated Campaigns - Content Strategist, IDC CX", company: "Amazon Web Services (AWS)", location: "San Francisco, CA", url: "https://www.linkedin.com/jobs/view/4407893687/" },
+      { title: "Content Strategist", company: "Akkodis", location: "Knoxville, TN", url: "https://www.linkedin.com/jobs/view/4406557404/" },
+      { title: "Content Lead", company: "MarqVision", location: "San Francisco, CA", url: "https://www.linkedin.com/jobs/view/4406954427/" },
+      { title: "Content Lead", company: "Scan.com", location: "United States", url: "https://www.linkedin.com/jobs/view/4407557552/" },
+      { title: "Content Strategist Lead", company: "Sigma360", location: "United States", url: "https://www.linkedin.com/jobs/view/4406212129/" },
+      { title: "Marketing Content Strategist – Growth", company: "Alignerr", location: "United States", url: "https://www.linkedin.com/jobs/view/4407562548/" },
+      { title: "Technical Content Engineer", company: "Siemens Digital Industries Software", location: "Charlotte, NC", url: "https://www.linkedin.com/jobs/view/4406562167/" },
+      { title: "Sr. Demand Manager (content)", company: "Aha!", location: "United States", url: "https://www.linkedin.com/jobs/view/4408070806/" },
+      { title: "Content Editor - AI Trainer", company: "DataAnnotation", location: "Washington State", url: "https://www.indeed.com/jobs?q=content+writer&l=Seattle%2C+WA" }
+    ]
+  },
+  {
+    label: "Documentation",
+    jobs: [
+      { title: "Technical Documentation Developer", company: "Bloomberg", location: "New York, NY", url: "https://www.linkedin.com/jobs/view/4405198391/" },
+      { title: "MoP/Documentation Engineer", company: "Jobs via Dice", location: "Redmond, WA", url: "https://www.linkedin.com/jobs/view/4405157592/" },
+      { title: "Engineering Document Control Engineer (CAD & PLM)", company: "Wise Equation Solutions Inc.", location: "Novi, MI", url: "https://www.linkedin.com/jobs/view/4406578148/" },
+      { title: "Document Control Specialist", company: "Furtado & Associates Inc.", location: "Seattle, WA", url: "https://www.indeed.com/jobs?q=document+control+specialist&l=Seattle%2C+WA" }
+    ]
+  },
+  {
+    label: "Developer Advocate",
+    jobs: [
+      { title: "Senior Developer Advocate", company: "Nebius", location: "United States", url: "https://www.linkedin.com/jobs/view/4406227858/" }
+    ]
+  },
+  {
+    label: "Developer Experience",
+    jobs: [
+      { title: "DX Engineer", company: "Cursor", location: "San Francisco, CA", url: "https://www.linkedin.com/jobs/view/4408045618/" },
+      { title: "DX Engineer", company: "Cursor", location: "New York, NY", url: "https://www.linkedin.com/jobs/view/4408050505/" },
+      { title: "Developer Experience", company: "Jobs via Dice", location: "Charlotte, NC", url: "https://www.linkedin.com/jobs/view/4406930327/" }
+    ]
+  },
+  {
+    label: "Business Analyst",
+    jobs: [
+      { title: "Business Analyst", company: "R Systems", location: "Sacramento, CA", url: "https://www.linkedin.com/jobs/view/4405173140/" },
+      { title: "Business Analyst", company: "RADcube", location: "Indianapolis, IN", url: "https://www.linkedin.com/jobs/view/4407563625/" },
+      { title: "Business System Analyst", company: "CACI International Inc", location: "Chamblee, GA", url: "https://www.linkedin.com/jobs/view/4405505084/" },
+      { title: "Technical Business Analyst", company: "UpSela", location: "Dallas-Fort Worth Metroplex", url: "https://www.linkedin.com/jobs/view/4406243350/" },
+      { title: "Senior Business Analyst (ITS) - Grants", company: "University of Southern California", location: "Los Angeles, CA", url: "https://www.linkedin.com/jobs/view/4407528586/" },
+      { title: "Senior Business Analyst", company: "W. R. Berkley Corporation", location: "Glen Allen, VA", url: "https://www.linkedin.com/jobs/view/4407535597/" },
+      { title: "Business Analyst", company: "INSPYR Solutions", location: "Deerfield Beach, FL", url: "https://www.linkedin.com/jobs/view/4408022244/" },
+      { title: "Senior Business Analyst", company: "Emerson", location: "McKinney, TX", url: "https://www.linkedin.com/jobs/view/4408046886/" },
+      { title: "Business Analyst", company: "inSync Staffing", location: "San Diego, CA", url: "https://www.linkedin.com/jobs/view/4406920295/" },
+      { title: "Hybrid Business Analyst", company: "Solving IT", location: "Greater Madison Area", url: "https://www.linkedin.com/jobs/view/4406540825/" },
+      { title: "Business Analyst", company: "Brooksource", location: "Greenwood Village, CO", url: "https://www.linkedin.com/jobs/view/4406599373/" },
+      { title: "Senior Business Analyst", company: "Papa Murphy's International", location: "Greater Phoenix Area", url: "https://www.linkedin.com/jobs/view/4406542863/" }
+    ]
+  },
+  {
+    label: "Node",
+    jobs: [
+      { title: "Software Engineer (Node.JS)", company: "Nasscomm", location: "United States", url: "https://www.linkedin.com/jobs/view/4406551315/" },
+      { title: "Node.js Lead", company: "RISINGSUN TECHNOLOGIES", location: "United States", url: "https://www.linkedin.com/jobs/view/4405595110/" },
+      { title: "Senior Software Engineer - TypeScript/Node (Remote)", company: "Randstad Digital Americas", location: "McLean, VA", url: "https://www.linkedin.com/jobs/view/4406902494/" },
+      { title: "Principal Backend Engineer (Node.JS, AWS)", company: "Yahoo", location: "United States", url: "https://www.linkedin.com/jobs/view/4296328206/" },
+      { title: "Node.js Lead", company: "Jobs via Dice", location: "United States", url: "https://www.linkedin.com/jobs/view/4406911888/" }
+    ]
+  }
+];
+
+const noUrl = [
+  { sender: "KforceJobAlert@kforce.com", subject: "Kforce Job Alert 4/30/2026", date: "April 30, 2026", time: "12:04 AM" },
+  { sender: "donotreply@opportunities.adobe.com", subject: "Medleyj64119: Job Alerts for you from Adobe Systems Careers", date: "April 29, 2026", time: "5:03 PM" },
+  { sender: "support@builtin.com", subject: "New Technical Writer Job Matches", date: "April 29, 2026", time: "11:15 AM" },
+  { sender: "noreply@glassdoor.com", subject: "Senior Content Writer at Rally Enterprises & Communications and 2 more jobs in Seattle, WA for you. Apply Now.", date: "April 29, 2026", time: "10:49 AM" },
+  { sender: "noreply@jobright.ai", subject: "Your job matches for Technical Writer", date: "April 29, 2026", time: "9:00 AM" }
+];
+
+
+</script>
+</body>
+</html>

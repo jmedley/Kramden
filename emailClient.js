@@ -1,0 +1,44 @@
+class EmailClient {
+  constructor(authToken, senders, preloadIDs = false) {
+    this.authToken = authToken;
+    this.senders = Array.isArray(senders) ? senders : [senders];
+    this.messageIDs = [];
+    this._baseURL = 'https://gmail.googleapis.com/gmail/v1/users/me';
+
+    if (preloadIDs) {
+      this.loadIDs();
+    }
+  }
+
+  async loadIDs() {
+    const query = this.senders.map(s => `from:${s}`).join(' OR ');
+    const url = `${this._baseURL}/messages?q=${encodeURIComponent(query)}`;
+
+    const res = await fetch(url, { headers: this._authHeaders() });
+    if (!res.ok) throw new Error(`loadIDs failed: ${res.status} ${res.statusText}`);
+
+    const data = await res.json();
+    this.messageIDs = (data.messages || []).map(m => m.id);
+    return this.messageIDs;
+  }
+
+  async getMessage(messageID) {
+    const url = `${this._baseURL}/messages/${messageID}?format=full`;
+    const res = await fetch(url, { headers: this._authHeaders() });
+    if (!res.ok) throw new Error(`getMessage failed: ${res.status} ${res.statusText}`);
+    return res.json();
+  }
+
+  async getMetaData(messageID) {
+    const url = `${this._baseURL}/messages/${messageID}?format=metadata`;
+    const res = await fetch(url, { headers: this._authHeaders() });
+    if (!res.ok) throw new Error(`getMetaData failed: ${res.status} ${res.statusText}`);
+    return res.json();
+  }
+
+  _authHeaders() {
+    return { Authorization: `Bearer ${this.authToken}` };
+  }
+}
+
+module.exports = EmailClient;
