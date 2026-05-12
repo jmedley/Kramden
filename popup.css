@@ -1,4 +1,12 @@
-*, *::before, *::after {
+/*
+  Copyright (c) 2026 Joseph Medley. All rights reserved. 
+  No part of this software may be used, copied, modified, or distributed
+  without the express written permission of the author.
+*/
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -68,7 +76,9 @@ nav {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error-msg {
