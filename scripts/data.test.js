@@ -178,6 +178,25 @@ describe('EmailData', () => {
     });
   });
 
+  describe('hasEmail()', () => {
+    let chrome;
+    let instance;
+
+    beforeEach(async () => {
+      chrome = makeChromeMock({ emails: 'a@example.com,b@example.com' });
+      instance = makeEmailData(chrome);
+      await instance.ready;
+    });
+
+    it('returns true for an existing email', async () => {
+      assert.isTrue(await instance.hasEmail('a@example.com'));
+    });
+
+    it('returns false for a non-existing email', async () => {
+      assert.isFalse(await instance.hasEmail('c@example.com'));
+    });
+  });
+
   describe('remove()', () => {
     let chrome;
     let instance;

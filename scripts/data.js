@@ -38,6 +38,10 @@ class EmailData {
     }
   }
 
+  async hasEmail(address) {
+    return this.#emails.includes(address);
+  }
+
   async remove(address) {
     this.#emails = this.#emails.filter((e) => e !== address);
     await chrome.storage.sync.set({ emails: this.#emails.join(',') });
