@@ -4,11 +4,9 @@
   without the express written permission of the author.
 */
 
-// -------------------------------------------------------------------------
-// Placeholders — replace with real implementations
-// -------------------------------------------------------------------------
-/* async function followCurrentEmail() { ... } */
-/* async function ignoreCurrentEmail() { ... } */
+const EmailData   = require('./scripts/data');
+
+const emailData = new EmailData();
 
 // -------------------------------------------------------------------------
 // State
@@ -57,6 +55,10 @@ function isEmailOpen(str) {
   return regex.test(str);
 }
 
+async function followCurrentEmail() {  }
+
+async function ignoreCurrentEmail() {  }
+
 // -------------------------------------------------------------------------
 // Handlers
 // -------------------------------------------------------------------------
@@ -101,4 +103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log("No match: Button deactivated.");
     }
   }
+
+
 });
