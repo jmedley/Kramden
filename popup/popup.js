@@ -4,10 +4,6 @@
   without the express written permission of the author.
 */
 
-const EmailData   = require('./scripts/data');
-
-const emailData = new EmailData();
-
 // -------------------------------------------------------------------------
 // State
 // -------------------------------------------------------------------------
@@ -102,7 +98,5 @@ document.addEventListener('DOMContentLoaded', async () => {
       btnFollow.classList.add('deactivated');
       console.log("No match: Button deactivated.");
     }
-  }
-
-
+  }  
 });

@@ -55,5 +55,3 @@ class EmailData {
     return this.#lastRun;
   }
 }
-
-module.exports = EmailData;
