@@ -42,3 +42,27 @@ async function getSenderEmail(messageId, accessToken) {
     return null;
   }
 }
+
+// Detect when a specific email element appears/disappears
+const observer = new MutationObserver((mutations) => {
+  // Check for email opening: Look for the email thread container
+  const openEmail = document.querySelector('.ii.gt'); // Gmail's class for open email body
+  
+  if (openEmail && !document.body.classList.contains('email-open')) {
+    document.body.classList.add('email-open');
+    chrome.storage.local.set({ emailOpen: true })
+      .then(() => console.log("Email state set to 'open'"))
+      .catch((error) => console.error("Failed to set email state:", error));
+  }
+
+  // Check for closing: If container vanishes
+  if (!openEmail && document.body.classList.contains('email-open')) {
+    document.body.classList.remove('email-open');
+    chrome.storage.local.set({ emailOpen: false })
+      .then(() => console.log("Email state set to 'closed'"))
+      .catch((error) => console.error("Failed to set email state:", error));
+  }
+});
+
+// Start observing the Gmail app container
+observer.observe(document.body, { childList: true, subtree: true });

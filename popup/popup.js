@@ -86,10 +86,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Query for the active tab in the current window
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const emailState = await chrome.storage.local.get('emailOpen').emailState;
+  console.log("Email state from storage:", emailState);
 
   if (tab && tab.url) {
     // Check if the URL contains the target string
-    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url)) {
+    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url) && emailState) {
       btnFollow.disabled = false;
       btnFollow.classList.remove('deactivated');
       console.log("Match found: Button activated.");
