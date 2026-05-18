@@ -4,8 +4,7 @@
   "description": "A Chrome extension to help job seekers manage their applications and stay organized.",
   "keywords": [
     "employment",
-    "'job",
-    "search'"
+    "job search"
   ],
   "homepage": "https://github.com/jmedley/Kramden#readme",
   "bugs": {
@@ -17,9 +16,12 @@
   },
   "license": "UNLICENSED",
   "author": "Joseph Medley",
-  "type": "private",
+  "type": "module",
   "main": "entry.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha ./ --recursive"
+  },
+  "dependencies": {
+    "mocha": "^11.7.5"
   }
 }
