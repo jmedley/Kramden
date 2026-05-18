@@ -9,6 +9,9 @@
         "identity",
         "storage"
     ],
+    "host_permissions": [
+        "https://mail.google.com/*"
+    ],
     "oauth2": {
         "client_id": "1020910266604-f9cgs0r7rdlc4dl75dsblbs4ktiv2hfr.apps.googleusercontent.com",
         "scopes": [
@@ -28,7 +31,7 @@
                 "https://mail.google.com/*"
             ],
             "js": [
-                "content-scripts/content-script.js"
+                "content-scripts/content.js"
             ]
         }
     ]

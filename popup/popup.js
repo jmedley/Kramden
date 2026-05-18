@@ -10,8 +10,14 @@
 let isFollowing = false;   // false = "Follow" showing, true = "Ignore" showing
 
 // -------------------------------------------------------------------------
+// Data
+// -------------------------------------------------------------------------
+const emailData = new EmailData();
+
+// -------------------------------------------------------------------------
 // Elements
 // -------------------------------------------------------------------------
+let tab;
 const btnDashboard = document.getElementById('btn-dashboard');
 const btnFollow    = document.getElementById('btn-follow');
 const followIcon   = document.getElementById('follow-icon');
@@ -47,13 +53,23 @@ function showError(msg) {
 }
 
 function isEmailOpen(str) {
-  const regex = /#inbox\/\w{32}/;
+  const regex = /\/\w{32}/;
   return regex.test(str);
 }
 
-async function followCurrentEmail() {  }
+async function followCurrentEmail() { 
+  const senderData = await getEmailFromActiveTab();
+  if (!senderData) throw new Error('Could not determine sender of current email.');
+  await emailData.add(senderData.email);
+  setFollowUI(false);
+ }
 
-async function ignoreCurrentEmail() {  }
+async function ignoreCurrentEmail() { 
+  const senderData = await getEmailFromActiveTab();
+  if (!senderData) throw new Error('Could not determine sender of current email.');
+  await emailData.remove(senderData.email);
+  setFollowUI(true);
+}
 
 // -------------------------------------------------------------------------
 // Handlers
@@ -85,13 +101,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const targetSubstring = "https://mail.google.com/mail";
 
   // Query for the active tab in the current window
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const emailState = await chrome.storage.local.get('emailOpen').emailState;
-  console.log("Email state from storage:", emailState);
+  [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   if (tab && tab.url) {
     // Check if the URL contains the target string
-    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url) && emailState) {
+    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url)) {
       btnFollow.disabled = false;
       btnFollow.classList.remove('deactivated');
       console.log("Match found: Button activated.");
@@ -102,3 +116,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }  
 });
+
+async function getEmailFromActiveTab() {
+  return await new Promise((resolve, reject) => {
+    chrome.tabs.sendMessage(tab.id, { action: "getSender" }, (response) => {
+      if (response) {
+        resolve(response);
+      } else {
+        reject(new Error("No sender data found. Is an email open?"));
+      }
+    });
+  });
+}
