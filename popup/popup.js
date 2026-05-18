@@ -61,14 +61,12 @@ async function followCurrentEmail() {
   const senderData = await getEmailFromActiveTab();
   if (!senderData) throw new Error('Could not determine sender of current email.');
   await emailData.add(senderData.email);
-  setFollowUI(false);
  }
 
 async function ignoreCurrentEmail() { 
   const senderData = await getEmailFromActiveTab();
   if (!senderData) throw new Error('Could not determine sender of current email.');
   await emailData.remove(senderData.email);
-  setFollowUI(true);
 }
 
 // -------------------------------------------------------------------------
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (tab && tab.url) {
     // Check if the URL contains the target string
-    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url)) {
+    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url) &&!isEmailSaved()) {
       btnFollow.disabled = false;
       btnFollow.classList.remove('deactivated');
       console.log("Match found: Button activated.");
@@ -116,6 +114,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }  
 });
+
+function isEmailSaved() {
+  const senderData = getEmailFromActiveTab()
+    .then((data) => {
+      if (!data) throw new Error('Could not determine sender of current email.');
+      return emailData.hasEmail(data.email);
+    })
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
+}
 
 async function getEmailFromActiveTab() {
   return await new Promise((resolve, reject) => {
