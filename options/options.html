@@ -10,33 +10,41 @@
 <body>
 
   <main>
-    <section class="card" id="section-options" aria-label="Email tracker">
-      <h1>Options</h1>
-
-      <form class="input-row" id="form-email-tracker" novalidate>
-        <div id="div-tracking">
-          <label for="select-followed-emails">Tracked Emails</label>
-          <div id="div-tracked">  
-            <select id="select-followed-emails" name="followed-emails" size="8">
-              <!-- Options will be populated by JavaScript -->
-            </select>
-            <button class="btn-secondary" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop tracking</button>
-          </div>
-
-          <div id="div-add-email">
-            <input
-              type="email"
-              id="input-add-email"
-              placeholder="name@example.com"
-              autocomplete="email"
-              spellcheck="false"
-              aria-label="Email to track"
-            />
-            <button type="submit" class="btn-primary" id="btn-add-email">Track</button>
-            <span class="error-msg" id="error">Enter a valid email</span>
-          </div>
+    <section id="section-options" aria-label="Email tracker">
+      <div class="section-card">
+        <div class="section-header">
+          <h2>Options</h2>
         </div>
-      </form>
+
+        <div class="card-content">
+          <form id="form-email-tracker" novalidate>
+            <div id="div-tracking">
+              <div class="option-title">
+                <label for="select-followed-emails">Tracked Emails</label>
+              </div>
+              <div id="div-tracked">  
+                <select id="select-followed-emails" name="followed-emails" size="8">
+                  <!-- Options will be populated by JavaScript -->
+                </select>
+                <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop tracking</button>
+              </div>
+
+              <div id="div-add-email">
+                <input
+                  type="email"
+                  id="input-add-email"
+                  placeholder="name@example.com"
+                  autocomplete="email"
+                  spellcheck="false"
+                  aria-label="Email to track"
+                />
+                <button type="submit" class="btn" id="btn-add-email">Track</button>
+                <span class="error-msg" id="error">Enter a valid email</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </section>
 
   </main>
