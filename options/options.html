@@ -3,50 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Job Search Report — April 29–30, 2026</title> 
+<title>Kramden Dashboard</title> 
 <link rel="stylesheet" href="options.css">
 <script src="../scripts/data.js"></script>
 </head>
 <body>
 
   <main>
-    <section>
-      <h1>📬 Job Search Email Report</h1>
-    </section>
+    <section class="card" id="section-options" aria-label="Email tracker">
+      <h1>Options</h1>
 
-      
+      <form class="input-row" id="form-email-tracker" novalidate>
+        <div id="div-tracking">
+          <label for="select-followed-emails">Tracked Emails</label>
+          <div id="div-tracked">  
+            <select id="select-followed-emails" name="followed-emails" size="8">
+              <!-- Options will be populated by JavaScript -->
+            </select>
+            <button class="btn-secondary" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop tracking</button>
+          </div>
 
-
-    <section class="card" aria-label="Email tracker">
-      <h1>Tracked emails</h1>
-
-      <label for="followed-emails">Choose an option:</label>
-      <select id="followed-emails" name="followed-emails" size="8">
-        
-      </select>
-
-      <button class="btn-secondary" id="stop-tracking" disabled aria-label="Stop tracking selected email">Stop tracking</button>
-
-
-      <form class="input-row" id="form" novalidate>
-        <div class="input-wrap">
-          <input
-            type="email"
-            id="emailList"
-            placeholder="name@example.com"
-            autocomplete="email"
-            spellcheck="false"
-            aria-label="Email to track"
-          />
-          <span class="error-msg" id="error">Enter a valid email</span>
+          <div id="div-add-email">
+            <input
+              type="email"
+              id="input-add-email"
+              placeholder="name@example.com"
+              autocomplete="email"
+              spellcheck="false"
+              aria-label="Email to track"
+            />
+            <button type="submit" class="btn-primary" id="btn-add-email">Track</button>
+            <span class="error-msg" id="error">Enter a valid email</span>
+          </div>
         </div>
-        <button type="submit" class="btn-primary" id="track">Track</button>
       </form>
-
-      <div class="footnote">
-        <span>Click a row to select · <kbd>Enter</kbd> to track · <kbd>Del</kbd> to stop</span>
-        <span id="status" aria-live="polite"></span>
-      </div>
     </section>
 
   </main>
