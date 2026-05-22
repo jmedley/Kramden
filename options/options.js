@@ -4,6 +4,14 @@
   without the express written permission of the author.
 */
 
+// Data
+const emailData = new EmailData();
+
+// Elements
+const selectList = document.getElementById('followed-emails');
+const btnStop = document.getElementById('stop-tracking');
+
+
 document.addEventListener('DOMContentLoaded', async () => {
   const emailData = new EmailData();
   await emailData.ready;
@@ -19,33 +27,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     option.textContent = `${emailLabel} (${emailValues})`;
     document.getElementById('followed-emails').appendChild(option);
   }
+
+  // Enable/disable stop-tracking button based on selection
+  selectList.addEventListener('change', () => {
+    if (selectList.selectedIndex >= 0) {
+      btnStop.disabled = false;
+    } else {
+      btnStop.disabled = true;
+    }
+  });
+
+  // Remove selected email from tracking
+  btnStop.addEventListener('click', async () => {
+    const selectedOption = selectList.options[selectList.selectedIndex];
+    if (selectedOption && selectedOption.value) {
+      const emails = selectedOption.value.split(', ').map((e) => e.trim());
+      await emailData.remove({ email: emails });
+      selectList.removeChild(selectedOption);
+      selectList.dispatchEvent(new Event('change'));
+    }
+  });
 });
 
-function copyUrl(btn, url) {
-  navigator.clipboard.writeText(url).then(() => {
-    btn.textContent = "Copied!";
-    btn.classList.add("copied");
-    setTimeout(() => {
-      btn.textContent = "Copy";
-      btn.classList.remove("copied");
-    }, 1800);
-  }).catch(() => {
-    const ta = document.createElement("textarea");
-    ta.value = url;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-    btn.textContent = "Copied!";
-    btn.classList.add("copied");
-    setTimeout(() => {
-      btn.textContent = "Copy";
-      btn.classList.remove("copied");
-    }, 1800);
-  });
-}
+// function copyUrl(btn, url) {
+//   navigator.clipboard.writeText(url).then(() => {
+//     btn.textContent = "Copied!";
+//     btn.classList.add("copied");
+//     setTimeout(() => {
+//       btn.textContent = "Copy";
+//       btn.classList.remove("copied");
+//     }, 1800);
+//   }).catch(() => {
+//     const ta = document.createElement("textarea");
+//     ta.value = url;
+//     ta.style.position = "fixed";
+//     ta.style.opacity = "0";
+//     document.body.appendChild(ta);
+//     ta.select();
+//     document.execCommand("copy");
+//     document.body.removeChild(ta);
+//     btn.textContent = "Copied!";
+//     btn.classList.add("copied");
+//     setTimeout(() => {
+//       btn.textContent = "Copy";
+//       btn.classList.remove("copied");
+//     }, 1800);
+//   });
+// }
 
 // Build sections
 // sections.forEach(section => {
@@ -106,14 +134,14 @@ function copyUrl(btn, url) {
 // noUrlDiv.appendChild(noUrlTable);
 // document.body.appendChild(noUrlDiv);
 
-function copyUrl(url, btn) {
-  navigator.clipboard.writeText(url).then(() => {
-    const original = btn.textContent;
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
+// function copyUrl(url, btn) {
+//   navigator.clipboard.writeText(url).then(() => {
+//     const original = btn.textContent;
+//     btn.textContent = 'Copied!';
+//     btn.classList.add('copied');
+//     setTimeout(() => {
+//       btn.textContent = original;
+//       btn.classList.remove('copied');
+//     }, 2000);
+//   });
+// }
