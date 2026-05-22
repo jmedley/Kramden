@@ -4,6 +4,23 @@
   without the express written permission of the author.
 */
 
+document.addEventListener('DOMContentLoaded', async () => {
+  const emailData = new EmailData();
+  await emailData.ready;
+  const emails = emailData.emails;
+  console.log('Followed emails:', emails);
+  
+  // Each email entry is expected to carry an array of email addresses.
+  for (const emailEntry of emails) {
+    const option = document.createElement('option');
+    const emailValues = emailEntry.email.join(', ');
+    const emailLabel = emailEntry.name;
+    option.value = emailValues;
+    option.textContent = `${emailLabel} (${emailValues})`;
+    document.getElementById('followed-emails').appendChild(option);
+  }
+});
+
 function copyUrl(btn, url) {
   navigator.clipboard.writeText(url).then(() => {
     btn.textContent = "Copied!";

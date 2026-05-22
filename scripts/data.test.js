@@ -51,12 +51,9 @@ function makeEmailData(chromeMock) {
       const result = await chromeMock.storage.sync.get(['emails', 'lastRun']);
 
       if (result.emails !== undefined) {
-        this.#emails = result.emails
-          .split(',')
-          .map((e) => e.trim())
-          .filter(Boolean);
+        this.#emails = this.#normalizeEmails(result.emails);
       } else {
-        await chromeMock.storage.sync.set({ emails: '' });
+        await chromeMock.storage.sync.set({ emails: [] });
       }
 
       if (result.lastRun !== undefined) {
@@ -66,20 +63,89 @@ function makeEmailData(chromeMock) {
       }
     }
 
-    async add(address) {
-      if (!this.#emails.includes(address)) {
-        this.#emails.push(address);
-        await chromeMock.storage.sync.set({ emails: this.#emails.join(',') });
+    #normalizeEmails(value) {
+      if (Array.isArray(value)) {
+        return value
+          .filter(Boolean)
+          .map((item) => {
+            if (typeof item === 'string') {
+              return { name: '', email: [item.trim()] };
+            }
+
+            const rawEmail = item.email;
+            const emails = Array.isArray(rawEmail)
+              ? rawEmail.map((e) => String(e).trim()).filter(Boolean)
+              : typeof rawEmail === 'string'
+              ? [rawEmail.trim()]
+              : [];
+
+            return { name: item.name ?? '', email: emails };
+          })
+          .filter((entry) => entry.email.length > 0);
+      }
+
+      if (typeof value === 'string') {
+        return value
+          .split(',')
+          .map((e) => e.trim())
+          .filter(Boolean)
+          .map((email) => ({ name: '', email: [email] }));
+      }
+
+      return [];
+    }
+
+    #normalizeSender(sender) {
+      const name = typeof sender === 'object' && sender?.name ? sender.name : '';
+      if (typeof sender === 'string') {
+        return { name: '', email: [sender.trim()] };
+      }
+
+      if (!sender?.email) {
+        return { name, email: [] };
+      }
+
+      const emails = Array.isArray(sender.email)
+        ? sender.email.map((e) => String(e).trim()).filter(Boolean)
+        : typeof sender.email === 'string'
+        ? [sender.email.trim()]
+        : [];
+
+      return { name, email: emails };
+    }
+
+    async add(sender) {
+      const normalized = this.#normalizeSender(sender);
+      if (normalized.email.length === 0) return;
+
+      const exists = this.#emails.some((entry) =>
+        entry.email.some((email) => normalized.email.includes(email))
+      );
+
+      if (!exists) {
+        this.#emails.push(normalized);
+        await chromeMock.storage.sync.set({ emails: this.#emails });
       }
     }
 
-    async remove(address) {
-      this.#emails = this.#emails.filter((e) => e !== address);
-      await chromeMock.storage.sync.set({ emails: this.#emails.join(',') });
+    async hasEmail(sender) {
+      const normalized = this.#normalizeSender(sender);
+      if (normalized.email.length === 0) return false;
+      return this.#emails.some((entry) =>
+        entry.email.some((email) => normalized.email.includes(email))
+      );
+    }
+
+    async remove(sender) {
+      const normalized = this.#normalizeSender(sender);
+      this.#emails = this.#emails.filter(
+        (entry) => !entry.email.some((email) => normalized.email.includes(email))
+      );
+      await chromeMock.storage.sync.set({ emails: this.#emails });
     }
 
     get emails() {
-      return [...this.#emails];
+      return this.#emails.map((entry) => ({ ...entry }));
     }
 
     get lastRun() {
@@ -89,10 +155,6 @@ function makeEmailData(chromeMock) {
 
   return new EmailData();
 }
-
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
 
 describe('EmailData', () => {
   describe('constructor — empty storage', () => {
@@ -106,7 +168,7 @@ describe('EmailData', () => {
     });
 
     it('creates the emails key in storage', () => {
-      assert.equal(chrome.storage.sync._store.emails, '');
+      assert.deepEqual(chrome.storage.sync._store.emails, []);
     });
 
     it('creates the lastRun key in storage', () => {
@@ -129,7 +191,10 @@ describe('EmailData', () => {
 
     beforeEach(async () => {
       const chrome = makeChromeMock({
-        emails: 'a@example.com,b@example.com',
+        emails: [
+          { name: '', email: ['a@example.com'] },
+          { name: '', email: ['b@example.com'] },
+        ],
         lastRun: '2026-01-01T00:00:00Z',
       });
       instance = makeEmailData(chrome);
@@ -137,7 +202,10 @@ describe('EmailData', () => {
     });
 
     it('splits the stored CSV into an array', () => {
-      assert.deepEqual(instance.emails, ['a@example.com', 'b@example.com']);
+      assert.deepEqual(instance.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: '', email: ['b@example.com'] },
+      ]);
     });
 
     it('exposes lastRun from storage', () => {
@@ -147,7 +215,10 @@ describe('EmailData', () => {
     it('emails is iterable with for...of', () => {
       const visited = [];
       for (const e of instance.emails) visited.push(e);
-      assert.deepEqual(visited, ['a@example.com', 'b@example.com']);
+      assert.deepEqual(visited, [
+        { name: '', email: ['a@example.com'] },
+        { name: '', email: ['b@example.com'] },
+      ]);
     });
   });
 
@@ -156,25 +227,35 @@ describe('EmailData', () => {
     let instance;
 
     beforeEach(async () => {
-      chrome = makeChromeMock({ emails: 'a@example.com', lastRun: null });
+      chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
       instance = makeEmailData(chrome);
       await instance.ready;
     });
 
     it('appends a new address to the array', async () => {
-      await instance.add('b@example.com');
-      assert.deepEqual(instance.emails, ['a@example.com', 'b@example.com']);
+      await instance.add({ name: 'Bob', email: ['b@example.com'] });
+      assert.deepEqual(instance.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: 'Bob', email: ['b@example.com'] },
+      ]);
     });
 
     it('persists the updated list to storage', async () => {
-      await instance.add('b@example.com');
-      assert.equal(chrome.storage.sync._store.emails, 'a@example.com,b@example.com');
+      await instance.add({ name: 'Bob', email: ['b@example.com'] });
+      assert.deepEqual(chrome.storage.sync._store.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: 'Bob', email: ['b@example.com'] },
+      ]);
     });
 
     it('ignores duplicate addresses', async () => {
-      await instance.add('a@example.com');
-      assert.deepEqual(instance.emails, ['a@example.com']);
-      assert.equal(chrome.storage.sync._store.emails, 'a@example.com');
+      chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
+      instance = makeEmailData(chrome);
+      await instance.ready;
+
+      await instance.add({ email: ['a@example.com'] });
+      assert.deepEqual(instance.emails, [{ name: '', email: ['a@example.com'] }]);
+      assert.deepEqual(chrome.storage.sync._store.emails, [{ name: '', email: ['a@example.com'] }]);
     });
   });
 
@@ -183,17 +264,23 @@ describe('EmailData', () => {
     let instance;
 
     beforeEach(async () => {
-      chrome = makeChromeMock({ emails: 'a@example.com,b@example.com' });
+      chrome = makeChromeMock({
+        emails: [
+          { name: '', email: ['a@example.com'] },
+          { name: '', email: ['b@example.com'] },
+        ],
+      });
       instance = makeEmailData(chrome);
       await instance.ready;
     });
 
     it('returns true for an existing email', async () => {
-      assert.isTrue(await instance.hasEmail('a@example.com'));
+      assert.strictEqual(await instance.hasEmail({ email: ['a@example.com'] }), true);
+      assert.strictEqual(await instance.hasEmail({ email: ['a@example.com'] }), true);
     });
 
     it('returns false for a non-existing email', async () => {
-      assert.isFalse(await instance.hasEmail('c@example.com'));
+      assert.strictEqual(await instance.hasEmail({ email: ['c@example.com'] }), false);
     });
   });
 
@@ -203,7 +290,11 @@ describe('EmailData', () => {
 
     beforeEach(async () => {
       chrome = makeChromeMock({
-        emails: 'a@example.com,b@example.com,c@example.com',
+        emails: [
+          { name: '', email: ['a@example.com'] },
+          { name: '', email: ['b@example.com'] },
+          { name: '', email: ['c@example.com'] },
+        ],
         lastRun: null,
       });
       instance = makeEmailData(chrome);
@@ -211,31 +302,41 @@ describe('EmailData', () => {
     });
 
     it('removes the specified address from the array', async () => {
-      await instance.remove('b@example.com');
-      assert.deepEqual(instance.emails, ['a@example.com', 'c@example.com']);
+      await instance.remove({ email: ['b@example.com'] });
+      assert.deepEqual(instance.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: '', email: ['c@example.com'] },
+      ]);
     });
 
     it('persists the updated list to storage', async () => {
-      await instance.remove('b@example.com');
-      assert.equal(chrome.storage.sync._store.emails, 'a@example.com,c@example.com');
+      await instance.remove({ email: ['b@example.com'] });
+      assert.deepEqual(chrome.storage.sync._store.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: '', email: ['c@example.com'] },
+      ]);
     });
 
     it('is a no-op for an address not in the list', async () => {
-      await instance.remove('z@example.com');
-      assert.deepEqual(instance.emails, ['a@example.com', 'b@example.com', 'c@example.com']);
+      await instance.remove({ email: ['z@example.com'] });
+      assert.deepEqual(instance.emails, [
+        { name: '', email: ['a@example.com'] },
+        { name: '', email: ['b@example.com'] },
+        { name: '', email: ['c@example.com'] },
+      ]);
     });
   });
 
   describe('emails getter', () => {
     it('returns a copy — mutating it does not affect internal state', async () => {
-      const chrome = makeChromeMock({ emails: 'a@example.com', lastRun: null });
+      const chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
       const instance = makeEmailData(chrome);
       await instance.ready;
 
       const copy = instance.emails;
-      copy.push('injected@example.com');
+      copy.push({ name: 'Injected', email: ['injected@example.com'] });
 
-      assert.deepEqual(instance.emails, ['a@example.com']);
+      assert.deepEqual(instance.emails, [{ name: '', email: ['a@example.com'] }]);
     });
   });
 });

@@ -16,12 +16,9 @@ class EmailData {
     const result = await chrome.storage.sync.get(['emails', 'lastRun']);
 
     if (result.emails !== undefined) {
-      this.#emails = result.emails
-        .split(',')
-        .map((e) => e.trim())
-        .filter(Boolean);
+      this.#emails = this.#normalizeEmails(result.emails);
     } else {
-      await chrome.storage.sync.set({ emails: '' });
+      await chrome.storage.sync.set({ emails: [] });
     }
 
     if (result.lastRun !== undefined) {
@@ -31,24 +28,70 @@ class EmailData {
     }
   }
 
-  async add(address) {
-    if (!this.#emails.includes(address)) {
-      this.#emails.push(address);
-      await chrome.storage.sync.set({ emails: this.#emails.join(',') });
+  #normalizeEmails(value) {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+
+    return value
+      .filter(Boolean)
+      .map((item) => ({
+        name: item.name ?? '',
+        email: Array.isArray(item.email)
+          ? item.email.map((e) => String(e).trim()).filter(Boolean)
+          : [],
+      }))
+      .filter((entry) => entry.email.length > 0);
+  }
+
+  #normalizeSender(sender) {
+    const name = typeof sender === 'object' && sender?.name ? sender.name : '';
+
+    if (!sender?.email || !Array.isArray(sender.email)) {
+      return { name, email: [] };
+    }
+
+    const emails = sender.email.map((e) => String(e).trim()).filter(Boolean);
+    return { name, email: emails };
+  }
+
+  async add(sender) {
+    const normalized = this.#normalizeSender(sender);
+    if (normalized.email.length === 0) return;
+
+    const exists = this.#emails.some((entry) =>
+      entry.email.some((email) => normalized.email.includes(email))
+    );
+
+    if (!exists) {
+      this.#emails.push(normalized);
+      await chrome.storage.sync.set({ emails: this.#emails });
     }
   }
 
-  async hasEmail(address) {
-    return this.#emails.includes(address);
+  async hasEmail(sender) {
+    const normalized = this.#normalizeSender(sender);
+    if (normalized.email.length === 0) return false;
+    return this.#emails.some((entry) =>
+      entry.email.some((email) => normalized.email.includes(email))
+    );
   }
 
-  async remove(address) {
-    this.#emails = this.#emails.filter((e) => e !== address);
-    await chrome.storage.sync.set({ emails: this.#emails.join(',') });
+  async remove(sender) {
+    const normalized = this.#normalizeSender(sender);
+    if (normalized.email.length === 0) return;
+
+    this.#emails = this.#emails.filter(
+      (entry) => !entry.email.some((email) => normalized.email.includes(email))
+    );
+    await chrome.storage.sync.set({ emails: this.#emails });
   }
 
   get emails() {
-    return [...this.#emails];
+    return this.#emails.map((entry) => ({
+      name: entry.name,
+      email: [...entry.email],
+    }));
   }
 
   get lastRun() {

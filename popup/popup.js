@@ -60,7 +60,7 @@ function isEmailOpen(str) {
 async function followCurrentEmail() { 
   const senderData = await getEmailFromActiveTab();
   if (!senderData) throw new Error('Could not determine sender of current email.');
-  await emailData.add(senderData.email);
+  await emailData.add(senderData);
  }
 
 async function ignoreCurrentEmail() { 
