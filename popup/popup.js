@@ -4,19 +4,13 @@
   without the express written permission of the author.
 */
 
-// -------------------------------------------------------------------------
 // State
-// -------------------------------------------------------------------------
 let isFollowing = false;   // false = "Follow" showing, true = "Ignore" showing
 
-// -------------------------------------------------------------------------
 // Data
-// -------------------------------------------------------------------------
 const emailData = new EmailData();
 
-// -------------------------------------------------------------------------
 // Elements
-// -------------------------------------------------------------------------
 let tab;
 const btnDashboard = document.getElementById('btn-dashboard');
 const btnFollow    = document.getElementById('btn-follow');
@@ -24,9 +18,7 @@ const followIcon   = document.getElementById('follow-icon');
 const followLabel  = document.getElementById('follow-label');
 const followError  = document.getElementById('follow-error');
 
-// -------------------------------------------------------------------------
 // Helpers
-// -------------------------------------------------------------------------
 function setFollowUI(following) {
   isFollowing = following;
   followIcon.textContent  = following ? '🔕' : '📌';
@@ -69,9 +61,7 @@ async function ignoreCurrentEmail() {
   await emailData.remove(senderData.email);
 }
 
-// -------------------------------------------------------------------------
 // Handlers
-// -------------------------------------------------------------------------
 btnDashboard.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
 });
