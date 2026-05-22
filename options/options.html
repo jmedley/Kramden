@@ -5,43 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Job Search Report — April 29–30, 2026</title> 
 <link rel="stylesheet" href="options.css">
+<script src="../scripts/data.js"></script>
 </head>
 <body>
 
   <main>
     <section>
       <h1>📬 Job Search Email Report</h1>
-<p class="subtitle">April 29–30, 2026 &nbsp;·&nbsp; Scanned from Gmail "Job Search" label</p>
     </section>
 
       
 
 
     <section class="card" aria-label="Email tracker">
-      <div class="list-label">
-        <h1>Tracked emails</h1>
-        <span class="count" id="count">0 emails</span>
-      </div>
+      <h1>Tracked emails</h1>
 
-      <ul class="list" id="list" role="listbox" aria-label="Tracked emails list" tabindex="0">
-        <li class="empty" id="empty">No emails tracked yet.<br />Add one below to get started.</li>
-      </ul>
+      <label for="followed-emails">Choose an option:</label>
+      <select id="followed-emails" name="followed-emails" size="8">
+        
+      </select>
 
       <button class="btn-secondary" id="stop" disabled aria-label="Stop tracking selected email">Stop tracking</button>
-
-      <label for="my-select">Choose an option:</label>
-      <select id="my-select" name="my-select" size="8">
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-        <option value="4">Option 4</option>
-        <option value="5">Option 5</option>
-        <option value="6">Option 6</option>
-        <option value="7">Option 7</option>
-        <option value="8">Option 8</option>
-        <option value="9">Option 9</option>
-        <option value="10">Option 10</option>
-      </select>
 
 
       <form class="input-row" id="form" novalidate>
