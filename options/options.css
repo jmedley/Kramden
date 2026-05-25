@@ -99,6 +99,11 @@ main {
   white-space: nowrap;
 }
 
+.btn:disabled {
+  background: #c0c0c0;
+  cursor: not-allowed;
+}
+
 .btn:hover {
   background: #1557b0;
 }

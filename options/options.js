@@ -8,12 +8,13 @@
 const emailData = new EmailData();
 
 // Elements
-const selectList = document.getElementById('followed-emails');
-const btnStop = document.getElementById('stop-tracking');
+const lstFollowed = document.getElementById('select-followed-emails');
+const btnStop = document.getElementById('btn-stop-tracking');
+const txtAddEmail = document.getElementById('input-add-email');
+const btnAddEmail = document.getElementById('btn-add-email');
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const emailData = new EmailData();
   await emailData.ready;
   const emails = emailData.emails;
   console.log('Followed emails:', emails);
@@ -25,12 +26,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const emailLabel = emailEntry.name;
     option.value = emailValues;
     option.textContent = `${emailLabel} (${emailValues})`;
-    document.getElementById('followed-emails').appendChild(option);
+    lstFollowed.appendChild(option);
+  }
+
+  // Ensure stop button reflects current selection state on load
+  if (lstFollowed.options.length === 0) {
+    btnStop.disabled = true;
+  } else {
+    btnStop.disabled = lstFollowed.selectedIndex < 0;
   }
 
   // Enable/disable stop-tracking button based on selection
-  selectList.addEventListener('change', () => {
-    if (selectList.selectedIndex >= 0) {
+  lstFollowed.addEventListener('change', () => {
+    if (lstFollowed.selectedIndex >= 0) {
       btnStop.disabled = false;
     } else {
       btnStop.disabled = true;
@@ -39,109 +47,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Remove selected email from tracking
   btnStop.addEventListener('click', async () => {
-    const selectedOption = selectList.options[selectList.selectedIndex];
+    const selectedOption = lstFollowed.options[lstFollowed.selectedIndex];
     if (selectedOption && selectedOption.value) {
       const emails = selectedOption.value.split(', ').map((e) => e.trim());
       await emailData.remove({ email: emails });
-      selectList.removeChild(selectedOption);
-      selectList.dispatchEvent(new Event('change'));
+      lstFollowed.removeChild(selectedOption);
+      lstFollowed.dispatchEvent(new Event('change'));
     }
   });
 });
 
-// function copyUrl(btn, url) {
-//   navigator.clipboard.writeText(url).then(() => {
-//     btn.textContent = "Copied!";
-//     btn.classList.add("copied");
-//     setTimeout(() => {
-//       btn.textContent = "Copy";
-//       btn.classList.remove("copied");
-//     }, 1800);
-//   }).catch(() => {
-//     const ta = document.createElement("textarea");
-//     ta.value = url;
-//     ta.style.position = "fixed";
-//     ta.style.opacity = "0";
-//     document.body.appendChild(ta);
-//     ta.select();
-//     document.execCommand("copy");
-//     document.body.removeChild(ta);
-//     btn.textContent = "Copied!";
-//     btn.classList.add("copied");
-//     setTimeout(() => {
-//       btn.textContent = "Copy";
-//       btn.classList.remove("copied");
-//     }, 1800);
-//   });
-// }
-
-// Build sections
-// sections.forEach(section => {
-//   const div = document.createElement("div");
-//   div.className = "section";
-
-//   const header = document.createElement("div");
-//   header.className = "section-header";
-//   header.innerHTML = `${section.label} <span class="count">${section.jobs.length}</span>`;
-//   div.appendChild(header);
-
-//   const table = document.createElement("table");
-//   table.innerHTML = `<thead><tr><th>Job Title</th><th>Company</th><th>Location</th><th></th></tr></thead>`;
-//   const tbody = document.createElement("tbody");
-
-//   section.jobs.forEach(job => {
-//     const tr = document.createElement("tr");
-//     tr.innerHTML = `
-//       <td class="title">${job.title}</td>
-//       <td class="company">${job.company}</td>
-//       <td class="location">${job.location}</td>
-//       <td class="actions">
-//         <a href="${job.url}" target="_blank" class="btn btn-open">Open</a>
-//         <button class="btn btn-copy" onclick="copyUrl(this, '${job.url.replace(/'/g, "\\'")}')">Copy</button>
-//       </td>
-//     `;
-//     tbody.appendChild(tr);
-//   });
-
-//   table.appendChild(tbody);
-//   div.appendChild(table);
-//   document.body.appendChild(div);
-// });
-
-// // No-URL section
-// const noUrlDiv = document.createElement("div");
-// noUrlDiv.className = "section";
-// const noUrlHeader = document.createElement("div");
-// noUrlHeader.className = "section-header";
-// noUrlHeader.innerHTML = `Emails Without Extractable Job URLs <span class="count">${noUrl.length}</span>`;
-// noUrlDiv.appendChild(noUrlHeader);
-
-// const noUrlTable = document.createElement("table");
-// noUrlTable.className = "no-url-table";
-// noUrlTable.innerHTML = `<thead><tr><th>Sender</th><th>Subject</th><th>Date</th><th>Time (PDT)</th></tr></thead>`;
-// const noUrlBody = document.createElement("tbody");
-// noUrl.forEach(row => {
-//   const tr = document.createElement("tr");
-//   tr.innerHTML = `
-//     <td class="sender">${row.sender}</td>
-//     <td class="subject">${row.subject}</td>
-//     <td>${row.date}</td>
-//     <td>${row.time}</td>
-//   `;
-//   noUrlBody.appendChild(tr);
-// });
-// noUrlTable.appendChild(noUrlBody);
-// noUrlDiv.appendChild(noUrlTable);
-// document.body.appendChild(noUrlDiv);
-
-// function copyUrl(url, btn) {
-//   navigator.clipboard.writeText(url).then(() => {
-//     const original = btn.textContent;
-//     btn.textContent = 'Copied!';
-//     btn.classList.add('copied');
-//     setTimeout(() => {
-//       btn.textContent = original;
-//       btn.classList.remove('copied');
-//     }, 2000);
-//   });
-// }
+txtAddEmail.addEventListener('input', () => {
+  const value = txtAddEmail.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  btnAddEmail.disabled = !emailRegex.test(value);
+});
