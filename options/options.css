@@ -120,6 +120,13 @@ main {
   align-items: flex-start;
 }
 
+#div-add-tracking {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
 #div-tracked,
 #div-add-email {
   display: flex;
@@ -129,22 +136,47 @@ main {
 }
 
 #select-followed-emails,
+#input-add-job-site,
 #input-add-email {
   width: 100%;
   box-sizing: border-box;
-  padding: 8px;
+  padding: 6px;
 }
 
 #select-followed-emails {
   min-width: 290px;
 }
 
-#input-add-email {
+#input-add-email,
+#input-add-job-site {
   min-width: 309px;
+}
+
+#div-add-job-site,
+#div-add-email {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  /* optional spacing */
+}
+
+#div-add-job-site label,
+#div-add-email label {
+  display: block;
+}
+
+#div-add-job-site input,
+#div-add-email input {
+  width: 100%;
 }
 
 #btn-stop-tracking {
   white-space: nowrap;
+}
+
+#btn-add-email {
+  display: block;
+  width: auto;
 }
 
 #error {
