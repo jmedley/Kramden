@@ -1,8 +1,3 @@
-/*
-  Vitest rewrite of scripts/emailClient.test.js
-  Uses vitest and vitest-chrome
-*/
-import 'vitest-chrome';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import EmailClientModule from './emailClient.js';
 
