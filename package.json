@@ -19,8 +19,7 @@
   "type": "module",
   "main": "entry.js",
   "scripts": {
-    "test": "mocha ./ --recursive",
-    "test:vitest": "vitest run"
+    "test": "vitest run"
   },
   "devDependencies": {
     "vitest": "^4.1.7",
