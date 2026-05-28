@@ -19,9 +19,11 @@
   "type": "module",
   "main": "entry.js",
   "scripts": {
-    "test": "mocha ./ --recursive"
+    "test": "mocha ./ --recursive",
+    "test:vitest": "vitest run"
   },
-  "dependencies": {
-    "mocha": "^11.7.5"
+  "devDependencies": {
+    "vitest": "^4.1.7",
+    "vitest-chrome": "^0.1.0"
   }
 }

@@ -98,3 +98,5 @@ class EmailData {
     return this.#lastRun;
   }
 }
+
+export default EmailData;

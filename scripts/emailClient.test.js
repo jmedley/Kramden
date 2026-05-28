@@ -1,11 +1,12 @@
 /*
-  Copyright (c) 2026 Joseph Medley. All rights reserved.
-  No part of this software may be used, copied, modified, or distributed
-  without the express written permission of the author.
+  Vitest rewrite of scripts/emailClient.test.js
+  Uses vitest and vitest-chrome
 */
+import 'vitest-chrome';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import EmailClientModule from './emailClient.js';
 
-const assert = require('assert');
-const EmailClient = require('./emailClient');
+const EmailClient = EmailClientModule?.default ?? EmailClientModule;
 
 const FAKE_TOKEN = 'test-token-abc';
 const FAKE_SENDERS = ['jobs-noreply@linkedin.com'];
@@ -25,21 +26,27 @@ function mockFetch(responses) {
 }
 
 describe('EmailClient', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    // cleanup global.fetch if tests set it
+    try { delete global.fetch; } catch (e) {}
+  });
+
   describe('constructor', () => {
     it('stores authToken and senders', () => {
       const client = new EmailClient(FAKE_TOKEN, FAKE_SENDERS);
-      assert.strictEqual(client.authToken, FAKE_TOKEN);
-      assert.deepStrictEqual(client.senders, FAKE_SENDERS);
+      expect(client.authToken).toBe(FAKE_TOKEN);
+      expect(client.senders).toEqual(FAKE_SENDERS);
     });
 
     it('wraps a single sender string in an array', () => {
       const client = new EmailClient(FAKE_TOKEN, 'jobs@example.com');
-      assert.deepStrictEqual(client.senders, ['jobs@example.com']);
+      expect(client.senders).toEqual(['jobs@example.com']);
     });
 
     it('initializes messageIDs as empty array', () => {
       const client = new EmailClient(FAKE_TOKEN, FAKE_SENDERS);
-      assert.deepStrictEqual(client.messageIDs, []);
+      expect(client.messageIDs).toEqual([]);
     });
   });
 
@@ -49,8 +56,8 @@ describe('EmailClient', () => {
       global.fetch = mockFetch([{ body: { messages: [{ id: 'a' }, { id: 'b' }] } }]);
 
       const ids = await client.loadIDs();
-      assert.deepStrictEqual(ids, ['a', 'b']);
-      assert.deepStrictEqual(client.messageIDs, ['a', 'b']);
+      expect(ids).toEqual(['a', 'b']);
+      expect(client.messageIDs).toEqual(['a', 'b']);
     });
 
     it('handles empty messages list', async () => {
@@ -58,14 +65,14 @@ describe('EmailClient', () => {
       global.fetch = mockFetch([{ body: {} }]);
 
       const ids = await client.loadIDs();
-      assert.deepStrictEqual(ids, []);
+      expect(ids).toEqual([]);
     });
 
     it('throws on non-ok response', async () => {
       const client = new EmailClient(FAKE_TOKEN, FAKE_SENDERS);
       global.fetch = mockFetch([{ ok: false, status: 401, statusText: 'Unauthorized' }]);
 
-      await assert.rejects(() => client.loadIDs(), /loadIDs failed: 401/);
+      await expect(client.loadIDs()).rejects.toThrow(/loadIDs failed: 401/);
     });
 
     it('builds query from multiple senders', async () => {
@@ -78,7 +85,7 @@ describe('EmailClient', () => {
       };
 
       await client.loadIDs();
-      assert.ok(capturedURL.includes(encodeURIComponent('from:a@example.com OR from:b@example.com')));
+      expect(capturedURL.includes(encodeURIComponent('from:a@example.com OR from:b@example.com'))).toBe(true);
     });
   });
 
@@ -89,7 +96,7 @@ describe('EmailClient', () => {
       global.fetch = mockFetch([{ body: fakeMsg }]);
 
       const msg = await client.getMessage(MSG_ID);
-      assert.deepStrictEqual(msg, fakeMsg);
+      expect(msg).toEqual(fakeMsg);
     });
 
     it('requests format=full', async () => {
@@ -101,14 +108,14 @@ describe('EmailClient', () => {
       };
 
       await client.getMessage(MSG_ID);
-      assert.ok(capturedURL.includes('format=full'));
+      expect(capturedURL.includes('format=full')).toBe(true);
     });
 
     it('throws on non-ok response', async () => {
       const client = new EmailClient(FAKE_TOKEN, FAKE_SENDERS);
       global.fetch = mockFetch([{ ok: false, status: 404, statusText: 'Not Found' }]);
 
-      await assert.rejects(() => client.getMessage(MSG_ID), /getMessage failed: 404/);
+      await expect(client.getMessage(MSG_ID)).rejects.toThrow(/getMessage failed: 404/);
     });
   });
 
@@ -119,7 +126,7 @@ describe('EmailClient', () => {
       global.fetch = mockFetch([{ body: fakeMeta }]);
 
       const meta = await client.getMetaData(MSG_ID);
-      assert.deepStrictEqual(meta, fakeMeta);
+      expect(meta).toEqual(fakeMeta);
     });
 
     it('requests format=metadata', async () => {
@@ -131,14 +138,14 @@ describe('EmailClient', () => {
       };
 
       await client.getMetaData(MSG_ID);
-      assert.ok(capturedURL.includes('format=metadata'));
+      expect(capturedURL.includes('format=metadata')).toBe(true);
     });
 
     it('throws on non-ok response', async () => {
       const client = new EmailClient(FAKE_TOKEN, FAKE_SENDERS);
       global.fetch = mockFetch([{ ok: false, status: 403, statusText: 'Forbidden' }]);
 
-      await assert.rejects(() => client.getMetaData(MSG_ID), /getMetaData failed: 403/);
+      await expect(client.getMetaData(MSG_ID)).rejects.toThrow(/getMetaData failed: 403/);
     });
   });
 
@@ -152,7 +159,7 @@ describe('EmailClient', () => {
       };
 
       await client.getMetaData(MSG_ID);
-      assert.strictEqual(capturedHeaders.Authorization, `Bearer ${FAKE_TOKEN}`);
+      expect(capturedHeaders.Authorization).toBe(`Bearer ${FAKE_TOKEN}`);
     });
   });
 });
