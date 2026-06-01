@@ -1,0 +1,3 @@
+[submodule "EmailParsers"]
+	path = EmailParsers
+	url = https://github.com/jmedley/EmailParsers.git
