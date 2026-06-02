@@ -137,7 +137,7 @@ main {
 
 #select-followed-emails,
 #input-sender,
-#input-add-email {
+#input-sender-email {
   width: 100%;
   box-sizing: border-box;
   padding: 6px;
@@ -147,7 +147,7 @@ main {
   min-width: 290px;
 }
 
-#input-add-email,
+#input-sender-email,
 #input-sender {
   min-width: 309px;
 }
