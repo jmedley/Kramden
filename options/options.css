@@ -9,6 +9,7 @@ body {
   background: #f0f2f5;
   color: #1a1a2e;
   min-height: 100vh;
+  padding: 24px;
 }
 
 header {
@@ -39,6 +40,86 @@ main {
   padding: 20px 16px 48px;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  unicode-bidi: isolate;
+  border-color: inherit;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f2f5;
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+th {
+  background: #f7f8fa;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e8eaed;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
+}
+
+.actions {
+  white-space: nowrap;
+  display: flex;
+  gap: 6px;
+}
+
+.btn-copy {
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-open {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.company {
+  color: #444;
+}
+
+.job-title {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.location {
+  color: #777;
+  font-size: 0.82rem;
+}
+
 .section-card {
   background: white;
   border-radius: 12px;
@@ -60,7 +141,13 @@ main {
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  flex: 1;
+}
+
+.section-header .count {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
 }
 
 .card-content {
