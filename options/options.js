@@ -15,11 +15,10 @@ const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await emailData.ready;
+async function loadEmails() {
   const emails = emailData.emails;
   console.log('Followed emails:', emails);
-  
+
   // Each email entry is expected to carry an array of email addresses.
   for (const emailEntry of emails) {
     const option = document.createElement('option');
@@ -36,6 +35,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     btnStopTracking.disabled = lstFollowed.selectedIndex < 0;
   }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await emailData.ready;
+  await loadEmails();
 
   // Enable/disable stop-tracking button based on selection
   lstFollowed.addEventListener('change', () => {
@@ -58,8 +62,44 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-txtSenderEmail.addEventListener('input', () => {
-  const value = txtSenderEmail.value.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  btnTrackSender.disabled = !emailRegex.test(value);
+btnTrackSender.addEventListener('click', async () => {
+  const senderData = {
+      sender: txtSender.value.trim(),
+      email: [txtSenderEmail.value.trim()]
+    };
+    emailData.add(senderData).then(() => {
+      // Clear inputs and disable button after successful addition
+      txtSender.value = '';
+      txtSenderEmail.value = '';
+      setButtonState();
+      loadEmails(); // Refresh the list to show the newly added sender
+    })
+    .catch((err) => {
+      console.error('Error adding sender:', err);
+    }); 
 });
+
+txtSenderEmail.addEventListener('input', () => {
+  setButtonState();
+});
+
+txtSender.addEventListener('input', () => {
+  setButtonState();
+});
+
+function setButtonState() {
+  const isSenderValid = evaluateSenderInput();
+  const isEmailValid = evaluateEmailInput();
+  btnTrackSender.disabled = !(isSenderValid && isEmailValid);
+}
+
+function evaluateSenderInput() {
+  const senderValue = txtSender.value.trim();
+  return senderValue.length > 0;
+}
+
+function evaluateEmailInput() {
+  const emailValue = txtSenderEmail.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(emailValue);
+}
