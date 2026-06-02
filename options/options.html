@@ -1,66 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kramden Dashboard</title> 
-<link rel="stylesheet" href="options.css">
-<script src="../scripts/data.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kramden Dashboard</title>
+  <link rel="stylesheet" href="options.css">
+  <script src="../scripts/data.js"></script>
 </head>
+
 <body>
 
   <main>
-    <section id="section-options" aria-label="Email tracker">
+
+
+    <section id="section-jobs-list" aria-label="section-jobs-list">
       <div class="section-card">
         <div class="section-header">
-          <h2>Options</h2>
+          <h2>Job Title</h2>
+          <span class="count">21 roles</span>
         </div>
-
-        <div class="card-content">
-          <form id="form-email-tracker" novalidate>
-            <div id="div-tracking">
-              <div class="option-title">
-                <label for="select-followed-emails">Tracked Emails</label>
-              </div>
-              <div id="div-tracked">  
-                <select id="select-followed-emails" name="followed-emails" size="8">
-                  <!-- Options will be populated by JavaScript -->
-                </select>
-                <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop tracking</button>
-              </div>
-              <div id="div-add-tracking">
-                <div id="div-sender">
-                  <label for="input-sender">Sender</label>
-                  <input
-                    type="text"
-                    id="input-sender"
-                    placeholder="Sender"
-                    autocomplete="url"
-                    spellcheck="false"
-                    aria-label="Sender to track"
-                  />
-                </div>
-                <div id="div-sender-email">
-                  <label for="input-sender-email">Email</label>
-                  <input
-                    type="email"
-                    id="input-sender-email"
-                    placeholder="name@example.com"
-                    autocomplete="email"
-                    spellcheck="false"
-                    aria-label="Email to track"
-                  />
-                </div>
-                <button type="submit" class="btn" id="btn-track-sender" disabled>Track</button>
-                <span class="error-msg" id="error">Enter a valid email</span>
-              </div>
-            </div>
-          </form>
-        </div>
+        <template id="job-row-template">
+          <tr>
+            <td><span class="job-title"></span></td>
+            <td class="company"></td>
+            <td class="location"></td>
+            <td class="actions">
+              <a class="btn-open" href="#" target="_blank">Open</a>
+              <button class="btn-copy" type="button" data-url="">Copy</button>
+            </td>
+          </tr>
+        </template>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
       </div>
-    </section>
+
+      <section id="section-options" aria-label="Email tracker">
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Options</h2>
+          </div>
+
+          <div class="card-content">
+            <form id="form-email-tracker" novalidate>
+              <div id="div-tracking">
+                <div class="option-title">
+                  <label for="select-followed-emails">Tracked Emails</label>
+                </div>
+                <div id="div-tracked">
+                  <select id="select-followed-emails" name="followed-emails" size="8">
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
+                  <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop
+                    tracking</button>
+                </div>
+                <div id="div-add-tracking">
+                  <div id="div-sender">
+                    <label for="input-sender">Sender</label>
+                    <input type="text" id="input-sender" placeholder="Sender" autocomplete="url" spellcheck="false"
+                      aria-label="Sender to track" />
+                  </div>
+                  <div id="div-sender-email">
+                    <label for="input-sender-email">Email</label>
+                    <input type="email" id="input-sender-email" placeholder="name@example.com" autocomplete="email"
+                      spellcheck="false" aria-label="Email to track" />
+                  </div>
+                  <button type="submit" class="btn" id="btn-track-sender" disabled>Track</button>
+                  <span class="error-msg" id="error">Enter a valid email</span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
 
   </main>
+
+  <script src="../scripts/jobsView.js"></script>
+  <script src="../scripts/jobsController.js"></script>
   <script src="options.js"></script>
 </body>
+
 </html>
