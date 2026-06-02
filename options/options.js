@@ -9,9 +9,10 @@ const emailData = new EmailData();
 
 // Elements
 const lstFollowed = document.getElementById('select-followed-emails');
-const btnStop = document.getElementById('btn-stop-tracking');
-const txtAddEmail = document.getElementById('input-add-email');
-const btnAddEmail = document.getElementById('btn-add-email');
+const btnStopTracking = document.getElementById('btn-stop-tracking');
+const txtSender = document.getElementById('input-sender');
+const txtSenderEmail = document.getElementById('input-sender-email');
+const btnTrackSender = document.getElementById('btn-track-sender');
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -23,30 +24,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (const emailEntry of emails) {
     const option = document.createElement('option');
     const emailValues = emailEntry.email.join(', ');
-    const emailLabel = emailEntry.name;
+    const emailSender = emailEntry.name;
     option.value = emailValues;
-    option.textContent = `${emailLabel} (${emailValues})`;
+    option.textContent = `${emailSender} (${emailValues})`;
     lstFollowed.appendChild(option);
   }
 
   // Ensure stop button reflects current selection state on load
   if (lstFollowed.options.length === 0) {
-    btnStop.disabled = true;
+    btnStopTracking.disabled = true;
   } else {
-    btnStop.disabled = lstFollowed.selectedIndex < 0;
+    btnStopTracking.disabled = lstFollowed.selectedIndex < 0;
   }
 
   // Enable/disable stop-tracking button based on selection
   lstFollowed.addEventListener('change', () => {
     if (lstFollowed.selectedIndex >= 0) {
-      btnStop.disabled = false;
+      btnStopTracking.disabled = false;
     } else {
-      btnStop.disabled = true;
+      btnStopTracking.disabled = true;
     }
   });
 
   // Remove selected email from tracking
-  btnStop.addEventListener('click', async () => {
+  btnStopTracking.addEventListener('click', async () => {
     const selectedOption = lstFollowed.options[lstFollowed.selectedIndex];
     if (selectedOption && selectedOption.value) {
       const emails = selectedOption.value.split(', ').map((e) => e.trim());
@@ -57,8 +58,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-txtAddEmail.addEventListener('input', () => {
-  const value = txtAddEmail.value.trim();
+txtSenderEmail.addEventListener('input', () => {
+  const value = txtSenderEmail.value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  btnAddEmail.disabled = !emailRegex.test(value);
+  btnTrackSender.disabled = !emailRegex.test(value);
 });
