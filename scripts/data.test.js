@@ -65,8 +65,8 @@ describe('EmailData', () => {
     beforeEach(async () => {
       const chrome = makeChromeMock({
         emails: [
-          { name: '', email: ['a@example.com'] },
-          { name: '', email: ['b@example.com'] },
+          { sender: '', email: ['a@example.com'] },
+          { sender: '', email: ['b@example.com'] },
         ],
         lastRun: '2026-01-01T00:00:00Z',
       });
@@ -76,8 +76,8 @@ describe('EmailData', () => {
 
     it('splits the stored CSV into an array', () => {
       expect(instance.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: '', email: ['b@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: '', email: ['b@example.com'] },
       ]);
     });
 
@@ -89,8 +89,8 @@ describe('EmailData', () => {
       const visited = [];
       for (const e of instance.emails) visited.push(e);
       expect(visited).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: '', email: ['b@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: '', email: ['b@example.com'] },
       ]);
     });
   });
@@ -100,35 +100,35 @@ describe('EmailData', () => {
     let instance;
 
     beforeEach(async () => {
-      chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
+      chrome = makeChromeMock({ emails: [{ sender: '', email: ['a@example.com'] }], lastRun: null });
       instance = new EmailData();
       await instance.ready;
     });
 
     it('appends a new address to the array', async () => {
-      await instance.add({ name: 'Bob', email: ['b@example.com'] });
+      await instance.add({ sender: 'Bob', email: ['b@example.com'] });
       expect(instance.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: 'Bob', email: ['b@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: 'Bob', email: ['b@example.com'] },
       ]);
     });
 
     it('persists the updated list to storage', async () => {
-      await instance.add({ name: 'Bob', email: ['b@example.com'] });
+      await instance.add({ sender: 'Bob', email: ['b@example.com'] });
       expect(chrome.storage.sync._store.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: 'Bob', email: ['b@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: 'Bob', email: ['b@example.com'] },
       ]);
     });
 
     it('ignores duplicate addresses', async () => {
-      chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
+      chrome = makeChromeMock({ emails: [{ sender: '', email: ['a@example.com'] }], lastRun: null });
       instance = new EmailData();
       await instance.ready;
 
       await instance.add({ email: ['a@example.com'] });
-      expect(instance.emails).toEqual([{ name: '', email: ['a@example.com'] }]);
-      expect(chrome.storage.sync._store.emails).toEqual([{ name: '', email: ['a@example.com'] }]);
+      expect(instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
+      expect(chrome.storage.sync._store.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
     });
   });
 
@@ -139,8 +139,8 @@ describe('EmailData', () => {
     beforeEach(async () => {
       chrome = makeChromeMock({
         emails: [
-          { name: '', email: ['a@example.com'] },
-          { name: '', email: ['b@example.com'] },
+          { sender: '', email: ['a@example.com'] },
+          { sender: '', email: ['b@example.com'] },
         ],
       });
       instance = new EmailData();
@@ -164,9 +164,9 @@ describe('EmailData', () => {
     beforeEach(async () => {
       chrome = makeChromeMock({
         emails: [
-          { name: '', email: ['a@example.com'] },
-          { name: '', email: ['b@example.com'] },
-          { name: '', email: ['c@example.com'] },
+          { sender: '', email: ['a@example.com'] },
+          { sender: '', email: ['b@example.com'] },
+          { sender: '', email: ['c@example.com'] },
         ],
         lastRun: null,
       });
@@ -177,39 +177,39 @@ describe('EmailData', () => {
     it('removes the specified address from the array', async () => {
       await instance.remove({ email: ['b@example.com'] });
       expect(instance.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: '', email: ['c@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: '', email: ['c@example.com'] },
       ]);
     });
 
     it('persists the updated list to storage', async () => {
       await instance.remove({ email: ['b@example.com'] });
       expect(chrome.storage.sync._store.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: '', email: ['c@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: '', email: ['c@example.com'] },
       ]);
     });
 
     it('is a no-op for an address not in the list', async () => {
       await instance.remove({ email: ['z@example.com'] });
       expect(instance.emails).toEqual([
-        { name: '', email: ['a@example.com'] },
-        { name: '', email: ['b@example.com'] },
-        { name: '', email: ['c@example.com'] },
+        { sender: '', email: ['a@example.com'] },
+        { sender: '', email: ['b@example.com'] },
+        { sender: '', email: ['c@example.com'] },
       ]);
     });
   });
 
   describe('emails getter', () => {
     it('returns a copy — mutating it does not affect internal state', async () => {
-      const chrome = makeChromeMock({ emails: [{ name: '', email: ['a@example.com'] }], lastRun: null });
+      const chrome = makeChromeMock({ emails: [{ sender: '', email: ['a@example.com'] }], lastRun: null });
       const instance = new EmailData();
       await instance.ready;
 
       const copy = instance.emails;
-      copy.push({ name: 'Injected', email: ['injected@example.com'] });
+      copy.push({ sender: 'Injected', email: ['injected@example.com'] });
 
-      expect(instance.emails).toEqual([{ name: '', email: ['a@example.com'] }]);
+      expect(instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
     });
   });
 });

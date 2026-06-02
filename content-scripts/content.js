@@ -3,12 +3,12 @@ function getSenderOfOpenEmail() {
   // Gmail often hides the full email address until you click to show details
   // Here we query for the official data-hovercard-id or email tooltip attributes
   const senderElement = document.querySelector('div[aria-label="Show details"] span[email], span[email]');
-  
+  console.log('Sender element found:', senderElement);
   if (senderElement) {
     return {
-      name: senderElement.innerText,
+      sender: String(senderElement.innerText).trim(),
       email: [senderElement.getAttribute('email')]
-    }
+    };
   }
   
   return null;

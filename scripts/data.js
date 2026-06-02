@@ -36,7 +36,7 @@ class EmailData {
     return value
       .filter(Boolean)
       .map((item) => ({
-        name: item.name ?? '',
+        sender: item.sender ?? item.name ?? '',
         email: Array.isArray(item.email)
           ? item.email.map((e) => String(e).trim()).filter(Boolean)
           : [],
@@ -45,14 +45,17 @@ class EmailData {
   }
 
   #normalizeSender(sender) {
-    const name = typeof sender === 'object' && sender?.name ? sender.name : '';
+    const senderName =
+      typeof sender === 'object' && (sender?.sender ?? sender?.name)
+        ? sender?.sender ?? sender?.name
+        : '';
 
     if (!sender?.email || !Array.isArray(sender.email)) {
-      return { name, email: [] };
+      return { sender: senderName, email: [] };
     }
 
     const emails = sender.email.map((e) => String(e).trim()).filter(Boolean);
-    return { name, email: emails };
+    return { sender: senderName, email: emails };
   }
 
   async add(sender) {
@@ -89,7 +92,7 @@ class EmailData {
 
   get emails() {
     return this.#emails.map((entry) => ({
-      name: entry.name,
+      sender: entry.sender,
       email: [...entry.email],
     }));
   }
@@ -99,4 +102,4 @@ class EmailData {
   }
 }
 
-export default EmailData;
+// export default EmailData;

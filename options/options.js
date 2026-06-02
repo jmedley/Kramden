@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (const emailEntry of emails) {
     const option = document.createElement('option');
     const emailValues = emailEntry.email.join(', ');
-    const emailSender = emailEntry.name;
+    const emailSender = emailEntry.sender ?? emailEntry.name ?? '';
     option.value = emailValues;
     option.textContent = `${emailSender} (${emailValues})`;
     lstFollowed.appendChild(option);
