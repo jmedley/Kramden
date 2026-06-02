@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import EmailClientModule from './emailClient.js';
+import EmailClientModule from '../scripts/emailClient.js';
 
 const EmailClient = EmailClientModule?.default ?? EmailClientModule;
 

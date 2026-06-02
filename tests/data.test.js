@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { chrome } from 'vitest-chrome/lib/index.esm.js';
-import EmailData from './data.js';
+import EmailData from '../scripts/data.js';
 
 function makeChromeMock(initialData = {}) {
   const store = { ...initialData };
