@@ -19,10 +19,20 @@
   "type": "module",
   "main": "entry.js",
   "scripts": {
+    "build": "node build.js test",
+    "build:production": "node build.js",
     "test": "vitest run"
   },
   "devDependencies": {
+    "jsdom": "^29.1.1",
     "vitest": "^4.1.7",
     "vitest-chrome": "^0.1.0"
+  },
+  "dependencies": {
+    "archiver": "^8.0.0"
+  },
+  "config": {
+    "builddir": "/home/jmedley/repos/Kramden",
+    "testdir": "/mnt/c/Users/joeme/Documents/kramden"
   }
 }
