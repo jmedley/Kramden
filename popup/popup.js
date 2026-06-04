@@ -13,15 +13,15 @@ const emailData = new EmailData();
 // Elements
 let tab;
 const btnDashboard = document.getElementById('btn-dashboard');
-const btnFollow    = document.getElementById('btn-follow');
-const followIcon   = document.getElementById('follow-icon');
-const followLabel  = document.getElementById('follow-label');
-const followError  = document.getElementById('follow-error');
+const btnFollow = document.getElementById('btn-follow');
+const followIcon = document.getElementById('follow-icon');
+const followLabel = document.getElementById('follow-label');
+const followError = document.getElementById('follow-error');
 
 // Helpers
 function setFollowUI(following) {
   isFollowing = following;
-  followIcon.textContent  = following ? '🔕' : '📌';
+  followIcon.textContent = following ? '🔕' : '📌';
   followLabel.textContent = following ? 'Ignore current email' : 'Follow current email';
 }
 
@@ -49,13 +49,13 @@ function isEmailOpen(str) {
   return regex.test(str);
 }
 
-async function followCurrentEmail() { 
+async function followCurrentEmail() {
   const senderData = await getEmailFromActiveTab();
   if (!senderData) throw new Error('Could not determine sender of current email.');
   await emailData.add(senderData);
- }
+}
 
-async function ignoreCurrentEmail() { 
+async function ignoreCurrentEmail() {
   const senderData = await getEmailFromActiveTab();
   if (!senderData) throw new Error('Could not determine sender of current email.');
   await emailData.remove(senderData);
@@ -67,7 +67,7 @@ btnDashboard.addEventListener('click', () => {
 });
 
 btnFollow.addEventListener('click', async () => {
-  showError('');
+  // showError('');
   setLoading(true);
 
   try {
@@ -79,7 +79,7 @@ btnFollow.addEventListener('click', async () => {
       setFollowUI(false);
     }
   } catch (err) {
-    showError(err?.message ?? 'Something went wrong. Please try again.');
+    // showError(err?.message ?? 'Something went wrong. Please try again.');
   } finally {
     setLoading(false);
   }
@@ -88,27 +88,19 @@ btnFollow.addEventListener('click', async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   const targetSubstring = "https://mail.google.com/mail";
 
-  // Query for the active tab in the current window
   [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab) { return; }
+  if (!isEmailOpen(tab.url)) {
+    btnFollow.disabled = true;
+    return;
+  }
 
-  if (tab && tab.url) {
-    // Check if the URL contains the target string
-    if (tab.url.includes(targetSubstring) && isEmailOpen(tab.url)) {
-      const saved = await isEmailSaved();
-      if (!saved) {
-        btnFollow.disabled = false;
-        btnFollow.classList.remove('deactivated');
-        console.log("Match found: Button activated.");
-      } else {
-        btnFollow.disabled = true;
-        btnFollow.classList.add('deactivated');
-        console.log("Already saved: Button deactivated.");
-      }
-    } else {
-      btnFollow.disabled = true;
-      btnFollow.classList.add('deactivated');
-      console.log("No match: Button deactivated.");
-    }
+  const saved = await isEmailSaved();
+  console.log("Email saved:", saved);
+  if (saved) {
+    setFollowUI(true);
+  } else {
+    setFollowUI(false);
   }
 });
 
