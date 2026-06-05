@@ -16,7 +16,7 @@ const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
 
-async function loadEmails() {
+async function loadEmailAddresses() {
   clearFollowedList();
   await emailData.refresh(); // Ensure we have the latest data from storage
   const emails = emailData.emails;
@@ -42,13 +42,13 @@ async function loadEmails() {
 document.addEventListener("visibilitychange", async () => {
   if (document.visibilityState === "visible") {
     clearFollowedList();
-    await loadEmails();
+    await loadEmailAddresses();
   }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
-  await loadEmails();
+  await loadEmailAddresses();
 
   const authToken = await getAuthToken();
   const emailClient = new EmailClient(authToken, emailData.emails, false);
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Refresh the tracked email list from storage
   btnRefreshList.addEventListener('click', async () => {
-    await loadEmails();
+    await loadEmailAddresses();
   });
 
   // Remove selected email from tracking
@@ -92,7 +92,7 @@ btnTrackSender.addEventListener('click', async () => {
     txtSender.value = '';
     txtSenderEmail.value = '';
     setButtonState();
-    loadEmails(); // Refresh the list to show the newly added sender
+    loadEmailAddresses(); // Refresh the list to show the newly added sender
   })
     .catch((err) => {
       console.error('Error adding sender:', err);
