@@ -180,10 +180,12 @@ tr {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   white-space: nowrap;
+  text-align: center;
 }
 
 .btn:disabled {
@@ -226,8 +228,8 @@ tr {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start;
-  width: max-content;
+  align-items: stretch;
+  width: 130px;
 }
 
 #div-tracked-actions .btn {
@@ -275,7 +277,7 @@ tr {
 
 #btn-track-sender {
   display: block;
-  width: auto;
+  width: 100%;
 }
 
 #error {
