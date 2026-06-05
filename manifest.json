@@ -13,7 +13,7 @@
         "https://mail.google.com/*"
     ],
     "oauth2": {
-        "client_id": "1020910266604-f9cgs0r7rdlc4dl75dsblbs4ktiv2hfr.apps.googleusercontent.com",
+        "client_id": "1020910266604-hn8kd6i0uomh0aknda807u2pibs9c64s.apps.googleusercontent.com",
         "scopes": [
             "https://www.googleapis.com/auth/gmail.readonly"
         ]

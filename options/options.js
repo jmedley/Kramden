@@ -50,6 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
   await loadEmails();
 
+  const authToken = await getAuthToken();
+  const emailClient = new EmailClient(authToken, emailData.emails, false);
+  const ids = await emailClient.loadIDs();
+  console.log('Loaded email IDs:', ids);
+
+
   // Enable/disable stop-tracking button based on selection
   lstFollowed.addEventListener('change', () => {
     if (lstFollowed.selectedIndex >= 0) {
@@ -125,4 +131,19 @@ function evaluateEmailInput() {
   const emailValue = txtSenderEmail.value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(emailValue);
+}
+
+function getAuthToken() {
+  return new Promise((resolve, reject) => {
+    chrome.identity.getAuthToken({ interactive: true }, (token) => {
+      console.log('Auth token obtained:', token);
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        reject(chrome.runtime.lastError);
+      } else {
+        console.log('Auth token obtained successfully:', token);
+        resolve(token);
+      }
+    });
+  });
 }
