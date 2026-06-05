@@ -59,6 +59,7 @@ class EmailData {
   }
 
   async add(sender) {
+    console.log("Adding email:", sender);
     const normalized = this.#normalizeSender(sender);
     if (normalized.email.length === 0) return;
 
@@ -73,6 +74,7 @@ class EmailData {
   }
 
   async hasEmail(sender) {
+    console.log("Checking if email is saved:", sender);
     const normalized = this.#normalizeSender(sender);
     if (normalized.email.length === 0) return false;
     return this.#emails.some((entry) =>
@@ -81,6 +83,7 @@ class EmailData {
   }
 
   async remove(sender) {
+    console.log("Removing email:", sender);
     const normalized = this.#normalizeSender(sender);
     if (normalized.email.length === 0) return;
 
@@ -88,6 +91,16 @@ class EmailData {
       (entry) => !entry.email.some((email) => normalized.email.includes(email))
     );
     await chrome.storage.sync.set({ emails: this.#emails });
+  }
+
+  // Refresh cached data from chrome.storage.sync.
+  // Call this when you need to ensure the in-memory `#emails` reflects
+  // the latest data (for example, when another tab or extension page may
+  // have modified storage).
+  async refresh() {
+    this.ready = this.#init();
+    await this.ready;
+    return this.emails;
   }
 
   get emails() {

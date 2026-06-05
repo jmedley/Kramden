@@ -16,8 +16,8 @@ const btnTrackSender = document.getElementById('btn-track-sender');
 
 
 async function loadEmails() {
+  await emailData.refresh(); // Ensure we have the latest data from storage
   const emails = emailData.emails;
-  console.log('Followed emails:', emails);
 
   // Each email entry is expected to carry an array of email addresses.
   for (const emailEntry of emails) {
@@ -36,6 +36,13 @@ async function loadEmails() {
     btnStopTracking.disabled = lstFollowed.selectedIndex < 0;
   }
 }
+
+document.addEventListener("visibilitychange", async () => {
+  if (document.visibilityState === "visible") {
+    clearFollowedList();
+    await loadEmails();
+  }
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
@@ -64,19 +71,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 btnTrackSender.addEventListener('click', async () => {
   const senderData = {
-      sender: txtSender.value.trim(),
-      email: [txtSenderEmail.value.trim()]
-    };
-    emailData.add(senderData).then(() => {
-      // Clear inputs and disable button after successful addition
-      txtSender.value = '';
-      txtSenderEmail.value = '';
-      setButtonState();
-      loadEmails(); // Refresh the list to show the newly added sender
-    })
+    sender: txtSender.value.trim(),
+    email: [txtSenderEmail.value.trim()]
+  };
+  emailData.add(senderData).then(() => {
+    // Clear inputs and disable button after successful addition
+    txtSender.value = '';
+    txtSenderEmail.value = '';
+    setButtonState();
+    loadEmails(); // Refresh the list to show the newly added sender
+  })
     .catch((err) => {
       console.error('Error adding sender:', err);
-    }); 
+    });
 });
 
 txtSenderEmail.addEventListener('input', () => {
@@ -91,6 +98,15 @@ function setButtonState() {
   const isSenderValid = evaluateSenderInput();
   const isEmailValid = evaluateEmailInput();
   btnTrackSender.disabled = !(isSenderValid && isEmailValid);
+}
+
+function clearFollowedList() {
+  while (lstFollowed.options.length > 0) {
+    lstFollowed.remove(0);
+  }
+
+  btnStopTracking.disabled = true;
+  lstFollowed.dispatchEvent(new Event('change'));
 }
 
 function evaluateSenderInput() {
