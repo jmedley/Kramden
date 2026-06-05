@@ -10,12 +10,14 @@ const emailData = new EmailData();
 // Elements
 const lstFollowed = document.getElementById('select-followed-emails');
 const btnStopTracking = document.getElementById('btn-stop-tracking');
+const btnRefreshList = document.getElementById('btn-refresh-list');
 const txtSender = document.getElementById('input-sender');
 const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
 
 async function loadEmails() {
+  clearFollowedList();
   await emailData.refresh(); // Ensure we have the latest data from storage
   const emails = emailData.emails;
 
@@ -55,6 +57,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       btnStopTracking.disabled = true;
     }
+  });
+
+  // Refresh the tracked email list from storage
+  btnRefreshList.addEventListener('click', async () => {
+    await loadEmails();
   });
 
   // Remove selected email from tracking

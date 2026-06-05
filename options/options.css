@@ -222,6 +222,18 @@ tr {
   width: 100%;
 }
 
+#div-tracked-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  width: max-content;
+}
+
+#div-tracked-actions .btn {
+  width: 100%;
+}
+
 #select-followed-emails,
 #input-sender,
 #input-sender-email {
@@ -231,7 +243,7 @@ tr {
 }
 
 #select-followed-emails {
-  min-width: 290px;
+  min-width: 630px;
 }
 
 #input-sender-email,

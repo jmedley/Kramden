@@ -61,8 +61,11 @@
                   <select id="select-followed-emails" name="followed-emails" size="8">
                     <!-- Options will be populated by JavaScript -->
                   </select>
-                  <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop
-                    tracking</button>
+                  <div id="div-tracked-actions">
+                    <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop
+                      tracking</button>
+                    <button class="btn" id="btn-refresh-list" type="button" aria-label="Refresh tracked emails list">Refresh list</button>
+                  </div>
                 </div>
                 <div id="div-add-tracking">
                   <div id="div-sender">
