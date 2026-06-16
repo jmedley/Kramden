@@ -104,10 +104,10 @@ class EmailData {
   }
 
   get emails() {
-    return this.#emails.map((entry) => ({
+    return this.refresh().then(() => this.#emails.map((entry) => ({
       sender: entry.sender,
       email: [...entry.email],
-    }));
+    })));
   }
 
   get lastRun() {
