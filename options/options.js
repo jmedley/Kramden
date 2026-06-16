@@ -6,6 +6,7 @@
 
 // Data
 const emailData = new EmailData();
+let emails = await emailData.emails;
 
 // Elements
 const lstFollowed = document.getElementById('select-followed-emails');
@@ -15,11 +16,15 @@ const txtSender = document.getElementById('input-sender');
 const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
+async function loadEmailData() {
+  const authToken = await getAuthToken();
+  const emailClient = new EmailClient(authToken, emails, false);
+  const ids = await emailClient.loadIDs();
+  console.log('Loaded email IDs:', ids);
+}
 
 async function loadEmailAddresses() {
   clearFollowedList();
-  await emailData.refresh(); // Ensure we have the latest data from storage
-  const emails = emailData.emails;
 
   // Each email entry is expected to carry an array of email addresses.
   for (const emailEntry of emails) {
@@ -49,9 +54,10 @@ document.addEventListener("visibilitychange", async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
   await loadEmailAddresses();
+  await loadEmailData();
 
   const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, emailData.emails, false);
+  const emailClient = new EmailClient(authToken, await emailData.emails, false);
   const ids = await emailClient.loadIDs();
   console.log('Loaded email IDs:', ids);
 
