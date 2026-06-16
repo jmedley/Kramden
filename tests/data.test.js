@@ -48,13 +48,13 @@ describe('EmailData', () => {
       expect(chrome.storage.sync._store.lastRun).toBe(null);
     });
 
-    it('exposes an empty emails array', () => {
-      expect(instance.emails).toEqual([]);
+    it('exposes an empty emails array', async () => {
+      expect(await instance.emails).toEqual([]);
     });
 
-    it('emails is iterable with forEach', () => {
+    it('emails is iterable with forEach', async () => {
       const visited = [];
-      instance.emails.forEach((e) => visited.push(e));
+      (await instance.emails).forEach((e) => visited.push(e));
       expect(visited).toEqual([]);
     });
   });
@@ -74,8 +74,8 @@ describe('EmailData', () => {
       await instance.ready;
     });
 
-    it('splits the stored CSV into an array', () => {
-      expect(instance.emails).toEqual([
+    it('splits the stored CSV into an array', async () => {
+      expect(await instance.emails).toEqual([
         { sender: '', email: ['a@example.com'] },
         { sender: '', email: ['b@example.com'] },
       ]);
@@ -85,9 +85,9 @@ describe('EmailData', () => {
       expect(instance.lastRun).toBe('2026-01-01T00:00:00Z');
     });
 
-    it('emails is iterable with for...of', () => {
+    it('emails is iterable with for...of', async () => {
       const visited = [];
-      for (const e of instance.emails) visited.push(e);
+      for (const e of await instance.emails) visited.push(e);
       expect(visited).toEqual([
         { sender: '', email: ['a@example.com'] },
         { sender: '', email: ['b@example.com'] },
@@ -107,7 +107,7 @@ describe('EmailData', () => {
 
     it('appends a new address to the array', async () => {
       await instance.add({ sender: 'Bob', email: ['b@example.com'] });
-      expect(instance.emails).toEqual([
+      expect(await instance.emails).toEqual([
         { sender: '', email: ['a@example.com'] },
         { sender: 'Bob', email: ['b@example.com'] },
       ]);
@@ -127,7 +127,7 @@ describe('EmailData', () => {
       await instance.ready;
 
       await instance.add({ email: ['a@example.com'] });
-      expect(instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
+      expect(await instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
       expect(chrome.storage.sync._store.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
     });
   });
@@ -176,7 +176,7 @@ describe('EmailData', () => {
 
     it('removes the specified address from the array', async () => {
       await instance.remove({ email: ['b@example.com'] });
-      expect(instance.emails).toEqual([
+      expect(await instance.emails).toEqual([
         { sender: '', email: ['a@example.com'] },
         { sender: '', email: ['c@example.com'] },
       ]);
@@ -192,7 +192,7 @@ describe('EmailData', () => {
 
     it('is a no-op for an address not in the list', async () => {
       await instance.remove({ email: ['z@example.com'] });
-      expect(instance.emails).toEqual([
+      expect(await instance.emails).toEqual([
         { sender: '', email: ['a@example.com'] },
         { sender: '', email: ['b@example.com'] },
         { sender: '', email: ['c@example.com'] },
@@ -206,10 +206,10 @@ describe('EmailData', () => {
       const instance = new EmailData();
       await instance.ready;
 
-      const copy = instance.emails;
+      const copy = await instance.emails;
       copy.push({ sender: 'Injected', email: ['injected@example.com'] });
 
-      expect(instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
+      expect(await instance.emails).toEqual([{ sender: '', email: ['a@example.com'] }]);
     });
   });
 });

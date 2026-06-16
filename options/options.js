@@ -6,7 +6,7 @@
 
 // Data
 const emailData = new EmailData();
-let emails = await emailData.emails;
+let emails;
 
 // Elements
 const lstFollowed = document.getElementById('select-followed-emails');
@@ -53,11 +53,12 @@ document.addEventListener("visibilitychange", async () => {
 
 document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
+  emails = await emailData.emails;
   await loadEmailAddresses();
-  await loadEmailData();
+  // await loadEmailData();
 
   const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, await emailData.emails, false);
+  const emailClient = new EmailClient(authToken, emails, false);
   const ids = await emailClient.loadIDs();
   console.log('Loaded email IDs:', ids);
 
