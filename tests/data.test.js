@@ -44,10 +44,6 @@ describe('SenderData', () => {
       expect(chrome.storage.sync._store.addresses).toEqual([]);
     });
 
-    it('creates the lastRun key in storage', () => {
-      expect(chrome.storage.sync._store.lastRun).toBe(null);
-    });
-
     it('exposes an empty addresses array', async () => {
       expect(await instance.addresses).toEqual([]);
     });
@@ -68,7 +64,6 @@ describe('SenderData', () => {
           { sender: '', address: ['a@example.com'] },
           { sender: '', address: ['b@example.com'] },
         ],
-        lastRun: '2026-01-01T00:00:00Z',
       });
       instance = new SenderData();
       await instance.ready;
@@ -79,10 +74,6 @@ describe('SenderData', () => {
         { sender: '', address: ['a@example.com'] },
         { sender: '', address: ['b@example.com'] },
       ]);
-    });
-
-    it('exposes lastRun from storage', () => {
-      expect(instance.lastRun).toBe('2026-01-01T00:00:00Z');
     });
 
     it('addresses is iterable with for...of', async () => {
@@ -100,7 +91,7 @@ describe('SenderData', () => {
     let instance;
 
     beforeEach(async () => {
-      chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }], lastRun: null });
+      chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       instance = new SenderData();
       await instance.ready;
     });
@@ -122,7 +113,7 @@ describe('SenderData', () => {
     });
 
     it('ignores duplicate addresses', async () => {
-      chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }], lastRun: null });
+      chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       instance = new SenderData();
       await instance.ready;
 
@@ -168,7 +159,6 @@ describe('SenderData', () => {
           { sender: '', address: ['b@example.com'] },
           { sender: '', address: ['c@example.com'] },
         ],
-        lastRun: null,
       });
       instance = new SenderData();
       await instance.ready;
@@ -202,7 +192,7 @@ describe('SenderData', () => {
 
   describe('addresses getter', () => {
     it('returns a copy — mutating it does not affect internal state', async () => {
-      const chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }], lastRun: null });
+      const chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       const instance = new SenderData();
       await instance.ready;
 

@@ -6,25 +6,18 @@
 
 class SenderData {
   #addresses = [];
-  #lastRun = null;
 
   constructor() {
     this.ready = this.#init();
   }
 
   async #init() {
-    const result = await chrome.storage.sync.get(['addresses', 'lastRun']);
+    const result = await chrome.storage.sync.get(['addresses']);
 
     if (result.addresses !== undefined) {
       this.#addresses = this.#normalizeAddresses(result.addresses);
     } else {
       await chrome.storage.sync.set({ addresses: [] });
-    }
-
-    if (result.lastRun !== undefined) {
-      this.#lastRun = result.lastRun;
-    } else {
-      await chrome.storage.sync.set({ lastRun: null });
     }
   }
 
@@ -115,9 +108,7 @@ class SenderData {
     );
   }
 
-  get lastRun() {
-    return this.#lastRun;
-  }
+
 }
 
 export default SenderData;
