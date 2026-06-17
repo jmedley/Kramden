@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { chrome } from 'vitest-chrome/lib/index.esm.js';
-import SenderData from '../scripts/data.js';
+import SenderData from './data.js';
 
 function makeChromeMock(initialData = {}) {
   const store = { ...initialData };
@@ -69,7 +69,7 @@ describe('SenderData', () => {
       await instance.ready;
     });
 
-    it('splits the stored CSV into an array', async () => {
+    it('loads pre-populated storage into addresses', async () => {
       expect(await instance.addresses).toEqual([
         { sender: '', address: ['a@example.com'] },
         { sender: '', address: ['b@example.com'] },
