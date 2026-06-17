@@ -55,13 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await emailData.ready;
   emails = await emailData.emails;
   await loadEmailAddresses();
-  // await loadEmailData();
-
-  const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, emails, false);
-  const ids = await emailClient.loadIDs();
-  console.log('Loaded email IDs:', ids);
-
+  await loadEmailData();
 
   // Enable/disable stop-tracking button based on selection
   lstFollowed.addEventListener('change', () => {
