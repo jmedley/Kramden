@@ -5,22 +5,6 @@
 */
 
 class SenderData {
-  #addresses = [];
-
-  constructor() {
-    this.ready = this.#init();
-  }
-
-  async #init() {
-    const result = await chrome.storage.sync.get(['addresses']);
-
-    if (result.addresses !== undefined) {
-      this.#addresses = this.#normalizeAddresses(result.addresses);
-    } else {
-      await chrome.storage.sync.set({ addresses: [] });
-    }
-  }
-
   #normalizeAddresses(value) {
     if (!Array.isArray(value)) {
       return [];
@@ -51,18 +35,24 @@ class SenderData {
     return { sender: senderName, address: addresses };
   }
 
+  async #getAddresses() {
+    const result = await chrome.storage.sync.get(['addresses']);
+    return this.#normalizeAddresses(result.addresses ?? []);
+  }
+
   async add(sender) {
     console.log("Adding address:", sender);
     const normalized = this.#normalizeSender(sender);
     if (normalized.address.length === 0) return;
 
-    const exists = this.#addresses.some((entry) =>
+    const addresses = await this.#getAddresses();
+    const exists = addresses.some((entry) =>
       entry.address.some((address) => normalized.address.includes(address))
     );
 
     if (!exists) {
-      this.#addresses.push(normalized);
-      await chrome.storage.sync.set({ addresses: this.#addresses });
+      addresses.push(normalized);
+      await chrome.storage.sync.set({ addresses });
     }
   }
 
@@ -72,7 +62,8 @@ class SenderData {
     console.log("Normalized sender for hasAddress check:", normalized);
     console.log("Length of normalized address:", normalized.address.length);
     if (normalized.address.length === 0) return false;
-    return this.#addresses.some((entry) => {
+    const addresses = await this.#getAddresses();
+    return addresses.some((entry) => {
       console.log("Checking against entry:", entry);
       return entry.address.some((address) => normalized.address.includes(address));
     });
@@ -83,32 +74,21 @@ class SenderData {
     const normalized = this.#normalizeSender(sender);
     if (normalized.address.length === 0) return;
 
-    this.#addresses = this.#addresses.filter(
+    const addresses = await this.#getAddresses();
+    const filtered = addresses.filter(
       (entry) => !entry.address.some((address) => normalized.address.includes(address))
     );
-    await chrome.storage.sync.set({ addresses: this.#addresses });
-  }
-
-  // Refresh cached data from chrome.storage.sync.
-  // Call this when you need to ensure the in-memory `#addresses` reflects
-  // the latest data (for example, when another tab or extension page may
-  // have modified storage).
-  async refresh() {
-    this.ready = this.#init();
-    await this.ready;
-    return this.addresses;
+    await chrome.storage.sync.set({ addresses: filtered });
   }
 
   get addresses() {
-    return this.ready.then(() =>
-      this.#addresses.map((entry) => ({
+    return this.#getAddresses().then((addresses) =>
+      addresses.map((entry) => ({
         sender: entry.sender,
         address: [...entry.address],
       }))
     );
   }
-
-
 }
 
-export default SenderData;
+// export default SenderData;

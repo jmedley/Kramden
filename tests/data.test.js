@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { chrome } from 'vitest-chrome/lib/index.esm.js';
-import SenderData from './data.js';
+import SenderData from '../scripts/data.js';
 
 function makeChromeMock(initialData = {}) {
   const store = { ...initialData };
@@ -30,53 +30,43 @@ function makeChromeMock(initialData = {}) {
 // Use the real SenderData from scripts/data.js
 
 describe('SenderData', () => {
-  describe('constructor — empty storage', () => {
-    let chrome;
-    let instance;
-
-    beforeEach(async () => {
-      chrome = makeChromeMock();
-      instance = new SenderData();
-      await instance.ready;
-    });
-
-    it('creates the addresses key in storage', () => {
-      expect(chrome.storage.sync._store.addresses).toEqual([]);
-    });
-
-    it('exposes an empty addresses array', async () => {
+  describe('addresses getter — empty storage', () => {
+    it('returns an empty array', async () => {
+      makeChromeMock();
+      const instance = new SenderData();
       expect(await instance.addresses).toEqual([]);
     });
 
-    it('addresses is iterable with forEach', async () => {
+    it('is iterable with forEach', async () => {
+      makeChromeMock();
+      const instance = new SenderData();
       const visited = [];
       (await instance.addresses).forEach((e) => visited.push(e));
       expect(visited).toEqual([]);
     });
   });
 
-  describe('constructor — pre-populated storage', () => {
+  describe('addresses getter — pre-populated storage', () => {
     let instance;
 
-    beforeEach(async () => {
-      const chrome = makeChromeMock({
+    beforeEach(() => {
+      makeChromeMock({
         addresses: [
           { sender: '', address: ['a@example.com'] },
           { sender: '', address: ['b@example.com'] },
         ],
       });
       instance = new SenderData();
-      await instance.ready;
     });
 
-    it('loads pre-populated storage into addresses', async () => {
+    it('reads pre-populated storage', async () => {
       expect(await instance.addresses).toEqual([
         { sender: '', address: ['a@example.com'] },
         { sender: '', address: ['b@example.com'] },
       ]);
     });
 
-    it('addresses is iterable with for...of', async () => {
+    it('is iterable with for...of', async () => {
       const visited = [];
       for (const e of await instance.addresses) visited.push(e);
       expect(visited).toEqual([
@@ -90,10 +80,9 @@ describe('SenderData', () => {
     let chrome;
     let instance;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       instance = new SenderData();
-      await instance.ready;
     });
 
     it('appends a new address to the array', async () => {
@@ -115,7 +104,6 @@ describe('SenderData', () => {
     it('ignores duplicate addresses', async () => {
       chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       instance = new SenderData();
-      await instance.ready;
 
       await instance.add({ address: ['a@example.com'] });
       expect(await instance.addresses).toEqual([{ sender: '', address: ['a@example.com'] }]);
@@ -124,18 +112,16 @@ describe('SenderData', () => {
   });
 
   describe('hasAddress()', () => {
-    let chrome;
     let instance;
 
-    beforeEach(async () => {
-      chrome = makeChromeMock({
+    beforeEach(() => {
+      makeChromeMock({
         addresses: [
           { sender: '', address: ['a@example.com'] },
           { sender: '', address: ['b@example.com'] },
         ],
       });
       instance = new SenderData();
-      await instance.ready;
     });
 
     it('returns true for an existing address', async () => {
@@ -152,7 +138,7 @@ describe('SenderData', () => {
     let chrome;
     let instance;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       chrome = makeChromeMock({
         addresses: [
           { sender: '', address: ['a@example.com'] },
@@ -161,7 +147,6 @@ describe('SenderData', () => {
         ],
       });
       instance = new SenderData();
-      await instance.ready;
     });
 
     it('removes the specified address from the array', async () => {
@@ -191,10 +176,9 @@ describe('SenderData', () => {
   });
 
   describe('addresses getter', () => {
-    it('returns a copy — mutating it does not affect internal state', async () => {
-      const chrome = makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
+    it('returns a copy — mutating it does not affect storage', async () => {
+      makeChromeMock({ addresses: [{ sender: '', address: ['a@example.com'] }] });
       const instance = new SenderData();
-      await instance.ready;
 
       const copy = await instance.addresses;
       copy.push({ sender: 'Injected', address: ['injected@example.com'] });
