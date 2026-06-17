@@ -64,6 +64,7 @@ async function ignoreCurrentEmail() {
 // Handlers
 btnDashboard.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
+  window.close();
 });
 
 btnFollow.addEventListener('click', async () => {
@@ -83,6 +84,7 @@ btnFollow.addEventListener('click', async () => {
   } finally {
     setLoading(false);
   }
+  window.close();
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
