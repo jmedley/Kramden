@@ -8,7 +8,7 @@
 let isFollowing = false;   // false = "Follow" showing, true = "Ignore" showing
 
 // Data
-const emailData = new EmailData();
+const senderData = new SenderData();
 
 // Elements
 let tab;
@@ -50,15 +50,15 @@ function isEmailOpen(str) {
 }
 
 async function followCurrentEmail() {
-  const senderData = await getEmailFromActiveTab();
-  if (!senderData) throw new Error('Could not determine sender of current email.');
-  await emailData.add(senderData);
+  const newSenderData = await getSenderFromActiveTab();
+  if (!newSenderData) throw new Error('Could not determine sender of current email.');
+  await senderData.add(newSenderData);
 }
 
 async function ignoreCurrentEmail() {
-  const senderData = await getEmailFromActiveTab();
-  if (!senderData) throw new Error('Could not determine sender of current email.');
-  await emailData.remove(senderData);
+  const newSenderData = await getSenderFromActiveTab();
+  if (!newSenderData) throw new Error('Could not determine sender of current email.');
+  await senderData.remove(newSenderData);
 }
 
 // Handlers
@@ -95,8 +95,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  const saved = await isEmailSaved();
-  console.log("Email saved:", saved);
+  await senderData.ready;
+  const saved = await isAddressSaved();
+  console.log("Address saved:", saved);
   if (saved) {
     setFollowUI(true);
   } else {
@@ -104,18 +105,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-async function isEmailSaved() {
+async function isAddressSaved() {
   try {
-    const data = await getEmailFromActiveTab();
+    const data = await getSenderFromActiveTab();
+    console.log("Sender data from active tab:", data);
     if (!data) throw new Error('Could not determine sender of current email.');
-    return await emailData.hasEmail(data);
+    // return await senderData.hasAddress(data);
+    let retVal = await senderData.hasAddress(data);
+    console.log("Result of hasAddress check:", retVal);
+    return retVal;
   } catch (err) {
     console.error(err);
     return false;
   }
 }
 
-async function getEmailFromActiveTab() {
+async function getSenderFromActiveTab() {
   return await new Promise((resolve, reject) => {
     chrome.tabs.sendMessage(tab.id, { action: "getSender" }, (response) => {
       if (response) {

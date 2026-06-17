@@ -5,8 +5,8 @@
 */
 
 // Data
-const emailData = new EmailData();
-let emails;
+const senderData = new SenderData();
+let addresses;
 
 // Elements
 const lstFollowed = document.getElementById('select-followed-emails');
@@ -16,23 +16,24 @@ const txtSender = document.getElementById('input-sender');
 const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
-async function loadEmailData() {
+async function loadSenderData() {
   const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, emails, false);
+  const emailClient = new EmailClient(authToken, addresses, false);
   const ids = await emailClient.loadIDs();
   console.log('Loaded email IDs:', ids);
 }
 
-async function loadEmailAddresses() {
+async function loadSenderAddresses() {
   clearFollowedList();
+  addresses = await senderData.addresses;
 
   // Each email entry is expected to carry an array of email addresses.
-  for (const emailEntry of emails) {
+  for (const entry of addresses) {
     const option = document.createElement('option');
-    const emailValues = emailEntry.email.join(', ');
-    const emailSender = emailEntry.sender ?? emailEntry.name ?? '';
-    option.value = emailValues;
-    option.textContent = `${emailSender} (${emailValues})`;
+    const addressValues = entry.address.join(', ');
+    const senderName = entry.sender ?? entry.name ?? '';
+    option.value = addressValues;
+    option.textContent = `${senderName} (${addressValues})`;
     lstFollowed.appendChild(option);
   }
 
@@ -47,15 +48,14 @@ async function loadEmailAddresses() {
 document.addEventListener("visibilitychange", async () => {
   if (document.visibilityState === "visible") {
     clearFollowedList();
-    await loadEmailAddresses();
+    await loadSenderAddresses();
   }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await emailData.ready;
-  emails = await emailData.emails;
-  await loadEmailAddresses();
-  await loadEmailData();
+  await senderData.ready;
+  await loadSenderAddresses();
+  await loadSenderData();
 
   // Enable/disable stop-tracking button based on selection
   lstFollowed.addEventListener('change', () => {
@@ -66,17 +66,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Refresh the tracked email list from storage
+  // Refresh the tracked address list from storage
   btnRefreshList.addEventListener('click', async () => {
-    await loadEmailAddresses();
+    await loadSenderAddresses();
   });
 
-  // Remove selected email from tracking
+  // Remove selected address from tracking
   btnStopTracking.addEventListener('click', async () => {
     const selectedOption = lstFollowed.options[lstFollowed.selectedIndex];
     if (selectedOption && selectedOption.value) {
-      const emails = selectedOption.value.split(', ').map((e) => e.trim());
-      await emailData.remove({ email: emails });
+      const addresses = selectedOption.value.split(', ').map((e) => e.trim());
+      await senderData.remove({ address: addresses });
       lstFollowed.removeChild(selectedOption);
       lstFollowed.dispatchEvent(new Event('change'));
     }
@@ -86,14 +86,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 btnTrackSender.addEventListener('click', async () => {
   const senderData = {
     sender: txtSender.value.trim(),
-    email: [txtSenderEmail.value.trim()]
+    address: [txtSenderEmail.value.trim()]
   };
-  emailData.add(senderData).then(() => {
+  senderData.add(senderData).then(() => {
     // Clear inputs and disable button after successful addition
     txtSender.value = '';
     txtSenderEmail.value = '';
     setButtonState();
-    loadEmailAddresses(); // Refresh the list to show the newly added sender
+    loadSenderAddresses(); // Refresh the list to show the newly added sender
   })
     .catch((err) => {
       console.error('Error adding sender:', err);
@@ -110,8 +110,8 @@ txtSender.addEventListener('input', () => {
 
 function setButtonState() {
   const isSenderValid = evaluateSenderInput();
-  const isEmailValid = evaluateEmailInput();
-  btnTrackSender.disabled = !(isSenderValid && isEmailValid);
+  const isAddressValid = evaluateEmailInput();
+  btnTrackSender.disabled = !(isSenderValid && isAddressValid);
 }
 
 function clearFollowedList() {
@@ -128,10 +128,10 @@ function evaluateSenderInput() {
   return senderValue.length > 0;
 }
 
-function evaluateEmailInput() {
-  const emailValue = txtSenderEmail.value.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(emailValue);
+function evaluateAddressInput() {
+  const addressValue = txtSenderEmail.value.trim();
+  const addressRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return addressRegex.test(addressValue);
 }
 
 function getAuthToken() {

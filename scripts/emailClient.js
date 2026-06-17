@@ -17,7 +17,7 @@ class EmailClient {
   }
 
   async loadIDs() {
-    const query = `from:(${this.senders.flatMap(s => s.email).join(' OR ')})`;
+    const query = `from:(${this.senders.flatMap(s => s.address).join(' OR ')})`;
     const url = `${this._baseURL}/messages?q=${encodeURIComponent(query)}`;
 
     const res = await fetch(url, { headers: this._authHeaders() });

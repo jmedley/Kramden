@@ -21,7 +21,7 @@ function getSenderOfOpenEmail() {
   if (senderElement) {
     return {
       sender: String(senderElement.innerText).trim(),
-      email: [senderElement.getAttribute('email')]
+      address: [senderElement.getAttribute('email')]
     };
   }
 

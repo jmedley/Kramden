@@ -4,8 +4,8 @@
   without the express written permission of the author.
 */
 
-class EmailData {
-  #emails = [];
+class SenderData {
+  #addresses = [];
   #lastRun = null;
 
   constructor() {
@@ -13,12 +13,12 @@ class EmailData {
   }
 
   async #init() {
-    const result = await chrome.storage.sync.get(['emails', 'lastRun']);
+    const result = await chrome.storage.sync.get(['addresses', 'lastRun']);
 
-    if (result.emails !== undefined) {
-      this.#emails = this.#normalizeEmails(result.emails);
+    if (result.addresses !== undefined) {
+      this.#addresses = this.#normalizeAddresses(result.addresses);
     } else {
-      await chrome.storage.sync.set({ emails: [] });
+      await chrome.storage.sync.set({ addresses: [] });
     }
 
     if (result.lastRun !== undefined) {
@@ -28,7 +28,7 @@ class EmailData {
     }
   }
 
-  #normalizeEmails(value) {
+  #normalizeAddresses(value) {
     if (!Array.isArray(value)) {
       return [];
     }
@@ -37,11 +37,11 @@ class EmailData {
       .filter(Boolean)
       .map((item) => ({
         sender: item.sender ?? item.name ?? '',
-        email: Array.isArray(item.email)
-          ? item.email.map((e) => String(e).trim()).filter(Boolean)
+        address: Array.isArray(item.address)
+          ? item.address.map((e) => String(e).trim()).filter(Boolean)
           : [],
       }))
-      .filter((entry) => entry.email.length > 0);
+      .filter((entry) => entry.address.length > 0);
   }
 
   #normalizeSender(sender) {
@@ -50,64 +50,67 @@ class EmailData {
         ? sender?.sender ?? sender?.name
         : '';
 
-    if (!sender?.email || !Array.isArray(sender.email)) {
-      return { sender: senderName, email: [] };
+    if (!sender?.address || !Array.isArray(sender.address)) {
+      return { sender: senderName, address: [] };
     }
 
-    const emails = sender.email.map((e) => String(e).trim()).filter(Boolean);
-    return { sender: senderName, email: emails };
+    const addresses = sender.address.map((e) => String(e).trim()).filter(Boolean);
+    return { sender: senderName, address: addresses };
   }
 
   async add(sender) {
-    console.log("Adding email:", sender);
+    console.log("Adding address:", sender);
     const normalized = this.#normalizeSender(sender);
-    if (normalized.email.length === 0) return;
+    if (normalized.address.length === 0) return;
 
-    const exists = this.#emails.some((entry) =>
-      entry.email.some((email) => normalized.email.includes(email))
+    const exists = this.#addresses.some((entry) =>
+      entry.address.some((address) => normalized.address.includes(address))
     );
 
     if (!exists) {
-      this.#emails.push(normalized);
-      await chrome.storage.sync.set({ emails: this.#emails });
+      this.#addresses.push(normalized);
+      await chrome.storage.sync.set({ addresses: this.#addresses });
     }
   }
 
-  async hasEmail(sender) {
-    console.log("Checking if email is saved:", sender);
+  async hasAddress(sender) {
+    console.log("Checking if address is saved:", sender);
     const normalized = this.#normalizeSender(sender);
-    if (normalized.email.length === 0) return false;
-    return this.#emails.some((entry) =>
-      entry.email.some((email) => normalized.email.includes(email))
-    );
+    console.log("Normalized sender for hasAddress check:", normalized);
+    console.log("Length of normalized address:", normalized.address.length);
+    if (normalized.address.length === 0) return false;
+    return this.#addresses.some((entry) => {
+      console.log("Checking against entry:", entry);
+      return entry.address.some((address) => normalized.address.includes(address));
+    });
   }
 
   async remove(sender) {
-    console.log("Removing email:", sender);
+    console.log("Removing address:", sender);
     const normalized = this.#normalizeSender(sender);
-    if (normalized.email.length === 0) return;
+    if (normalized.address.length === 0) return;
 
-    this.#emails = this.#emails.filter(
-      (entry) => !entry.email.some((email) => normalized.email.includes(email))
+    this.#addresses = this.#addresses.filter(
+      (entry) => !entry.address.some((address) => normalized.address.includes(address))
     );
-    await chrome.storage.sync.set({ emails: this.#emails });
+    await chrome.storage.sync.set({ addresses: this.#addresses });
   }
 
   // Refresh cached data from chrome.storage.sync.
-  // Call this when you need to ensure the in-memory `#emails` reflects
+  // Call this when you need to ensure the in-memory `#addresses` reflects
   // the latest data (for example, when another tab or extension page may
   // have modified storage).
   async refresh() {
     this.ready = this.#init();
     await this.ready;
-    return this.emails;
+    return this.addresses;
   }
 
-  get emails() {
+  get addresses() {
     return this.ready.then(() =>
-      this.#emails.map((entry) => ({
+      this.#addresses.map((entry) => ({
         sender: entry.sender,
-        email: [...entry.email],
+        address: [...entry.address],
       }))
     );
   }
@@ -117,4 +120,4 @@ class EmailData {
   }
 }
 
-// export default EmailData;
+export default SenderData;
