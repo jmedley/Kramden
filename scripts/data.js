@@ -91,4 +91,4 @@ class SenderData {
   }
 }
 
-// export default SenderData;
+export default SenderData;

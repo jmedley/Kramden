@@ -32,7 +32,8 @@ class EmailClient {
     const url = `${this._baseURL}/messages/${messageID}?format=full`;
     const res = await fetch(url, { headers: this._authHeaders() });
     if (!res.ok) throw new Error(`getMessage failed: ${res.status} ${res.statusText}`);
-    return res.json();
+    const data = await res.json();
+    return atob(data.payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
   }
 
   async getMetaData(messageID) {
@@ -47,4 +48,4 @@ class EmailClient {
   }
 }
 
-// module.exports = EmailClient;
+export default EmailClient;

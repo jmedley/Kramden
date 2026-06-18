@@ -3,6 +3,9 @@
   No part of this software may be used, copied, modified, or distributed
   without the express written permission of the author.
 */
+import getJobs from '../EmailParsers/index.js';
+import SenderData from '../scripts/data.js';
+import EmailClient from '../scripts/emailClient.js';
 
 // Data
 const senderData = new SenderData();
