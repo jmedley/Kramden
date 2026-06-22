@@ -3,9 +3,10 @@
   No part of this software may be used, copied, modified, or distributed
   without the express written permission of the author.
 */
-import getJobs from '../EmailParsers/index.js';
-import SenderData from '../scripts/data.js';
 import EmailClient from '../scripts/emailClient.js';
+import getJobs from '../EmailParsers/index.js';
+import renderJobs from '../scripts/jobsView.js';
+import SenderData from '../scripts/data.js';
 
 // Data
 const senderData = new SenderData();
@@ -24,6 +25,17 @@ async function loadSenderData() {
   const emailClient = new EmailClient(authToken, addresses, false);
   const ids = await emailClient.loadIDs();
   console.log('Loaded email IDs:', ids);
+
+  for (const id of ids) {
+    try {
+      const message = await emailClient.getMessage(id);
+      console.log('Fetched email message:', message);
+      const jobs = getJobs(message);
+      renderJobs(jobs.jobs);
+    } catch (err) {
+      console.error(`Error processing email ID ${id}:`, err);
+    }
+  }
 }
 
 async function loadSenderAddresses() {

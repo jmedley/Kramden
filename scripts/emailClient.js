@@ -29,11 +29,11 @@ class EmailClient {
   }
 
   async getMessage(messageID) {
-    const url = `${this._baseURL}/messages/${messageID}?format=full`;
+    const url = `${this._baseURL}/messages/${messageID}?format=raw`;
     const res = await fetch(url, { headers: this._authHeaders() });
     if (!res.ok) throw new Error(`getMessage failed: ${res.status} ${res.statusText}`);
     const data = await res.json();
-    return atob(data.payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+    return atob(data.raw.replace(/-/g, '+').replace(/_/g, '/'));
   }
 
   async getMetaData(messageID) {
