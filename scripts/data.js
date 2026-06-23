@@ -91,4 +91,17 @@ class SenderData {
   }
 }
 
+class DayRange {
+  async getDays() {
+    const result = await chrome.storage.sync.get(['days']);
+    const days = parseInt(result.days, 10);
+    return isNaN(days) ? 1 : Math.max(1, Math.min(31, days));
+  }
+
+  async setDays(days) {
+    await chrome.storage.sync.set({ days: days });
+  }
+}
+
+export { DayRange };
 export default SenderData;

@@ -19,18 +19,23 @@ const btnRefreshList = document.getElementById('btn-refresh-list');
 const txtSender = document.getElementById('input-sender');
 const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
+const jobsCountEl = document.getElementById('count-jobs');
+const countDaysEl = document.getElementById('count-days');
 
 async function loadSenderData() {
   const authToken = await getAuthToken();
   const emailClient = new EmailClient(authToken, addresses, false);
   const ids = await emailClient.loadIDs();
   console.log('Loaded email IDs:', ids);
+  let jobsCount = 0;
 
   for (const id of ids) {
     try {
       const message = await emailClient.getMessage(id);
       console.log('Fetched email message:', message);
       const jobs = getJobs(message);
+      jobsCount += jobs.jobs.length;
+      jobsCountEl.textContent = jobsCount;
       renderJobs(jobs.jobs);
     } catch (err) {
       console.error(`Error processing email ID ${id}:`, err);
@@ -121,6 +126,12 @@ txtSenderEmail.addEventListener('input', () => {
 
 txtSender.addEventListener('input', () => {
   setButtonState();
+});
+
+countDaysEl.addEventListener('input', () => {
+  const digitsOnly = countDaysEl.value.replace(/\D/g, '');
+  const clamped = Math.min(31, Math.max(1, parseInt(digitsOnly, 10) || 1));
+  countDaysEl.value = clamped;
 });
 
 function setButtonState() {

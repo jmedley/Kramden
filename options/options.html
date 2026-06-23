@@ -17,7 +17,9 @@
       <div class="section-card">
         <div class="section-header">
           <h2>Job Title</h2>
-          <span class="count">21 roles</span>
+          <!-- START HERE: When count-days changes, show a save button-->
+          <span class="count"><span id="count-jobs"></span> roles in the last <input type="text" id="count-days"
+              size="3" value="1"> day</span>
         </div>
         <template id="job-row-template">
           <tr>
