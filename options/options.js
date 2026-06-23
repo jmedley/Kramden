@@ -21,6 +21,7 @@ const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 const jobsCountEl = document.getElementById('count-jobs');
 const countDaysEl = document.getElementById('count-days');
+const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
 
 async function loadSenderData() {
   const authToken = await getAuthToken();
@@ -134,10 +135,19 @@ countDaysEl.addEventListener('input', () => {
   countDaysEl.value = clamped;
 });
 
+btnRefreshJobs.addEventListener('click', async () => {
+  clearJobsList();
+  await loadSenderData();
+});
+
 function setButtonState() {
   const isSenderValid = evaluateSenderInput();
   const isAddressValid = evaluateEmailInput();
   btnTrackSender.disabled = !(isSenderValid && isAddressValid);
+}
+
+function clearJobsList() {
+  document.getElementById('body-jobs-list').replaceChildren();
 }
 
 function clearFollowedList() {
