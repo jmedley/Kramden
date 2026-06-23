@@ -19,7 +19,7 @@ function createRow(job = {}) {
 
   if (titleEl) titleEl.textContent = job.jobTitle || '';
   if (companyEl) companyEl.textContent = job.company || '';
-  if (locationEl) locationEl.textContent = job.location || '';
+  if (locationEl) locationEl.textContent = job.location || 'Not provided';
   if (anchor) {
     anchor.href = job.applyLink || '#';
     anchor.target = '_blank';
