@@ -252,7 +252,7 @@ tr {
   width: 100%;
 }
 
-#select-followed-emails,
+#select-tracked-senders,
 #select-job-titles,
 #input-job-title,
 #input-sender,
@@ -262,7 +262,7 @@ tr {
   padding: 6px;
 }
 
-#select-followed-emails,
+#select-tracked-senders,
 #select-job-titles {
   min-width: 630px;
 }

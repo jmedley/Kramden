@@ -12,16 +12,21 @@ import SenderData from '../scripts/data.js';
 const senderData = new SenderData();
 let addresses;
 
-// Elements
-const lstFollowed = document.getElementById('select-followed-emails');
+// Jobs List
+const jobsCountEl = document.getElementById('count-jobs');
+const countDaysEl = document.getElementById('count-days');
+
+// Senders Configuration
+const slctTrackedSenders = document.getElementById('select-tracked-senders');
 const btnStopTracking = document.getElementById('btn-stop-tracking');
-const btnRefreshList = document.getElementById('btn-refresh-list');
+const btnRefreshSenders = document.getElementById('btn-refresh-senders');
 const txtSender = document.getElementById('input-sender');
 const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
-const jobsCountEl = document.getElementById('count-jobs');
-const countDaysEl = document.getElementById('count-days');
+
+// Jobs List Configuration
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
+
 
 async function loadSenderData() {
   const authToken = await getAuthToken();
@@ -55,14 +60,14 @@ async function loadSenderAddresses() {
     const senderName = entry.sender ?? entry.name ?? '';
     option.value = addressValues;
     option.textContent = `${senderName} (${addressValues})`;
-    lstFollowed.appendChild(option);
+    slctTrackedSenders.appendChild(option);
   }
 
   // Ensure stop button reflects current selection state on load
-  if (lstFollowed.options.length === 0) {
+  if (slctTrackedSenders.options.length === 0) {
     btnStopTracking.disabled = true;
   } else {
-    btnStopTracking.disabled = lstFollowed.selectedIndex < 0;
+    btnStopTracking.disabled = slctTrackedSenders.selectedIndex < 0;
   }
 }
 
@@ -79,8 +84,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadSenderData();
 
   // Enable/disable stop-tracking button based on selection
-  lstFollowed.addEventListener('change', () => {
-    if (lstFollowed.selectedIndex >= 0) {
+  slctTrackedSenders.addEventListener('change', () => {
+    if (slctTrackedSenders.selectedIndex >= 0) {
       btnStopTracking.disabled = false;
     } else {
       btnStopTracking.disabled = true;
@@ -88,18 +93,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Refresh the tracked address list from storage
-  btnRefreshList.addEventListener('click', async () => {
+  btnRefreshSenders.addEventListener('click', async () => {
     await loadSenderAddresses();
   });
 
   // Remove selected address from tracking
   btnStopTracking.addEventListener('click', async () => {
-    const selectedOption = lstFollowed.options[lstFollowed.selectedIndex];
+    const selectedOption = slctTrackedSenders.options[slctTrackedSenders.selectedIndex];
     if (selectedOption && selectedOption.value) {
       const addresses = selectedOption.value.split(', ').map((e) => e.trim());
       await senderData.remove({ address: addresses });
-      lstFollowed.removeChild(selectedOption);
-      lstFollowed.dispatchEvent(new Event('change'));
+      slctTrackedSenders.removeChild(selectedOption);
+      slctTrackedSenders.dispatchEvent(new Event('change'));
     }
   });
 });
@@ -151,12 +156,12 @@ function clearJobsList() {
 }
 
 function clearFollowedList() {
-  while (lstFollowed.options.length > 0) {
-    lstFollowed.remove(0);
+  while (slctTrackedSenders.options.length > 0) {
+    slctTrackedSenders.remove(0);
   }
 
   btnStopTracking.disabled = true;
-  lstFollowed.dispatchEvent(new Event('change'));
+  slctTrackedSenders.dispatchEvent(new Event('change'));
 }
 
 function evaluateSenderInput() {
