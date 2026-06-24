@@ -253,7 +253,7 @@ tr {
 }
 
 #select-followed-emails,
-#input-job-titles,
+#select-job-titles,
 #input-job-title,
 #input-sender,
 #input-sender-email {
@@ -263,7 +263,7 @@ tr {
 }
 
 #select-followed-emails,
-#input-job-titles {
+#select-job-titles {
   min-width: 630px;
 }
 
