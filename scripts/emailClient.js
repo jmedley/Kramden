@@ -5,9 +5,10 @@
 */
 
 class EmailClient {
-  constructor(authToken, senders, preloadIDs = false) {
+  constructor(authToken, senders, preloadIDs = false, dayRange = 1) {
     this.authToken = authToken;
     this.senders = Array.isArray(senders) ? senders : [senders];
+    this.dayRange = dayRange;
     this.messageIDs = [];
     this._baseURL = 'https://gmail.googleapis.com/gmail/v1/users/me';
 
@@ -17,7 +18,7 @@ class EmailClient {
   }
 
   async loadIDs() {
-    const query = `from:(${this.senders.flatMap(s => s.address).join(' OR ')})`;
+    const query = `from:(${this.senders.flatMap(s => s.address).join(' OR ')}) newer_than:${this.dayRange}d`;
     const url = `${this._baseURL}/messages?q=${encodeURIComponent(query)}`;
 
     const res = await fetch(url, { headers: this._authHeaders() });
@@ -41,6 +42,17 @@ class EmailClient {
     const res = await fetch(url, { headers: this._authHeaders() });
     if (!res.ok) throw new Error(`getMetaData failed: ${res.status} ${res.statusText}`);
     return res.json();
+  }
+
+  set dayRange(value) {
+    if (!Number.isInteger(value) || value < 1) {
+      throw new RangeError('dayRange must be a positive integer');
+    }
+    this._dayRange = value;
+  }
+
+  get dayRange() {
+    return this._dayRange;
   }
 
   _authHeaders() {

@@ -8,16 +8,19 @@ import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
+import { DayRange } from '../scripts/data.js';
 
 // Data
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
+const dayRange = new DayRange();
 let addresses;
 
 
 // Jobs List
 const jobsCountEl = document.getElementById('count-jobs');
 const countDaysEl = document.getElementById('count-days');
+const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
 
 // Senders Configuration
 const slctTrackedSenders = document.getElementById('select-tracked-senders');
@@ -37,17 +40,21 @@ const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 async function loadSenderData() {
   const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, addresses, false);
+  const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
   const ids = await emailClient.loadIDs();
+  const titleTerms = await jobTitles.getTitles();
   let jobsCount = 0;
 
   for (const id of ids) {
     try {
       const message = await emailClient.getMessage(id);
       const jobs = getJobs(message);
-      jobsCount += jobs.jobs.length;
+      const filtered = titleTerms.length
+        ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
+        : jobs.jobs;
+      jobsCount += filtered.length;
       jobsCountEl.textContent = jobsCount;
-      renderJobs(jobs.jobs);
+      renderJobs(filtered);
     } catch (err) {
       console.error(`Error processing email ID ${id}:`, err);
     }
@@ -103,6 +110,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   btnRemoveJobTitle.disabled = true;
   btnAddJobTitle.disabled = true;
+
+  countDaysEl.value = await dayRange.getDays();
 
   txtJobTitle.addEventListener('input', () => {
     btnAddJobTitle.disabled = txtJobTitle.value.trim().length === 0;
@@ -188,6 +197,12 @@ countDaysEl.addEventListener('input', () => {
   const digitsOnly = countDaysEl.value.replace(/\D/g, '');
   const clamped = Math.min(31, Math.max(1, parseInt(digitsOnly, 10) || 1));
   countDaysEl.value = clamped;
+});
+
+btnRefreshJobs.addEventListener('click', async () => {
+  clearJobsList();
+  await dayRange.setDays(parseInt(countDaysEl.value, 10));
+  await loadSenderData();
 });
 
 btnRefreshJobTitles.addEventListener('click', async () => {
