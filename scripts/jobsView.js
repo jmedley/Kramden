@@ -14,12 +14,14 @@ function createRow(job = {}) {
   const titleEl = tr.querySelector('.job-title');
   const companyEl = tr.querySelector('.company');
   const locationEl = tr.querySelector('.location');
+  const payEl = tr.querySelector('.pay');
   const anchor = tr.querySelector('.btn-open');
   const btnCopy = tr.querySelector('.btn-copy');
 
   if (titleEl) titleEl.textContent = job.jobTitle || '';
   if (companyEl) companyEl.textContent = job.company || '';
   if (locationEl) locationEl.textContent = job.location || 'Not provided';
+  if (payEl) payEl.textContent = job.pay || 'Not provided';
   if (anchor) {
     anchor.href = job.applyLink || '#';
     anchor.target = '_blank';
