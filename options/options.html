@@ -66,7 +66,7 @@
                     <!-- Options will be populated by JavaScript -->
                   </select>
                   <div id="div-tracked-actions">
-                    <button class="btn" id="btn-stop-tracking" disabled aria-label="Stop tracking selected email">Stop
+                    <button class="btn" id="btn-stop-tracking" type="button" disabled aria-label="Stop tracking selected email">Stop
                       tracking</button>
                     <button class="btn" id="btn-refresh-senders" type="button"
                       aria-label="Refresh tracked senders list">Refresh senders</button>
@@ -83,7 +83,7 @@
                     <input type="email" id="input-sender-email" placeholder="name@example.com" autocomplete="email"
                       spellcheck="false" aria-label="Email to track" />
                   </div>
-                  <button type="submit" class="btn" id="btn-track-sender" disabled>Track</button>
+                  <button type="button" class="btn" id="btn-track-sender" disabled>Track</button>
                   <span class="error-msg" id="error">Enter a valid email</span>
                 </div>
               </div>
@@ -100,7 +100,7 @@
                     <!-- Options will be populated by JavaScript -->
                   </select>
                   <div id="div-job-title-actions">
-                    <button class="btn" id="btn-remove-job-title" disabled
+                    <button class="btn" id="btn-remove-job-title" type="button" disabled
                       aria-label="Remove selected job title">Remove</button>
                     <button class="btn" id="btn-refresh-job-titles" type="button"
                       aria-label="Refresh job titles list">Refresh list</button>
@@ -113,7 +113,7 @@
                   <input type="text" id="input-job-title" placeholder="Job title" spellcheck="false"
                     aria-label="Job title to track" />
                 </div>
-                <button type="submit" class="btn" id="btn-add-job-title" disabled>Add</button>
+                <button type="button" class="btn" id="btn-add-job-title" disabled>Add</button>
               </div>
             </form>
           </div>

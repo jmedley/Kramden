@@ -7,10 +7,13 @@ import EmailClient from '../scripts/emailClient.js';
 import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
+import { JobTitles } from '../scripts/data.js';
 
 // Data
 const senderData = new SenderData();
+const jobTitles = new JobTitles();
 let addresses;
+
 
 // Jobs List
 const jobsCountEl = document.getElementById('count-jobs');
@@ -36,13 +39,11 @@ async function loadSenderData() {
   const authToken = await getAuthToken();
   const emailClient = new EmailClient(authToken, addresses, false);
   const ids = await emailClient.loadIDs();
-  console.log('Loaded email IDs:', ids);
   let jobsCount = 0;
 
   for (const id of ids) {
     try {
       const message = await emailClient.getMessage(id);
-      console.log('Fetched email message:', message);
       const jobs = getJobs(message);
       jobsCount += jobs.jobs.length;
       jobsCountEl.textContent = jobsCount;
@@ -75,10 +76,22 @@ async function loadSenderAddresses() {
   }
 }
 
+async function loadJobTitles() {
+  clearJobTitlesList();
+  const titles = await jobTitles.getTitles();
+  for (const title of titles) {
+    const option = document.createElement('option');
+    option.value = title;
+    option.textContent = title;
+    slctJobTitles.appendChild(option);
+  }
+}
+
 document.addEventListener("visibilitychange", async () => {
   if (document.visibilityState === "visible") {
     clearFollowedList();
     await loadSenderAddresses();
+    await loadJobTitles();
   }
 });
 
@@ -86,6 +99,35 @@ document.addEventListener('DOMContentLoaded', async () => {
   await senderData.ready;
   await loadSenderAddresses();
   await loadSenderData();
+  await loadJobTitles();
+
+  btnRemoveJobTitle.disabled = true;
+  btnAddJobTitle.disabled = true;
+
+  txtJobTitle.addEventListener('input', () => {
+    btnAddJobTitle.disabled = txtJobTitle.value.trim().length === 0;
+  });
+
+  btnAddJobTitle.addEventListener('click', async () => {
+    const title = txtJobTitle.value.trim();
+    await jobTitles.add(title);
+    txtJobTitle.value = '';
+    btnAddJobTitle.disabled = true;
+    await loadJobTitles();
+  });
+
+  slctJobTitles.addEventListener('change', () => {
+    btnRemoveJobTitle.disabled = slctJobTitles.selectedIndex < 0;
+  });
+
+  btnRemoveJobTitle.addEventListener('click', async () => {
+    const selectedOption = slctJobTitles.options[slctJobTitles.selectedIndex];
+    if (selectedOption && selectedOption.value) {
+      await jobTitles.remove(selectedOption.value);
+      slctJobTitles.removeChild(selectedOption);
+      slctJobTitles.dispatchEvent(new Event('change'));
+    }
+  });
 
   // Enable/disable stop-tracking button based on selection
   slctTrackedSenders.addEventListener('change', () => {
@@ -99,6 +141,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Refresh the tracked address list from storage
   btnRefreshSenders.addEventListener('click', async () => {
     await loadSenderAddresses();
+  });
+
+  btnRefreshJobTitles.addEventListener('click', async () => {
+    await loadJobTitles();
   });
 
   // Remove selected address from tracking
@@ -144,7 +190,7 @@ countDaysEl.addEventListener('input', () => {
   countDaysEl.value = clamped;
 });
 
-btnRefreshJobs.addEventListener('click', async () => {
+btnRefreshJobTitles.addEventListener('click', async () => {
   clearJobsList();
   await loadSenderData();
 });
@@ -157,6 +203,15 @@ function setButtonState() {
 
 function clearJobsList() {
   document.getElementById('body-jobs-list').replaceChildren();
+}
+
+function clearJobTitlesList() {
+  while (slctJobTitles.options.length > 0) {
+    slctJobTitles.remove(0);
+  }
+
+  btnRemoveJobTitle.disabled = true;
+  slctJobTitles.dispatchEvent(new Event('change'));
 }
 
 function clearFollowedList() {
