@@ -25,7 +25,11 @@ const txtSenderEmail = document.getElementById('input-sender-email');
 const btnTrackSender = document.getElementById('btn-track-sender');
 
 // Jobs List Configuration
-const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
+const slctJobTitles = document.getElementById('select-job-titles');
+const btnRemoveJobTitle = document.getElementById('btn-remove-job-title');
+const btnRefreshJobTitles = document.getElementById('btn-refresh-job-titles');
+const txtJobTitle = document.getElementById('input-job-title');
+const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 
 async function loadSenderData() {
