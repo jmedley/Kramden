@@ -103,5 +103,29 @@ class DayRange {
   }
 }
 
-export { DayRange };
+class JobTitles {
+  async getTitles() {
+    const result = await chrome.storage.sync.get(['jobTitles']);
+    const titles = result.jobTitles;
+    return Array.isArray(titles) ? titles.filter(Boolean) : [];
+  }
+
+  async add(title) {
+    if (!title || typeof title !== 'string') return;
+    const titles = await this.getTitles();
+    if (!titles.includes(title)) {
+      titles.push(title);
+      await chrome.storage.sync.set({ jobTitles: titles });
+    }
+  }
+
+  async remove(title) {
+    if (!title || typeof title !== 'string') return;
+    const titles = await this.getTitles();
+    const filtered = titles.filter((t) => t !== title);
+    await chrome.storage.sync.set({ jobTitles: filtered });
+  }
+}
+
+export { DayRange, JobTitles };
 export default SenderData;
