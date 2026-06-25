@@ -4,6 +4,12 @@
     "manifest_version": 3,
     "description": "__MSG_extensionDescription__",
     "default_locale": "en",
+    "icons": {
+        "16": "images/kramden-16.png",
+        "32": "images/kramden-32.png",
+        "48": "images/kramden-48.png",
+        "128": "images/kramden-128.png"
+    },
     "permissions": [
         "activeTab",
         "identity",
@@ -23,7 +29,10 @@
         "open_in_tab": true
     },
     "action": {
-        "default_popup": "popup/popup.html"
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "32": "images/kramden-32.png"
+        }
     },
     "content_scripts": [
         {
