@@ -49,6 +49,9 @@ async function loadSenderData() {
     try {
       const message = await emailClient.getMessage(id);
       const jobs = getJobs(message);
+      if (!jobs.jobs.length) {
+        console.log(`No jobs found from ${jobs.senderEmail}`);
+      }
       const filtered = titleTerms.length
         ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
         : jobs.jobs;
@@ -193,11 +196,6 @@ txtSender.addEventListener('input', () => {
   setButtonState();
 });
 
-countDaysEl.addEventListener('input', () => {
-  const digitsOnly = countDaysEl.value.replace(/\D/g, '');
-  const clamped = Math.min(31, Math.max(1, parseInt(digitsOnly, 10) || 1));
-  countDaysEl.value = clamped;
-});
 
 btnRefreshJobs.addEventListener('click', async () => {
   clearJobsList();
