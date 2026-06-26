@@ -1,8 +1,8 @@
 {
     "extensionName": {
-        "message": "Job Search Assistant"
+        "message": "Job Search Monitor"
     },
     "extensionDescription": {
-        "message": "A Chrome extension to help job seekers manage their applications and stay organized."
+        "message": "Monitor your inbox for open jobs in real time."
     }
 }
