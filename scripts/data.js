@@ -95,9 +95,8 @@ class DayRange {
 
   async getDays() {
     const result = await chrome.storage.sync.get(['days']);
-    this.#days = parseInt(result.days, 10);
     const days = parseInt(result.days, 10);
-    return isNaN(this.#days) ? 1 : Math.max(1, Math.min(31, days));
+    return isNaN(days) ? 1 : Math.max(1, Math.min(31, days));
   }
 
   async setDays(days) {
