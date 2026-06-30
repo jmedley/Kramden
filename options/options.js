@@ -40,7 +40,11 @@ const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 
 async function loadSenderData() {
-  if (!hasMetaData()) { return; }
+  if (hasMetaData()) {
+    initialHelp.style.display = 'none';
+  } else {
+    return;
+  }
   const authToken = await getAuthToken();
   const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
   const ids = await emailClient.loadIDs();
@@ -264,9 +268,5 @@ function getAuthToken() {
 }
 
 function hasMetaData() {
-  const hasMeta = (slctTrackedSenders.length > 0) && (slctJobTitles.length > 0);
-  if (hasMeta) {
-    initialHelp.display = 'none';
-  }
-  return hasMeta;
+  return (slctTrackedSenders.length > 0) && (slctJobTitles.length > 0);
 }
