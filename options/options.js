@@ -40,7 +40,7 @@ const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 
 async function loadSenderData() {
-  if (hasMetaData()) {
+  if (slctJobTitles.length > 0) {
     initialHelp.style.display = 'none';
   } else {
     return;
@@ -265,8 +265,4 @@ function getAuthToken() {
       }
     });
   });
-}
-
-function hasMetaData() {
-  return (slctTrackedSenders.length > 0) && (slctJobTitles.length > 0);
 }
