@@ -24,7 +24,7 @@ const followError = document.getElementById('follow-error');
 function setFollowUI(following) {
   isFollowing = following;
   followIcon.textContent = following ? '🔕' : '📌';
-  followLabel.textContent = following ? 'Ignore current email' : 'Follow current email';
+  followLabel.textContent = following ? 'Ignore current sender' : 'Follow current sender';
 }
 
 function setLoading(on) {

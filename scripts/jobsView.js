@@ -36,7 +36,6 @@ function clear(tbody) {
 }
 
 function renderJobs(jobs = []) {
-  // const tbody = document.querySelector(tbodySelector);
   const tbody = document.getElementById('body-jobs-list');
   if (!tbody) return;
   const frag = document.createDocumentFragment();
