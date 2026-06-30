@@ -18,6 +18,7 @@ let addresses;
 
 
 // Jobs List
+const initialHelp = document.getElementById('initial-help');
 const jobsCountEl = document.getElementById('count-jobs');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
@@ -39,6 +40,7 @@ const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 
 async function loadSenderData() {
+  if (!hasMetaData()) { return; }
   const authToken = await getAuthToken();
   const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
   const ids = await emailClient.loadIDs();
@@ -106,10 +108,9 @@ document.addEventListener("visibilitychange", async () => {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await senderData.ready;
   await loadSenderAddresses();
-  await loadSenderData();
   await loadJobTitles();
+  await loadSenderData();
 
   btnRemoveJobTitle.disabled = true;
   btnAddJobTitle.disabled = true;
@@ -260,4 +261,12 @@ function getAuthToken() {
       }
     });
   });
+}
+
+function hasMetaData() {
+  const hasMeta = (slctTrackedSenders.length > 0) && (slctJobTitles.length > 0);
+  if (hasMeta) {
+    initialHelp.display = 'none';
+  }
+  return hasMeta;
 }

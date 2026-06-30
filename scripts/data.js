@@ -92,10 +92,12 @@ class SenderData {
 }
 
 class DayRange {
+
   async getDays() {
     const result = await chrome.storage.sync.get(['days']);
+    this.#days = parseInt(result.days, 10);
     const days = parseInt(result.days, 10);
-    return isNaN(days) ? 1 : Math.max(1, Math.min(31, days));
+    return isNaN(this.#days) ? 1 : Math.max(1, Math.min(31, days));
   }
 
   async setDays(days) {
@@ -106,7 +108,7 @@ class DayRange {
 class JobTitles {
   async getTitles() {
     const result = await chrome.storage.sync.get(['jobTitles']);
-    const titles = result.jobTitles;
+    const titles = result.jobTitles || [];
     return Array.isArray(titles) ? titles.filter(Boolean) : [];
   }
 
@@ -125,6 +127,8 @@ class JobTitles {
     const filtered = titles.filter((t) => t !== title);
     await chrome.storage.sync.set({ jobTitles: filtered });
   }
+
+
 }
 
 export { DayRange, JobTitles };
