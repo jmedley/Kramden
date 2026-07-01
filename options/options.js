@@ -39,7 +39,7 @@ const txtJobTitle = document.getElementById('input-job-title');
 const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
 
-async function loadSenderData() {
+async function loadDataFromEmails() {
   if (slctJobTitles.length > 0) {
     initialHelp.style.display = 'none';
   } else {
@@ -107,14 +107,14 @@ document.addEventListener("visibilitychange", async () => {
   if (document.visibilityState === "visible") {
     clearFollowedList();
     await loadSenderAddresses();
-    await loadJobTitles();
+    await loadDataFromEmails();
   }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSenderAddresses();
   await loadJobTitles();
-  await loadSenderData();
+  await loadDataFromEmails();
 
   btnRemoveJobTitle.disabled = true;
   btnAddJobTitle.disabled = true;
@@ -205,12 +205,12 @@ txtSender.addEventListener('input', () => {
 btnRefreshJobs.addEventListener('click', async () => {
   clearJobsList();
   await dayRange.setDays(parseInt(countDaysEl.value, 10));
-  await loadSenderData();
+  await loadDataFromEmails();
 });
 
 btnRefreshJobTitles.addEventListener('click', async () => {
   clearJobsList();
-  await loadSenderData();
+  await loadDataFromEmails();
 });
 
 function setButtonState() {
