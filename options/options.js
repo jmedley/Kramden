@@ -7,8 +7,8 @@ import EmailClient from '../scripts/emailClient.js';
 import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
-import { JobTitles } from '../scripts/data.js';
 import { DayRange } from '../scripts/data.js';
+import { JobTitles } from '../scripts/data.js';
 
 // Data
 const senderData = new SenderData();

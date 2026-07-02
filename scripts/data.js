@@ -4,6 +4,8 @@
   without the express written permission of the author.
 */
 
+import { sortObjects } from '../scripts/utils.js';
+
 class SenderData {
   #normalizeAddresses(value) {
     if (!Array.isArray(value)) {
@@ -83,10 +85,13 @@ class SenderData {
 
   get addresses() {
     return this.#getAddresses().then((addresses) =>
-      addresses.map((entry) => ({
-        sender: entry.sender,
-        address: [...entry.address],
-      }))
+      sortObjects(
+        addresses.map((entry) => ({
+          sender: entry.sender,
+          address: [...entry.address],
+        })),
+        'sender'
+      )
     );
   }
 }
@@ -108,7 +113,9 @@ class JobTitles {
   async getTitles() {
     const result = await chrome.storage.sync.get(['jobTitles']);
     const titles = result.jobTitles || [];
-    return Array.isArray(titles) ? titles.filter(Boolean) : [];
+    return Array.isArray(titles)
+      ? titles.filter(Boolean).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+      : [];
   }
 
   async add(title) {
