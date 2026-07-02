@@ -9,6 +9,7 @@ import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
 import { DayRange } from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
+import { sortObjects } from '../scripts/utils.js';
 
 // Data
 const senderData = new SenderData();
@@ -49,7 +50,7 @@ async function loadDataFromEmails() {
   const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
   const ids = await emailClient.loadIDs();
   const titleTerms = await jobTitles.getTitles();
-  const allJobs = [];
+  let allJobs = [];
 
   for (const id of ids) {
     try {
@@ -68,6 +69,7 @@ async function loadDataFromEmails() {
   }
 
   jobsCountEl.textContent = allJobs.length;
+  allJobs = sortObjects(allJobs, 'jobTitle');
   renderJobs(allJobs);
 }
 
