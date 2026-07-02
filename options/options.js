@@ -49,7 +49,7 @@ async function loadDataFromEmails() {
   const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
   const ids = await emailClient.loadIDs();
   const titleTerms = await jobTitles.getTitles();
-  let jobsCount = 0;
+  const allJobs = [];
 
   for (const id of ids) {
     try {
@@ -61,13 +61,14 @@ async function loadDataFromEmails() {
       const filtered = titleTerms.length
         ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
         : jobs.jobs;
-      jobsCount += filtered.length;
-      jobsCountEl.textContent = jobsCount;
-      renderJobs(filtered);
+      allJobs.push(...filtered);
     } catch (err) {
       console.error(`Error processing email ID ${id}:`, err);
     }
   }
+
+  jobsCountEl.textContent = allJobs.length;
+  renderJobs(allJobs);
 }
 
 async function loadSenderAddresses() {
@@ -114,12 +115,11 @@ document.addEventListener("visibilitychange", async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSenderAddresses();
   await loadJobTitles();
+  countDaysEl.value = await dayRange.getDays();
   await loadDataFromEmails();
 
   btnRemoveJobTitle.disabled = true;
   btnAddJobTitle.disabled = true;
-
-  countDaysEl.value = await dayRange.getDays();
 
   txtJobTitle.addEventListener('input', () => {
     btnAddJobTitle.disabled = txtJobTitle.value.trim().length === 0;
