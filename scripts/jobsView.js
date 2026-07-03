@@ -31,13 +31,10 @@ function createRow(job = {}) {
   return tr;
 }
 
-function clear(tbody) {
-  tbody.innerHTML = '';
-}
-
 function renderJobs(jobs = []) {
   const tbody = document.getElementById('body-jobs-list');
   if (!tbody) return;
+  tbody.innerHTML = '';
   const frag = document.createDocumentFragment();
   jobs.forEach((job) => frag.appendChild(createRow(job)));
   tbody.appendChild(frag);
