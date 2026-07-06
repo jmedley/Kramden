@@ -137,5 +137,26 @@ class JobTitles {
 
 }
 
-export { DayRange, JobTitles };
+//  { jobTitle: title, company, location, applyLink: url, datePosted, pay: 'Not provided' };
+
+class Jobs {
+  #jobs = [];
+
+  add(jobs) {
+    for (const job of jobs) {
+      const isDuplicate = this.#jobs.some(
+        (j) => j.jobTitle === job.jobTitle && j.company === job.company && j.location === job.location
+      );
+      if (!isDuplicate) {
+        this.#jobs.push(job);
+      }
+    }
+  }
+
+  get jobs() {
+    return this.#jobs;
+  }
+}
+
+export { DayRange, JobTitles, Jobs };
 export default SenderData;
