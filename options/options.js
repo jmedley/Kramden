@@ -22,6 +22,7 @@ let addresses;
 // Jobs List
 const initialHelp = document.getElementById('initial-help');
 const jobsCountEl = document.getElementById('count-jobs');
+const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
 
@@ -47,31 +48,40 @@ async function loadDataFromEmails() {
   } else {
     return;
   }
-  const authToken = await getAuthToken();
-  const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
-  const ids = await emailClient.loadIDs();
-  const titleTerms = await jobTitles.getTitles();
-  const jobsData = new Jobs();
 
-  for (const id of ids) {
-    try {
-      const message = await emailClient.getMessage(id);
-      const jobs = getJobs(message);
-      if (!jobs.jobs.length) {
-        console.log(`No jobs found from ${jobs.senderEmail}`);
+  jobsCountEl.style.display = 'none';
+  retrievingJobsEl.style.display = 'inline-flex';
+
+  try {
+    const authToken = await getAuthToken();
+    const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
+    const ids = await emailClient.loadIDs();
+    const titleTerms = await jobTitles.getTitles();
+    const jobsData = new Jobs();
+
+    for (const id of ids) {
+      try {
+        const message = await emailClient.getMessage(id);
+        const jobs = getJobs(message);
+        if (!jobs.jobs.length) {
+          console.log(`No jobs found from ${jobs.senderEmail}`);
+        }
+        const filtered = titleTerms.length
+          ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
+          : jobs.jobs;
+        jobsData.add(filtered);
+      } catch (err) {
+        console.error(`Error processing email ID ${id}:`, err);
       }
-      const filtered = titleTerms.length
-        ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
-        : jobs.jobs;
-      jobsData.add(filtered);
-    } catch (err) {
-      console.error(`Error processing email ID ${id}:`, err);
     }
-  }
 
-  jobsCountEl.textContent = jobsData.jobs.length;
-  const sortedJobs = sortObjects(jobsData.jobs, 'jobTitle');
-  renderJobs(sortedJobs);
+    jobsCountEl.textContent = jobsData.jobs.length;
+    const sortedJobs = sortObjects(jobsData.jobs, 'jobTitle');
+    renderJobs(sortedJobs);
+  } finally {
+    retrievingJobsEl.style.display = 'none';
+    jobsCountEl.style.display = '';
+  }
 }
 
 async function loadSenderAddresses() {
@@ -218,7 +228,7 @@ btnRefreshJobTitles.addEventListener('click', async () => {
 
 function setButtonState() {
   const isSenderValid = evaluateSenderInput();
-  const isAddressValid = evaluateEmailInput();
+  const isAddressValid = evaluateAddressInput();
   btnTrackSender.disabled = !(isSenderValid && isAddressValid);
 }
 
