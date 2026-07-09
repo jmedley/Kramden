@@ -15,6 +15,7 @@ function createRow(job = {}) {
   const companyEl = tr.querySelector('.company');
   const locationEl = tr.querySelector('.location');
   const payEl = tr.querySelector('.pay');
+  const receivedDateEl = tr.querySelector('.received-date');
   const anchor = tr.querySelector('.btn-open');
   const btnCopy = tr.querySelector('.btn-copy');
 
@@ -22,6 +23,7 @@ function createRow(job = {}) {
   if (companyEl) companyEl.textContent = job.company || '';
   if (locationEl) locationEl.textContent = job.location || 'Not provided';
   if (payEl) payEl.textContent = job.pay || 'Not provided';
+  if (receivedDateEl) receivedDateEl.textContent = job.receivedDate ? job.receivedDate.toLocaleString() : 'Not provided';
   if (anchor) {
     anchor.href = job.applyLink || '#';
     anchor.target = '_blank';

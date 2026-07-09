@@ -69,6 +69,9 @@ async function loadDataFromEmails() {
         const filtered = titleTerms.length
           ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
           : jobs.jobs;
+        for (const job of filtered) {
+          job.receivedDate = jobs.receivedDate;
+        }
         jobsData.add(filtered);
       } catch (err) {
         console.error(`Error processing email ID ${id}:`, err);
