@@ -10,12 +10,14 @@ import SenderData from '../scripts/data.js';
 import { DayRange } from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
 import { Jobs } from '../scripts/data.js';
+import { SortColumn } from '../scripts/data.js';
 import { sortObjects } from '../scripts/utils.js';
 
 // Data
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
 const dayRange = new DayRange();
+const sortColumn = new SortColumn();
 let addresses;
 let currentJobs = [];
 let currentSortedTh = null;
@@ -148,6 +150,14 @@ document.addEventListener("visibilitychange", async () => {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const storedColumnId = await sortColumn.getColumn();
+  if (storedColumnId && jobHeadingSortKeys[storedColumnId]) {
+    const storedTh = document.getElementById(storedColumnId);
+    if (storedTh) {
+      markSortedHeading(storedTh);
+    }
+  }
+
   await loadSenderAddresses();
   await loadJobTitles();
   countDaysEl.value = await dayRange.getDays();
@@ -254,6 +264,7 @@ function markSortedHeading(th) {
   }
   th.classList.add('th-sorted');
   currentSortedTh = th;
+  sortColumn.setColumn(th.id);
 }
 
 function sortJobsByHeading(th) {

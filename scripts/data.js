@@ -137,6 +137,17 @@ class JobTitles {
 
 }
 
+class SortColumn {
+  async getColumn() {
+    const result = await chrome.storage.local.get(['sortColumn']);
+    return result.sortColumn ?? null;
+  }
+
+  async setColumn(id) {
+    await chrome.storage.local.set({ sortColumn: id });
+  }
+}
+
 //  { jobTitle: title, company, location, applyLink: url, datePosted, pay: 'Not provided' };
 
 class Jobs {
@@ -158,5 +169,5 @@ class Jobs {
   }
 }
 
-export { DayRange, JobTitles, Jobs };
+export { DayRange, JobTitles, Jobs, SortColumn };
 export default SenderData;
