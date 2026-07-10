@@ -70,7 +70,7 @@ async function loadDataFromEmails() {
           ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
           : jobs.jobs;
         for (const job of filtered) {
-          job.receivedDate = jobs.receivedDate;
+          job.receivedDate = jobs.receivedDate.toLocaleString();
         }
         jobsData.add(filtered);
       } catch (err) {
@@ -79,7 +79,7 @@ async function loadDataFromEmails() {
     }
 
     jobsCountEl.textContent = jobsData.jobs.length;
-    const sortedJobs = sortObjects(jobsData.jobs, 'jobTitle');
+    const sortedJobs = sortObjects(jobsData.jobs, 'receivedDate');
     renderJobs(sortedJobs);
   } finally {
     retrievingJobsEl.style.display = 'none';
