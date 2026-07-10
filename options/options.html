@@ -14,12 +14,34 @@
 <body>
   <main>
 
+    <div id="page-help-banner" class="help-banner" role="note">
+      <p>This dashboard scans your Gmail inbox for job postings from the senders listed in the "Tracked Senders"
+        section, and filters them by the
+        job titles you're interested in.</p>
+      <button type="button" id="btn-dismiss-help" class="btn-dismiss" aria-label="Dismiss help">&times;</button>
+    </div>
+
     <section id="section-jobs-list" aria-label="section-jobs-list">
-      <span class="help" id="initial-help">To list emails add at least one job title and at least one sender's
-        email address. The list may be empty until a sender's email contains a matching job.</span>
+      <span class="help" id="initial-help">Add at least one job title below to start seeing results here.</span>
+      <p class="help" id="empty-results-help">No jobs matched your tracked senders and titles in the last <span
+          id="empty-results-days"></span> days. Try widening the day range or adding more job titles.</p>
       <div class="section-card">
         <div class="section-header">
           <h2><img src="../images/kramden-16.png" alt="Jobs" /> Jobs</h2>
+          <details class="help-details">
+            <summary aria-label="What is this section?">?</summary>
+            <div class="help-popover">
+              <ul>
+                <li><strong>Days:</strong> how many days back (1&ndash;31) to search your inbox.</li>
+                <li><strong>Refresh:</strong> re-scans Gmail using your current senders, titles, and day range. The
+                  first time, Google will ask you to sign in and grant access.</li>
+                <li><strong>Sorting:</strong> click a column header to sort, click again to reverse. Your sort is
+                  remembered next time you open this page.</li>
+                <li><strong>Open / Copy link:</strong> "Open" opens the job posting in a new tab; "Copy link" copies
+                  the apply URL to your clipboard.</li>
+              </ul>
+            </div>
+          </details>
           <span class="count"><span id="count-jobs"></span><span id="retrieving-jobs"><span class="spinner"
                 aria-hidden="true"></span>Retrieving jobs</span> jobs found in emails from the last <select
               id="count-days">
@@ -98,6 +120,7 @@
                 <div class="option-title">
                   <label for="select-tracked-senders">Tracked Senders</label>
                 </div>
+                <p class="help-inline">These are the Gmail addresses the dashboard scans for job postings.</p>
                 <div id="div-tracked">
                   <select id="select-tracked-senders" name="followed-emails" size="8">
                     <!-- Options will be populated by JavaScript -->
@@ -132,6 +155,15 @@
               <div id="div-job-titles">
                 <div class="option-title">
                   <label for="select-job-titles">Job Titles</label>
+                  <details class="help-details">
+                    <summary aria-label="What is this section?">?</summary>
+                    <div class="help-popover">
+                      <p>A job is shown if its title contains any of your tracked keywords, matched
+                        case-insensitively as a substring (e.g. "Engineer" also matches "Senior Software
+                        Engineer"). If no titles are tracked, all jobs from tracked senders are shown.</p>
+                      <p>Select a title and click <strong>Remove</strong> to stop tracking it.</p>
+                    </div>
+                  </details>
                 </div>
                 <div id="div-selected-titles">
                   <select id="select-job-titles" name="job-titles" size="8" aria-label="Job titles to track">

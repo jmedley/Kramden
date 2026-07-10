@@ -8,6 +8,7 @@ import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
 import { DayRange } from '../scripts/data.js';
+import { HelpBanner } from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
 import { Jobs } from '../scripts/data.js';
 import { SortColumn } from '../scripts/data.js';
@@ -20,14 +21,21 @@ const jobTitles = new JobTitles();
 const dayRange = new DayRange();
 const sortColumn = new SortColumn();
 const sortDirection = new SortDirection();
+const helpBanner = new HelpBanner();
 let addresses;
 let currentJobs = [];
 let currentSortedTh = null;
 let currentSortDirection = 'asc';
 
 
+// Page Help
+const pageHelpBanner = document.getElementById('page-help-banner');
+const btnDismissHelp = document.getElementById('btn-dismiss-help');
+
 // Jobs List
 const initialHelp = document.getElementById('initial-help');
+const emptyResultsHelp = document.getElementById('empty-results-help');
+const emptyResultsDaysEl = document.getElementById('empty-results-days');
 const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const countDaysEl = document.getElementById('count-days');
@@ -73,6 +81,7 @@ async function loadDataFromEmails() {
 
   jobsCountEl.style.display = 'none';
   retrievingJobsEl.style.display = 'inline-flex';
+  emptyResultsHelp.style.display = 'none';
 
   try {
     const authToken = await getAuthToken();
@@ -105,6 +114,11 @@ async function loadDataFromEmails() {
     currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id], currentSortDirection);
     markSortedHeading(sortTh, currentSortDirection);
     renderJobs(currentJobs);
+
+    if (currentJobs.length === 0) {
+      emptyResultsDaysEl.textContent = countDaysEl.value;
+      emptyResultsHelp.style.display = 'block';
+    }
   } finally {
     retrievingJobsEl.style.display = 'none';
     jobsCountEl.style.display = '';
@@ -153,6 +167,10 @@ document.addEventListener("visibilitychange", async () => {
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if (await helpBanner.isDismissed()) {
+    pageHelpBanner.style.display = 'none';
+  }
+
   const storedColumnId = await sortColumn.getColumn();
   const storedDirection = await sortDirection.getDirection();
   if (storedColumnId && jobHeadingSortKeys[storedColumnId]) {
@@ -223,6 +241,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       slctTrackedSenders.dispatchEvent(new Event('change'));
     }
   });
+});
+
+btnDismissHelp.addEventListener('click', async () => {
+  pageHelpBanner.style.display = 'none';
+  await helpBanner.dismiss();
 });
 
 btnTrackSender.addEventListener('click', async () => {

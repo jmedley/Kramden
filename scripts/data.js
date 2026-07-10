@@ -159,6 +159,17 @@ class SortDirection {
   }
 }
 
+class HelpBanner {
+  async isDismissed() {
+    const result = await chrome.storage.local.get(['helpBannerDismissed']);
+    return result.helpBannerDismissed === true;
+  }
+
+  async dismiss() {
+    await chrome.storage.local.set({ helpBannerDismissed: true });
+  }
+}
+
 //  { jobTitle: title, company, location, applyLink: url, datePosted, pay: 'Not provided' };
 
 class Jobs {
@@ -180,5 +191,5 @@ class Jobs {
   }
 }
 
-export { DayRange, JobTitles, Jobs, SortColumn, SortDirection };
+export { DayRange, HelpBanner, JobTitles, Jobs, SortColumn, SortDirection };
 export default SenderData;

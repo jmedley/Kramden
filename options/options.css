@@ -335,3 +335,108 @@ tr {
 #error {
   display: none;
 }
+
+.help {
+  display: block;
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+#empty-results-help {
+  display: none;
+}
+
+.help-inline {
+  color: #777;
+  font-size: 0.8rem;
+  margin: -2px 0 4px;
+}
+
+.help-banner {
+  background: #eaf1ff;
+  border: 1px solid #c7dcff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.help-banner p {
+  font-size: 0.85rem;
+  color: #1557b0;
+  line-height: 1.4;
+}
+
+.btn-dismiss {
+  background: transparent;
+  border: none;
+  color: #1557b0;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.help-details {
+  margin-left: 2px;
+  position: relative;
+}
+
+.option-title .help-details {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.help-details summary {
+  list-style: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.option-title .help-details summary {
+  background: #e5e7eb;
+  color: #555;
+}
+
+.help-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.help-popover {
+  position: absolute;
+  z-index: 10;
+  top: 22px;
+  left: 0;
+  width: 280px;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.help-popover ul {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.help-popover p + p {
+  margin-top: 8px;
+}
