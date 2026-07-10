@@ -156,8 +156,16 @@
               <div id="div-tracking">
                 <div class="option-title">
                   <label for="select-tracked-senders">Tracked Senders</label>
+                  <details class="help-details">
+                    <summary aria-label="What is this section?">?</summary>
+                    <div class="help-popover">
+                      <p>These are the Gmail addresses the dashboard scans for job postings. If no senders are tracked,
+                        all jobs matching your tracked titles are shown.</p>
+                      <p>Select a sender and click <strong>Stop tracking</strong> to stop scanning for jobs from that
+                        sender.</p>
+                    </div>
+                  </details>
                 </div>
-                <p class="help-inline">These are the Gmail addresses the dashboard scans for job postings.</p>
                 <div id="div-tracked">
                   <select id="select-tracked-senders" name="followed-emails" size="8">
                     <!-- Options will be populated by JavaScript -->
