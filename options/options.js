@@ -140,11 +140,11 @@ async function loadSenderAddresses() {
   }
 
   // Ensure stop button reflects current selection state on load
-  if (slctTrackedSenders.options.length === 0) {
-    btnStopTracking.disabled = true;
-  } else {
-    btnStopTracking.disabled = slctTrackedSenders.selectedIndex < 0;
-  }
+  // if (slctTrackedSenders.options.length === 0) {
+  //   btnStopTracking.disabled = true;
+  // } else {
+  //   btnStopTracking.disabled = slctTrackedSenders.selectedIndex < 0;
+  // }
 }
 
 async function loadJobTitles() {
@@ -223,24 +223,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Refresh the tracked address list from storage
-  btnRefreshSenders.addEventListener('click', async () => {
-    await loadSenderAddresses();
-  });
+  // btnRefreshSenders.addEventListener('click', async () => {
+  //   await loadSenderAddresses();
+  // });
 
   btnRefreshJobTitles.addEventListener('click', async () => {
     await loadJobTitles();
   });
 
   // Remove selected address from tracking
-  btnStopTracking.addEventListener('click', async () => {
-    const selectedOption = slctTrackedSenders.options[slctTrackedSenders.selectedIndex];
-    if (selectedOption && selectedOption.value) {
-      const addresses = selectedOption.value.split(', ').map((e) => e.trim());
-      await senderData.remove({ address: addresses });
-      slctTrackedSenders.removeChild(selectedOption);
-      slctTrackedSenders.dispatchEvent(new Event('change'));
-    }
-  });
+  // btnStopTracking.addEventListener('click', async () => {
+  //   const selectedOption = slctTrackedSenders.options[slctTrackedSenders.selectedIndex];
+  //   if (selectedOption && selectedOption.value) {
+  //     const addresses = selectedOption.value.split(', ').map((e) => e.trim());
+  //     await senderData.remove({ address: addresses });
+  //     slctTrackedSenders.removeChild(selectedOption);
+  //     slctTrackedSenders.dispatchEvent(new Event('change'));
+  //   }
+  // });
 });
 
 btnDismissHelp.addEventListener('click', async () => {
@@ -248,30 +248,30 @@ btnDismissHelp.addEventListener('click', async () => {
   await helpBanner.dismiss();
 });
 
-btnTrackSender.addEventListener('click', async () => {
-  const senderData = {
-    sender: txtSender.value.trim(),
-    address: [txtSenderEmail.value.trim()]
-  };
-  senderData.add(senderData).then(() => {
-    // Clear inputs and disable button after successful addition
-    txtSender.value = '';
-    txtSenderEmail.value = '';
-    setButtonState();
-    loadSenderAddresses(); // Refresh the list to show the newly added sender
-  })
-    .catch((err) => {
-      console.error('Error adding sender:', err);
-    });
-});
+// btnTrackSender.addEventListener('click', async () => {
+//   const senderData = {
+//     sender: txtSender.value.trim(),
+//     address: [txtSenderEmail.value.trim()]
+//   };
+//   senderData.add(senderData).then(() => {
+//     // Clear inputs and disable button after successful addition
+//     txtSender.value = '';
+//     txtSenderEmail.value = '';
+//     setButtonState();
+//     loadSenderAddresses(); // Refresh the list to show the newly added sender
+//   })
+//     .catch((err) => {
+//       console.error('Error adding sender:', err);
+//     });
+// });
 
-txtSenderEmail.addEventListener('input', () => {
-  setButtonState();
-});
+// txtSenderEmail.addEventListener('input', () => {
+//   setButtonState();
+// });
 
-txtSender.addEventListener('input', () => {
-  setButtonState();
-});
+// txtSender.addEventListener('input', () => {
+//   setButtonState();
+// });
 
 
 btnRefreshJobs.addEventListener('click', async () => {
@@ -333,7 +333,7 @@ function clearFollowedList() {
     slctTrackedSenders.remove(0);
   }
 
-  btnStopTracking.disabled = true;
+  // btnStopTracking.disabled = true;
   slctTrackedSenders.dispatchEvent(new Event('change'));
 }
 
