@@ -94,9 +94,9 @@ async function loadDataFromEmails() {
       try {
         const message = await emailClient.getMessage(id);
         const jobs = getJobs(message);
-        if (!jobs.jobs.length) {
-          console.log(`No jobs found from ${jobs.senderEmail}`);
-        }
+        // if (!jobs.jobs.length) {
+        //   console.log(`No jobs found from ${jobs.senderEmail}`);
+        // }
         const filtered = titleTerms.length
           ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
           : jobs.jobs;
@@ -351,12 +351,12 @@ function evaluateAddressInput() {
 function getAuthToken() {
   return new Promise((resolve, reject) => {
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
-      console.log('Auth token obtained:', token);
+      // console.log('Auth token obtained:', token);
       if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError);
         reject(chrome.runtime.lastError);
       } else {
-        console.log('Auth token obtained successfully:', token);
+        // console.log('Auth token obtained successfully:', token);
         resolve(token);
       }
     });
