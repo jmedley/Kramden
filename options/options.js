@@ -32,6 +32,14 @@ let currentSortDirection = 'asc';
 const pageHelpBanner = document.getElementById('page-help-banner');
 const btnDismissHelp = document.getElementById('btn-dismiss-help');
 
+// Help Popovers
+const helpDetailsElements = document.querySelectorAll('.help-details');
+helpDetailsElements.forEach((details) => {
+  details.addEventListener('pointerleave', () => {
+    details.removeAttribute('open');
+  });
+});
+
 // Jobs List
 const initialHelp = document.getElementById('initial-help');
 const emptyResultsHelp = document.getElementById('empty-results-help');
