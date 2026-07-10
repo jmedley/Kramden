@@ -214,13 +214,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Enable/disable stop-tracking button based on selection
-  slctTrackedSenders.addEventListener('change', () => {
-    if (slctTrackedSenders.selectedIndex >= 0) {
-      btnStopTracking.disabled = false;
-    } else {
-      btnStopTracking.disabled = true;
-    }
-  });
+  // slctTrackedSenders.addEventListener('change', () => {
+  //   if (slctTrackedSenders.selectedIndex >= 0) {
+  //     btnStopTracking.disabled = false;
+  //   } else {
+  //     btnStopTracking.disabled = true;
+  //   }
+  // });
 
   // Refresh the tracked address list from storage
   // btnRefreshSenders.addEventListener('click', async () => {
