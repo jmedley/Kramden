@@ -32,12 +32,13 @@
             <summary aria-label="What is this section?">?</summary>
             <div class="help-popover">
               <ul>
-                <li><strong>Days:</strong> how many days back (1&ndash;31) to search your inbox.</li>
-                <li><strong>Refresh:</strong> re-scans Gmail using your current senders, titles, and day range. The
-                  first time, Google will ask you to sign in and grant access.</li>
-                <li><strong>Sorting:</strong> click a column header to sort, click again to reverse. Your sort is
-                  remembered next time you open this page.</li>
-                <li><strong>Open / Copy link:</strong> "Open" opens the job posting in a new tab; "Copy link" copies
+                <li><strong>Days:</strong> how many days back (1&ndash;31) to search your inbox. The last selected value
+                  is remembered.</li>
+                <li><strong>Refresh:</strong> re-scans Gmail using your current job titles and day range. The
+                  first time, Google will ask you to sign in to grant access.</li>
+                <li><strong>Sorting:</strong> click a column header to sort. Click again to reverse. Your column and
+                  sort direction are remembered.</li>
+                <li><strong>Open / Copy links:</strong> "Open" opens the job posting in a new tab; "Copy link" copies
                   the apply URL to your clipboard.</li>
               </ul>
             </div>
@@ -122,9 +123,9 @@
                   <details class="help-details">
                     <summary aria-label="What is this section?">?</summary>
                     <div class="help-popover">
-                      <p>A job is shown if its title contains any of your tracked keywords, matched
-                        case-insensitively as a substring (e.g. "Engineer" also matches "Senior Software
-                        Engineer"). If no titles are tracked, all jobs from tracked senders are shown.</p>
+                      <p>A job is shown if its title contains any of your tracked job titles. Matching is done without
+                        regard to letter case. For example, "software engineer" also matches "Senior Software
+                        Engineer".</p>
                       <p>Select a title and click <strong>Remove</strong> to stop tracking it.</p>
                     </div>
                   </details>
@@ -161,8 +162,6 @@
                     <div class="help-popover">
                       <p>These are the Gmail addresses the dashboard scans for job postings. If no senders are tracked,
                         all jobs matching your tracked titles are shown.</p>
-                      <p>Select a sender and click <strong>Stop tracking</strong> to stop scanning for jobs from that
-                        sender.</p>
                     </div>
                   </details>
                 </div>
