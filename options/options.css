@@ -65,15 +65,16 @@ th {
   color: #555;
   font-weight: 600;
   font-size: 0.78rem;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 10px 16px;
+  padding: 10px 28px 10px 16px;
   text-align: left;
   border-bottom: 1px solid #e8eaed;
 }
 
 th:hover {
-  background: #2563eb;
+  color: #2563eb;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 th.th-sorted {
@@ -117,18 +118,6 @@ tr {
   border-radius: 6px;
   font-size: 0.8rem;
   cursor: pointer;
-}
-
-.btn-open {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
 }
 
 .btn-open:visited {
@@ -222,14 +211,14 @@ tr {
   margin-bottom: 3px;
 }
 
-.btn {
-  background: #1a73e8;
-  color: white;
+.btn,
+.btn-open {
+  background: #2563eb;
+  color: #fff;
   border: none;
   border-radius: 6px;
   padding: 6px 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8rem;
   cursor: pointer;
   text-decoration: none;
   display: flex;
@@ -245,8 +234,10 @@ tr {
   cursor: not-allowed;
 }
 
-.btn:hover {
-  color: #1557b0;
+.btn:hover,
+.btn-open:hover,
+.btn-copy:hover {
+  cursor: pointer;
 }
 
 
