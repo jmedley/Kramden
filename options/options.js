@@ -17,6 +17,7 @@ const senderData = new SenderData();
 const jobTitles = new JobTitles();
 const dayRange = new DayRange();
 let addresses;
+let currentJobs = [];
 
 
 // Jobs List
@@ -25,6 +26,22 @@ const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
+
+// Job List Headings
+const thJobTitleEl = document.getElementById('th-job-title');
+const thCompanyEl = document.getElementById('th-company');
+const thLocationEl = document.getElementById('th-location');
+const thPayEl = document.getElementById('th-pay');
+const thReceivedDateEl = document.getElementById('th-received-date');
+const thActionsEl = document.getElementById('th-actions');
+
+const jobHeadingSortKeys = {
+  'th-job-title': 'jobTitle',
+  'th-company': 'company',
+  'th-location': 'location',
+  'th-pay': 'pay',
+  'th-received-date': 'receivedDate',
+};
 
 // Senders Configuration
 const slctTrackedSenders = document.getElementById('select-tracked-senders');
@@ -40,7 +57,6 @@ const btnRemoveJobTitle = document.getElementById('btn-remove-job-title');
 const btnRefreshJobTitles = document.getElementById('btn-refresh-job-titles');
 const txtJobTitle = document.getElementById('input-job-title');
 const btnAddJobTitle = document.getElementById('btn-add-job-title');
-
 
 async function loadDataFromEmails() {
   if (slctJobTitles.length > 0) {
@@ -79,8 +95,8 @@ async function loadDataFromEmails() {
     }
 
     jobsCountEl.textContent = jobsData.jobs.length;
-    const sortedJobs = sortObjects(jobsData.jobs, 'receivedDate');
-    renderJobs(sortedJobs);
+    currentJobs = sortObjects(jobsData.jobs, 'receivedDate');
+    renderJobs(currentJobs);
   } finally {
     retrievingJobsEl.style.display = 'none';
     jobsCountEl.style.display = '';
@@ -227,6 +243,17 @@ btnRefreshJobs.addEventListener('click', async () => {
 btnRefreshJobTitles.addEventListener('click', async () => {
   clearJobsList();
   await loadDataFromEmails();
+});
+
+function sortJobsByHeading(th) {
+  const key = jobHeadingSortKeys[th.id];
+  if (!key || currentJobs.length === 0) return;
+  sortObjects(currentJobs, key);
+  renderJobs(currentJobs);
+}
+
+[thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl, thActionsEl].forEach((th) => {
+  th.addEventListener('click', () => sortJobsByHeading(th));
 });
 
 function setButtonState() {

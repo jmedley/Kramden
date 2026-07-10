@@ -71,6 +71,10 @@ th {
   border-bottom: 1px solid #e8eaed;
 }
 
+th:hover {
+  background: #2563eb;
+}
+
 tr {
   display: table-row;
   vertical-align: inherit;
