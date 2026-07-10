@@ -4,8 +4,8 @@
   without the express written permission of the author.
 */
 
-function sortObjects(objectArray, key) {
-    const sorted = _mergeSortObjects(objectArray, key);
+function sortObjects(objectArray, key, direction = 'asc') {
+    const sorted = _mergeSortObjects(objectArray, key, direction);
 
     for (let i = 0; i < sorted.length; i++) {
         objectArray[i] = sorted[i];
@@ -14,25 +14,27 @@ function sortObjects(objectArray, key) {
     return objectArray;
 }
 
-function _mergeSortObjects(objectArray, key) {
+function _mergeSortObjects(objectArray, key, direction) {
     if (objectArray.length <= 1) {
         return objectArray;
     }
 
     const middle = Math.floor(objectArray.length / 2);
-    const left = _mergeSortObjects(objectArray.slice(0, middle), key);
-    const right = _mergeSortObjects(objectArray.slice(middle), key);
+    const left = _mergeSortObjects(objectArray.slice(0, middle), key, direction);
+    const right = _mergeSortObjects(objectArray.slice(middle), key, direction);
 
-    return _mergeObjects(left, right, key);
+    return _mergeObjects(left, right, key, direction);
 }
 
-function _mergeObjects(left, right, key) {
+function _mergeObjects(left, right, key, direction) {
     const result = [];
     let i = 0;
     let j = 0;
+    const multiplier = direction === 'desc' ? -1 : 1;
 
     while (i < left.length && j < right.length) {
-        if (left[i][key].localeCompare(right[j][key], undefined, { sensitivity: 'base' }) <= 0) {
+        const comparison = left[i][key].localeCompare(right[j][key], undefined, { sensitivity: 'base' }) * multiplier;
+        if (comparison <= 0) {
             result.push(left[i]);
             i++;
         } else {

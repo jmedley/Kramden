@@ -148,6 +148,17 @@ class SortColumn {
   }
 }
 
+class SortDirection {
+  async getDirection() {
+    const result = await chrome.storage.local.get(['sortDirection']);
+    return result.sortDirection === 'desc' ? 'desc' : 'asc';
+  }
+
+  async setDirection(direction) {
+    await chrome.storage.local.set({ sortDirection: direction });
+  }
+}
+
 //  { jobTitle: title, company, location, applyLink: url, datePosted, pay: 'Not provided' };
 
 class Jobs {
@@ -169,5 +180,5 @@ class Jobs {
   }
 }
 
-export { DayRange, JobTitles, Jobs, SortColumn };
+export { DayRange, JobTitles, Jobs, SortColumn, SortDirection };
 export default SenderData;

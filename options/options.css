@@ -81,12 +81,19 @@ th.th-sorted {
 }
 
 th.th-sorted::after {
-  content: '\25BC';
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.7rem;
+}
+
+th.th-sorted.sort-asc::after {
+  content: '\25B2';
+}
+
+th.th-sorted.sort-desc::after {
+  content: '\25BC';
 }
 
 tr {

@@ -11,6 +11,7 @@ import { DayRange } from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
 import { Jobs } from '../scripts/data.js';
 import { SortColumn } from '../scripts/data.js';
+import { SortDirection } from '../scripts/data.js';
 import { sortObjects } from '../scripts/utils.js';
 
 // Data
@@ -18,9 +19,11 @@ const senderData = new SenderData();
 const jobTitles = new JobTitles();
 const dayRange = new DayRange();
 const sortColumn = new SortColumn();
+const sortDirection = new SortDirection();
 let addresses;
 let currentJobs = [];
 let currentSortedTh = null;
+let currentSortDirection = 'asc';
 
 
 // Jobs List
@@ -99,8 +102,8 @@ async function loadDataFromEmails() {
 
     jobsCountEl.textContent = jobsData.jobs.length;
     const sortTh = currentSortedTh || thReceivedDateEl;
-    currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id]);
-    markSortedHeading(sortTh);
+    currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id], currentSortDirection);
+    markSortedHeading(sortTh, currentSortDirection);
     renderJobs(currentJobs);
   } finally {
     retrievingJobsEl.style.display = 'none';
@@ -151,10 +154,11 @@ document.addEventListener("visibilitychange", async () => {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const storedColumnId = await sortColumn.getColumn();
+  const storedDirection = await sortDirection.getDirection();
   if (storedColumnId && jobHeadingSortKeys[storedColumnId]) {
     const storedTh = document.getElementById(storedColumnId);
     if (storedTh) {
-      markSortedHeading(storedTh);
+      markSortedHeading(storedTh, storedDirection);
     }
   }
 
@@ -258,21 +262,24 @@ btnRefreshJobTitles.addEventListener('click', async () => {
   await loadDataFromEmails();
 });
 
-function markSortedHeading(th) {
+function markSortedHeading(th, direction = 'asc') {
   if (currentSortedTh) {
-    currentSortedTh.classList.remove('th-sorted');
+    currentSortedTh.classList.remove('th-sorted', 'sort-asc', 'sort-desc');
   }
-  th.classList.add('th-sorted');
+  th.classList.add('th-sorted', `sort-${direction}`);
   currentSortedTh = th;
+  currentSortDirection = direction;
   sortColumn.setColumn(th.id);
+  sortDirection.setDirection(direction);
 }
 
 function sortJobsByHeading(th) {
   const key = jobHeadingSortKeys[th.id];
   if (!key || currentJobs.length === 0) return;
-  sortObjects(currentJobs, key);
+  const nextDirection = (th === currentSortedTh && currentSortDirection === 'asc') ? 'desc' : 'asc';
+  sortObjects(currentJobs, key, nextDirection);
   renderJobs(currentJobs);
-  markSortedHeading(th);
+  markSortedHeading(th, nextDirection);
 }
 
 [thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl, thActionsEl].forEach((th) => {
