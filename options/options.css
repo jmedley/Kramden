@@ -35,7 +35,7 @@ header .date {
 }
 
 main {
-  max-width: 1037px;
+  max-width: 1075px;
   margin: 0 auto;
   padding: 20px 16px 48px;
 }
@@ -60,6 +60,7 @@ td {
 }
 
 th {
+  position: relative;
   background: #f7f8fa;
   color: #555;
   font-weight: 600;
@@ -73,6 +74,19 @@ th {
 
 th:hover {
   background: #2563eb;
+}
+
+th.th-sorted {
+  color: #1557b0;
+}
+
+th.th-sorted::after {
+  content: '\25BC';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
 }
 
 tr {
@@ -225,7 +239,7 @@ tr {
 }
 
 .btn:hover {
-  background: #1557b0;
+  color: #1557b0;
 }
 
 

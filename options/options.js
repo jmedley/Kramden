@@ -18,6 +18,7 @@ const jobTitles = new JobTitles();
 const dayRange = new DayRange();
 let addresses;
 let currentJobs = [];
+let currentSortedTh = null;
 
 
 // Jobs List
@@ -95,7 +96,9 @@ async function loadDataFromEmails() {
     }
 
     jobsCountEl.textContent = jobsData.jobs.length;
-    currentJobs = sortObjects(jobsData.jobs, 'receivedDate');
+    const sortTh = currentSortedTh || thReceivedDateEl;
+    currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id]);
+    markSortedHeading(sortTh);
     renderJobs(currentJobs);
   } finally {
     retrievingJobsEl.style.display = 'none';
@@ -245,11 +248,20 @@ btnRefreshJobTitles.addEventListener('click', async () => {
   await loadDataFromEmails();
 });
 
+function markSortedHeading(th) {
+  if (currentSortedTh) {
+    currentSortedTh.classList.remove('th-sorted');
+  }
+  th.classList.add('th-sorted');
+  currentSortedTh = th;
+}
+
 function sortJobsByHeading(th) {
   const key = jobHeadingSortKeys[th.id];
   if (!key || currentJobs.length === 0) return;
   sortObjects(currentJobs, key);
   renderJobs(currentJobs);
+  markSortedHeading(th);
 }
 
 [thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl, thActionsEl].forEach((th) => {
