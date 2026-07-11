@@ -37,15 +37,5 @@
         "default_icon": {
             "32": "images/kramden-32.png"
         }
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "https://mail.google.com/*"
-            ],
-            "js": [
-                "content-scripts/content.js"
-            ]
-        }
-    ]
+    }
 }

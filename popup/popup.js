@@ -69,45 +69,45 @@ btnDashboard.addEventListener('click', () => {
   window.close();
 });
 
-btnFollow.addEventListener('click', async () => {
-  // showError('');
-  setLoading(true);
+// btnFollow.addEventListener('click', async () => {
+//   // showError('');
+//   setLoading(true);
 
-  try {
-    if (!isFollowing) {
-      await followCurrentEmail();
-      setFollowUI(true);
-    } else {
-      await ignoreCurrentEmail();
-      setFollowUI(false);
-    }
-  } catch (err) {
-    // showError(err?.message ?? 'Something went wrong. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-  window.close();
-});
+//   try {
+//     if (!isFollowing) {
+//       await followCurrentEmail();
+//       setFollowUI(true);
+//     } else {
+//       await ignoreCurrentEmail();
+//       setFollowUI(false);
+//     }
+//   } catch (err) {
+//     // showError(err?.message ?? 'Something went wrong. Please try again.');
+//   } finally {
+//     setLoading(false);
+//   }
+//   window.close();
+// });
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const targetSubstring = "https://mail.google.com/mail";
+// document.addEventListener('DOMContentLoaded', async () => {
+//   const targetSubstring = "https://mail.google.com/mail";
 
-  [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab) { return; }
-  if (!isEmailOpen(tab.url)) {
-    btnFollow.disabled = true;
-    return;
-  }
+//   [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+//   if (!tab) { return; }
+//   if (!isEmailOpen(tab.url)) {
+//     btnFollow.disabled = true;
+//     return;
+//   }
 
-  await senderData.ready;
-  const saved = await isAddressSaved();
-  console.log("Address saved:", saved);
-  if (saved) {
-    setFollowUI(true);
-  } else {
-    setFollowUI(false);
-  }
-});
+//   await senderData.ready;
+//   const saved = await isAddressSaved();
+//   console.log("Address saved:", saved);
+//   if (saved) {
+//     setFollowUI(true);
+//   } else {
+//     setFollowUI(false);
+//   }
+// });
 
 async function isAddressSaved() {
   try {
