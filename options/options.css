@@ -440,3 +440,39 @@ tr {
 .help-popover p + p {
   margin-top: 8px;
 }
+
+#dialog-add-job-title {
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 320px;
+  margin: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+#dialog-add-job-title::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#dialog-add-job-title p {
+  margin-bottom: 10px;
+}
+
+#dialog-add-job-title label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+#dialog-add-job-title input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  margin-bottom: 16px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

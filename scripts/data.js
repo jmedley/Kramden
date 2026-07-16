@@ -170,6 +170,17 @@ class HelpBanner {
   }
 }
 
+class Installed {
+  async isInstalled() {
+    const result = await chrome.storage.sync.get(['installed']);
+    return result.installed === true;
+  }
+
+  async setInstalled() {
+    await chrome.storage.sync.set({ installed: true });
+  }
+}
+
 //  { jobTitle: title, company, location, applyLink: url, datePosted, pay: 'Not provided' };
 
 class Jobs {
@@ -191,5 +202,5 @@ class Jobs {
   }
 }
 
-export { DayRange, HelpBanner, JobTitles, Jobs, SortColumn, SortDirection };
+export { DayRange, HelpBanner, Installed, JobTitles, Jobs, SortColumn, SortDirection };
 export default SenderData;

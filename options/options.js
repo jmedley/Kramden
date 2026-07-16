@@ -9,6 +9,7 @@ import renderJobs from '../scripts/jobsView.js';
 import SenderData from '../scripts/data.js';
 import { DayRange } from '../scripts/data.js';
 import { HelpBanner } from '../scripts/data.js';
+import { Installed } from '../scripts/data.js';
 import { JobTitles } from '../scripts/data.js';
 import { Jobs } from '../scripts/data.js';
 import { SortColumn } from '../scripts/data.js';
@@ -22,6 +23,7 @@ const dayRange = new DayRange();
 const sortColumn = new SortColumn();
 const sortDirection = new SortDirection();
 const helpBanner = new HelpBanner();
+const installedData = new Installed();
 let addresses;
 let currentJobs = [];
 let currentSortedTh = null;
@@ -79,6 +81,12 @@ const btnRemoveJobTitle = document.getElementById('btn-remove-job-title');
 const btnRefreshJobTitles = document.getElementById('btn-refresh-job-titles');
 const txtJobTitle = document.getElementById('input-job-title');
 const btnAddJobTitle = document.getElementById('btn-add-job-title');
+
+// Add Job Title Dialog
+const dialogAddJobTitle = document.getElementById('dialog-add-job-title');
+const inputDialogJobTitle = document.getElementById('input-dialog-job-title');
+const btnDialogSave = document.getElementById('btn-dialog-save');
+const btnDialogCancel = document.getElementById('btn-dialog-cancel');
 
 async function loadDataFromEmails() {
   if (slctJobTitles.length > 0) {
@@ -166,6 +174,13 @@ async function loadJobTitles() {
   }
 }
 
+async function addJob(title) {
+  await jobTitles.add(title);
+  txtJobTitle.value = '';
+  btnAddJobTitle.disabled = true;
+  await loadJobTitles();
+}
+
 document.addEventListener("visibilitychange", async () => {
   if (document.visibilityState === "visible") {
     clearFollowedList();
@@ -177,6 +192,11 @@ document.addEventListener("visibilitychange", async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   if (await helpBanner.isDismissed()) {
     pageHelpBanner.style.display = 'none';
+  }
+
+  if (!(await installedData.isInstalled())) {
+    await installedData.setInstalled();
+    dialogAddJobTitle.showModal();
   }
 
   const storedColumnId = await sortColumn.getColumn();
@@ -200,13 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnAddJobTitle.disabled = txtJobTitle.value.trim().length === 0;
   });
 
-  btnAddJobTitle.addEventListener('click', async () => {
-    const title = txtJobTitle.value.trim();
-    await jobTitles.add(title);
-    txtJobTitle.value = '';
-    btnAddJobTitle.disabled = true;
-    await loadJobTitles();
-  });
+  btnAddJobTitle.addEventListener('click', () => addJob(txtJobTitle.value.trim()));
 
   slctJobTitles.addEventListener('change', () => {
     btnRemoveJobTitle.disabled = slctJobTitles.selectedIndex < 0;
@@ -254,6 +268,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 btnDismissHelp.addEventListener('click', async () => {
   pageHelpBanner.style.display = 'none';
   await helpBanner.dismiss();
+});
+
+btnDialogSave.addEventListener('click', async () => {
+  await addJob(inputDialogJobTitle.value.trim());
+  dialogAddJobTitle.close();
+});
+
+btnDialogCancel.addEventListener('click', () => {
+  dialogAddJobTitle.close();
 });
 
 // btnTrackSender.addEventListener('click', async () => {

@@ -21,6 +21,18 @@
       <button type="button" id="btn-dismiss-help" class="btn-dismiss" aria-label="Dismiss help">&times;</button>
     </div>
 
+    <dialog id="dialog-add-job-title" aria-label="Add a job title">
+      <p>Add a job title to start seeing matching postings. You can add more titles later using the Job Titles section,
+        located at the bottom of the page.</p>
+      <label for="input-dialog-job-title">Job title</label>
+      <input type="text" id="input-dialog-job-title" placeholder="Job title" spellcheck="false"
+        aria-label="Job title to track" />
+      <div class="dialog-actions">
+        <button type="button" class="btn" id="btn-dialog-save">Save</button>
+        <button type="button" class="btn" id="btn-dialog-cancel">Cancel</button>
+      </div>
+    </dialog>
+
     <section id="section-jobs-list" aria-label="section-jobs-list">
       <span class="help" id="initial-help">Add at least one job title below to start seeing results here.</span>
       <p class="help" id="empty-results-help">No jobs matched your tracked senders and titles in the last <span
