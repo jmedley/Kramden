@@ -234,6 +234,15 @@ tr {
   cursor: not-allowed;
 }
 
+.btn-donate {
+  background: #00b057;
+  width: fit-content;
+}
+
+.btn-donate:hover {
+  background: #009649;
+}
+
 .btn:hover,
 .btn-open:hover,
 .btn-copy:hover {
