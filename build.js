@@ -7,10 +7,9 @@ function buildExtension(buildType) {
     if (buildType === 'test') {
         output = fs.createWriteStream(`${process.env.npm_package_config_testdir}/kramden.zip`);
     } else {
-        output = fs.createWriteStream('kramden.crx');
+        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden.zip`);
     }
 
-    // const output = fs.createWriteStream('kramden.zip');
     const archive = new ZipArchive('zip', { zlib: { level: 9 } });
 
     output.on('close', () => console.log('Extension zipped successfully!'));
@@ -23,10 +22,13 @@ function buildExtension(buildType) {
     archive.file('EmailParsers/IndeedEmailParser.js', { name: 'EmailParsers/IndeedEmailParser.js' });
     archive.file('EmailParsers/MicrosoftEmailParser.js', { name: 'EmailParsers/MicrosoftEmailParser.js' });
     archive.file('EmailParsers/MonsterEmailParser.js', { name: 'EmailParsers/MonsterEmailParser.js' });
-    archive.directory('options/', 'options');
-    archive.directory('scripts/', 'scripts');
+    archive.directory('_locales/', '_locales');
     archive.directory('content-scripts/', 'content-scripts');
+    archive.directory('images/', 'images');
+    archive.directory('options/', 'options');
     archive.directory('popup/', 'popup');
+    archive.directory('resources/', 'resources');
+    archive.directory('scripts/', 'scripts');
     archive.finalize();
 };
 

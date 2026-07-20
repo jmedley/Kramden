@@ -1,6 +1,6 @@
 {
   "name": "kramden",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A Chrome extension to help job seekers manage their applications and stay organized.",
   "keywords": [
     "employment",
@@ -20,7 +20,7 @@
   "main": "entry.js",
   "scripts": {
     "build": "node build.js test",
-    "build:production": "node build.js",
+    "build:prod": "node build.js",
     "lint": "eslint .",
     "test": "vitest run"
   },
@@ -36,7 +36,7 @@
     "archiver": "^8.0.0"
   },
   "config": {
-    "builddir": "/home/jmedley/repos/Kramden",
+    "builddir": "/home/jmedley/repos",
     "testdir": "/mnt/c/Users/joeme/Documents/kramden"
   }
 }
