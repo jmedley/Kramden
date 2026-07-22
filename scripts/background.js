@@ -20,5 +20,4 @@ chrome.runtime.onInstalled.addListener(async () => {
     for (let sender of defaultSenders) {
         await senderData.add(sender);
     }
-    console.log("Install complete.");
 });
