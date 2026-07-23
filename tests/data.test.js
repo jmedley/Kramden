@@ -1,3 +1,8 @@
+/*
+  Copyright (c) 2026 Joseph Medley. All rights reserved.
+  No part of this software may be used, copied, modified, or distributed
+  without the express written permission of the author.
+*/
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { chrome } from 'vitest-chrome/lib/index.esm.js';
 import SenderData from '../scripts/data.js';

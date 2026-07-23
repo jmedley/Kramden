@@ -1,3 +1,8 @@
+/*
+  Copyright (c) 2026 Joseph Medley. All rights reserved.
+  No part of this software may be used, copied, modified, or distributed
+  without the express written permission of the author.
+*/
 // content.js
 function getSenderOfOpenEmail() {
   // Gmail often hides the full email address until you click to show details.
