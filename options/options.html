@@ -16,8 +16,9 @@
 
     <div id="page-help-banner" class="help-banner" role="note">
       <p>Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the "Tracked Senders"
-        section, and filters them by the
-        job titles you're interested in.</p>
+        section, and filters them by the job titles you're interested in. A job is shown if its title contains any of
+        the words in your tracked job titles. Matching is done without regard to letter case. For example, "software
+        engineer" also matches "Senior Software Engineer".</p>
       <button type="button" id="btn-dismiss-help" class="btn-dismiss" aria-label="Dismiss help">&times;</button>
     </div>
 
@@ -53,6 +54,16 @@
                 <li><strong>Open / Copy links:</strong> "Open" opens the job posting in a new tab; "Copy link" copies
                   the apply URL to your clipboard.</li>
               </ul>
+            </div>
+          </details>
+          <a class="btn btn-donate" id="btn-donate" href="https://donate.stripe.com/7sYcN70Hk00w34T1h57ok00"
+            target="_blank" rel="noopener">Donate</a>
+
+          <details class="help-details">
+            <summary aria-label="What is this section?">?</summary>
+            <div class="help-popover">
+              <p>You don't need to pay. Donating will help us keep the lights on. Pay as much or as little as you like.
+              </p>
             </div>
           </details>
           <span class="count"><span id="count-jobs"></span><span id="retrieving-jobs"><span class="spinner"
@@ -135,7 +146,8 @@
                   <details class="help-details">
                     <summary aria-label="What is this section?">?</summary>
                     <div class="help-popover">
-                      <p>A job is shown if its title contains any of your tracked job titles. Matching is done without
+                      <p>A job is shown if its title contains any of the words in your tracked job titles. Matching is
+                        done without
                         regard to letter case. For example, "software engineer" also matches "Senior Software
                         Engineer".</p>
                       <p>Select a title and click <strong>Remove</strong> to stop tracking it.</p>

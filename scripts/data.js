@@ -43,7 +43,6 @@ class SenderData {
   }
 
   async add(sender) {
-    console.log("Adding address:", sender);
     const normalized = this.#normalizeSender(sender);
     if (normalized.address.length === 0) return;
 

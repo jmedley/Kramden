@@ -35,6 +35,7 @@ header .date {
 }
 
 main {
+  position: relative;
   max-width: 1075px;
   margin: 0 auto;
   padding: 20px 16px 48px;
@@ -234,6 +235,15 @@ tr {
   cursor: not-allowed;
 }
 
+.btn-donate {
+  background: #00b057;
+  width: fit-content;
+}
+
+.btn-donate:hover {
+  background: #009649;
+}
+
 .btn:hover,
 .btn-open:hover,
 .btn-copy:hover {
@@ -375,7 +385,7 @@ tr {
   background: transparent;
   border: none;
   color: #1557b0;
-  font-size: 1.1rem;
+  font-size: 1.75rem;
   line-height: 1;
   cursor: pointer;
   padding: 0 2px;
@@ -437,7 +447,7 @@ tr {
   gap: 6px;
 }
 
-.help-popover p + p {
+.help-popover p+p {
   margin-top: 8px;
 }
 

@@ -273,6 +273,7 @@ btnDismissHelp.addEventListener('click', async () => {
 btnDialogSave.addEventListener('click', async () => {
   await addJob(inputDialogJobTitle.value.trim());
   dialogAddJobTitle.close();
+  await loadDataFromEmails();
 });
 
 btnDialogCancel.addEventListener('click', () => {

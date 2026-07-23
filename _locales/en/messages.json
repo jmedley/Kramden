@@ -1,8 +1,8 @@
 {
     "extensionName": {
-        "message": "Job Search Monitor BETA"
+        "message": "Job Search Monitor"
     },
     "extensionDescription": {
-        "message": "Monitor your inbox for open jobs in real time. THIS EXTENSION IS FOR BETA TESTING."
+        "message": "Monitor your inbox for open jobs in real time."
     }
 }
