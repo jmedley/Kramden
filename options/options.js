@@ -3,17 +3,18 @@
   No part of this software may be used, copied, modified, or distributed
   without the express written permission of the author.
 */
-import EmailClient from '../scripts/emailClient.js';
+
+import EmailClient from '../ExtensionUtils/emailClient.js';
 import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
-import SenderData from '../scripts/data.js';
-import { DayRange } from '../scripts/data.js';
-import { HelpBanner } from '../scripts/data.js';
-import { Installed } from '../scripts/data.js';
-import { JobTitles } from '../scripts/data.js';
-import { Jobs } from '../scripts/data.js';
-import { SortColumn } from '../scripts/data.js';
-import { SortDirection } from '../scripts/data.js';
+import { SenderData } from '../ExtensionUtils/data.js';
+import { DayRange } from '../ExtensionUtils/data.js';
+import { HelpBanner } from '../ExtensionUtils/data.js';
+import { Installed } from '../ExtensionUtils/data.js';
+import { JobTitles } from '../ExtensionUtils/data.js';
+import { Jobs } from '../ExtensionUtils/data.js';
+import { SortColumn } from '../ExtensionUtils/data.js';
+import { SortDirection } from '../ExtensionUtils/data.js';
 import { sortObjects } from '../scripts/utils.js';
 
 // Data
