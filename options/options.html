@@ -16,8 +16,9 @@
 
     <div id="page-help-banner" class="help-banner" role="note">
       <p>Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the "Tracked Senders"
-        section, and filters them by the
-        job titles you're interested in.</p>
+        section, and filters them by the job titles you're interested in. A job is shown if its title contains any of
+        the words in your tracked job titles. Matching is done without regard to letter case. For example, "software
+        engineer" also matches "Senior Software Engineer".</p>
       <button type="button" id="btn-dismiss-help" class="btn-dismiss" aria-label="Dismiss help">&times;</button>
     </div>
 
@@ -145,7 +146,8 @@
                   <details class="help-details">
                     <summary aria-label="What is this section?">?</summary>
                     <div class="help-popover">
-                      <p>A job is shown if its title contains any of your tracked job titles. Matching is done without
+                      <p>A job is shown if its title contains any of the words in your tracked job titles. Matching is
+                        done without
                         regard to letter case. For example, "software engineer" also matches "Senior Software
                         Engineer".</p>
                       <p>Select a title and click <strong>Remove</strong> to stop tracking it.</p>
