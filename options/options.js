@@ -78,7 +78,6 @@ const btnTrackSender = document.getElementById('btn-track-sender');
 // Jobs List Configuration
 const slctJobTitles = document.getElementById('select-job-titles');
 const btnRemoveJobTitle = document.getElementById('btn-remove-job-title');
-const btnRefreshJobTitles = document.getElementById('btn-refresh-job-titles');
 const txtJobTitle = document.getElementById('input-job-title');
 const btnAddJobTitle = document.getElementById('btn-add-job-title');
 
@@ -249,10 +248,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   //   await loadSenderAddresses();
   // });
 
-  btnRefreshJobTitles.addEventListener('click', async () => {
-    await loadJobTitles();
-  });
-
   // Remove selected address from tracking
   // btnStopTracking.addEventListener('click', async () => {
   //   const selectedOption = slctTrackedSenders.options[slctTrackedSenders.selectedIndex];
@@ -309,11 +304,6 @@ btnDialogCancel.addEventListener('click', () => {
 btnRefreshJobs.addEventListener('click', async () => {
   clearJobsList();
   await dayRange.setDays(parseInt(countDaysEl.value, 10));
-  await loadDataFromEmails();
-});
-
-btnRefreshJobTitles.addEventListener('click', async () => {
-  clearJobsList();
   await loadDataFromEmails();
 });
 
