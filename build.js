@@ -17,17 +17,20 @@ function buildExtension(buildType) {
     archive.pipe(output);
 
     archive.file('manifest.json', { name: 'manifest.json' });
+    archive.file('EmailParsers/index.js', { name: 'EmailParsers/index.js' });
     archive.file('EmailParsers/BaseEmailParser.js', { name: 'EmailParsers/BaseEmailParser.js' });
     archive.file('EmailParsers/DiceEmailParser.js', { name: 'EmailParsers/DiceEmailParser.js' });
+    archive.file('EmailParsers/GlassdoorEmailParser.js', { name: 'EmailParsers/GlassdoorEmailParser.js' });
+    archive.file('EmailParsers/HiringCafeEmailParser.js', { name: 'EmailParsers/HiringCafeEmailParser.js' });
     archive.file('EmailParsers/IndeedEmailParser.js', { name: 'EmailParsers/IndeedEmailParser.js' });
-    archive.file('EmailParsers/MicrosoftEmailParser.js', { name: 'EmailParsers/MicrosoftEmailParser.js' });
+    archive.file('EmailParsers/LinkedInEmailParser.js', { name: 'EmailParsers/LinkedInEmailParser.js' });
     archive.file('EmailParsers/MonsterEmailParser.js', { name: 'EmailParsers/MonsterEmailParser.js' });
+    archive.file('EmailParsers/JobrightEmailParser.js', { name: 'EmailParsers/JobrightEmailParser.js' });
     archive.directory('_locales/', '_locales');
     archive.directory('content-scripts/', 'content-scripts');
     archive.directory('images/', 'images');
     archive.directory('options/', 'options');
     archive.directory('popup/', 'popup');
-    archive.directory('resources/', 'resources');
     archive.directory('scripts/', 'scripts');
     archive.finalize();
 };

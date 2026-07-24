@@ -1,6 +1,7 @@
 {
     "name": "__MSG_extensionName__",
     "version": "1.0.1",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7Xu07VKalj9B8r6KzOQUjJHyVi2+3oOc8UWlfy285JmI7azLHp2eKlFDJUts5Tl6wa6XDBvaeKGsUuIufNzp9BwjD1+KJMWhx49W6PM5EO/qS1ydcL7aozSoixp45o+aI8uPJVEWBLPsGGGMxbyDWJYcSNolP9ioc7K1aK0HhFQ03O/SOzENnAM4D6SdU+dubqZhLrQxFSdCK1RxmxSVejROhHuadtv5ZvnJaJecuRHlxRxgHwywoY2iQR7NYgFQzhXgZACJWZrxhkUQVhQYZBpq8M8fdHl0GWmrFkUcFUo5iy6/w0U87oiQZ95srXjPz0w+ol8id4mn/ZDKGP4koQIDAQAB",
     "manifest_version": 3,
     "description": "__MSG_extensionDescription__",
     "default_locale": "en",
