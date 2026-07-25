@@ -8,8 +8,7 @@ node_modules/
 package-lock.json
 
 # Project
-kramden.zip
-kramden.crx
+build/
 
 # VS Code
 Kramden.code-workspace
