@@ -1,13 +1,14 @@
 import fs from 'fs';
 import { ZipArchive } from 'archiver';
+import packageJson from './package.json' with { type: 'json' };
 
 function buildExtension(buildType) {
     console.log(`Building extension for ${buildType}...`);
     let output;
-    if (buildType === 'test') {
-        output = fs.createWriteStream(`${process.env.npm_package_config_testdir}/kramden.zip`);
+    if (buildType !== 'prod') {
+        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${buildType.toUpperCase()}-${packageJson.version}.zip`);
     } else {
-        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden.zip`);
+        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${packageJson.version}.zip`);
     }
 
     const archive = new ZipArchive('zip', { zlib: { level: 9 } });
