@@ -9,6 +9,3 @@ package-lock.json
 
 # Project
 build/
-
-# VS Code
-Kramden.code-workspace
