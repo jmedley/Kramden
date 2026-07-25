@@ -20,7 +20,9 @@
   "main": "entry.js",
   "scripts": {
     "build": "node build.js test",
-    "build:prod": "node build.js",
+    "build:beta": "node build.js beta",
+    "build:prod": "node build.js prod",
+    "clean": "ls build | xargs -I @ rm build/@",
     "lint": "eslint .",
     "test": "vitest run"
   },
@@ -36,7 +38,6 @@
     "archiver": "^8.0.0"
   },
   "config": {
-    "builddir": "/home/jmedley/repos",
-    "testdir": "/mnt/c/Users/joeme/Documents/kramden"
+    "builddir": "/home/jmedley/repos/Kramden/build"
   }
 }
