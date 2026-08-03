@@ -7,7 +7,7 @@
 import EmailClient from '../ExtensionUtils/emailClient.js';
 import getJobs from '../EmailParsers/index.js';
 import renderJobs from '../scripts/jobsView.js';
-import { SenderData } from '../ExtensionUtils/data.js';
+import SenderData from '../ExtensionUtils/data.js';
 import { DayRange } from '../ExtensionUtils/data.js';
 import { HelpBanner } from '../ExtensionUtils/data.js';
 import { Installed } from '../ExtensionUtils/data.js';
