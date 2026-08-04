@@ -18,7 +18,19 @@ function buildExtension(buildType) {
     archive.on('error', (err) => { throw err; });
     archive.pipe(output);
 
-    archive.file('manifest.json', { name: 'manifest.json' });
+    if (buildType !== 'prod') {
+        const key = fs.readFileSync('key', 'utf8').trim();
+        const manifestWithKey = {};
+        for (const [name, value] of Object.entries(manifestJson)) {
+            manifestWithKey[name] = value;
+            if (name === 'version') {
+                manifestWithKey.key = key;
+            }
+        }
+        archive.append(JSON.stringify(manifestWithKey, null, 4), { name: 'manifest.json' });
+    } else {
+        archive.file('manifest.json', { name: 'manifest.json' });
+    }
     archive.file('EmailParsers/index.js', { name: 'EmailParsers/index.js' });
     archive.file('EmailParsers/BaseEmailParser.js', { name: 'EmailParsers/BaseEmailParser.js' });
     archive.file('EmailParsers/DiceEmailParser.js', { name: 'EmailParsers/DiceEmailParser.js' });
