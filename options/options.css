@@ -372,6 +372,22 @@ tr {
   margin: -2px 0 4px;
 }
 
+.page-footer {
+  color: #666;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.page-footer a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
 .help-banner {
   background: #eaf1ff;
   border: 1px solid #c7dcff;
