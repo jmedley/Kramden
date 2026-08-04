@@ -50,6 +50,8 @@ const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
+const btnShare = document.getElementById('btn-share');
+const shareUrl = 'https://chromewebstore.google.com/detail/job-search-monitor/ddamkhhbmihpacibjimjidchlkkalhnf?authuser=0&hl=en';
 
 // Job List Headings
 const thJobTitleEl = document.getElementById('th-job-title');
@@ -305,6 +307,28 @@ btnRefreshJobs.addEventListener('click', async () => {
   clearJobsList();
   await dayRange.setDays(parseInt(countDaysEl.value, 10));
   await loadDataFromEmails();
+});
+
+btnShare.addEventListener('click', async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Job Search Monitor',
+        text: 'Let a friend know about this extension.',
+        url: shareUrl
+      });
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    await navigator.clipboard.writeText(shareUrl).catch(() => { });
+  }
+  const original = btnShare.textContent;
+  btnShare.textContent = 'Copied';
+  setTimeout(() => (btnShare.textContent = original), 1200);
 });
 
 function markSortedHeading(th, direction = 'asc') {
