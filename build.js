@@ -16,6 +16,7 @@ function buildExtension(buildType) {
 
     output.on('close', () => console.log('Extension zipped successfully!'));
     archive.on('error', (err) => { throw err; });
+    archive.on('warning', (err) => { throw err; });
     archive.pipe(output);
 
     if (buildType !== 'prod') {
@@ -37,9 +38,9 @@ function buildExtension(buildType) {
     archive.file('EmailParsers/GlassdoorEmailParser.js', { name: 'EmailParsers/GlassdoorEmailParser.js' });
     archive.file('EmailParsers/HiringCafeEmailParser.js', { name: 'EmailParsers/HiringCafeEmailParser.js' });
     archive.file('EmailParsers/IndeedEmailParser.js', { name: 'EmailParsers/IndeedEmailParser.js' });
+    archive.file('EmailParsers/JobrightEmailParser.js', { name: 'EmailParsers/JobrightEmailParser.js' });
     archive.file('EmailParsers/LinkedInEmailParser.js', { name: 'EmailParsers/LinkedInEmailParser.js' });
     archive.file('EmailParsers/MonsterEmailParser.js', { name: 'EmailParsers/MonsterEmailParser.js' });
-    archive.file('EmailParsers/JobrightEmailParser.js', { name: 'EmailParsers/JobrightEmailParser.js' });
     archive.directory('_locales/', '_locales');
     archive.directory('content-scripts/', 'content-scripts');
     archive.directory('images/', 'images');
