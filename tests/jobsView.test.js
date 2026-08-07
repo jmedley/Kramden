@@ -21,7 +21,7 @@ describe('jobsView', () => {
   });
 
   it('exposes jobsView and can createRow', async () => {
-    await import('../scripts/jobsView.js');
+    await import('../scripts/jobsview.js');
     expect(window.jobsView).toBeDefined();
     const row = window.jobsView.createRow({
       title: 'Staff Technical Writer',
@@ -38,7 +38,7 @@ describe('jobsView', () => {
   });
 
   it('renderJobs appends rows to tbody', async () => {
-    await import('../scripts/jobsView.js');
+    await import('../scripts/jobsview.js');
     const jobs = [
       { title: 'A', company: 'Co', location: 'Loc', url: 'https://a' },
       { title: 'B', company: 'Co2', location: 'Loc2', url: 'https://b' },

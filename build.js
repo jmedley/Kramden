@@ -32,15 +32,18 @@ function buildExtension(buildType) {
     } else {
         archive.file('manifest.json', { name: 'manifest.json' });
     }
-    archive.file('EmailParsers/index.js', { name: 'EmailParsers/index.js' });
-    archive.file('EmailParsers/BaseEmailParser.js', { name: 'EmailParsers/BaseEmailParser.js' });
-    archive.file('EmailParsers/DiceEmailParser.js', { name: 'EmailParsers/DiceEmailParser.js' });
-    archive.file('EmailParsers/GlassdoorEmailParser.js', { name: 'EmailParsers/GlassdoorEmailParser.js' });
-    archive.file('EmailParsers/HiringCafeEmailParser.js', { name: 'EmailParsers/HiringCafeEmailParser.js' });
-    archive.file('EmailParsers/IndeedEmailParser.js', { name: 'EmailParsers/IndeedEmailParser.js' });
-    archive.file('EmailParsers/JobrightEmailParser.js', { name: 'EmailParsers/JobrightEmailParser.js' });
-    archive.file('EmailParsers/LinkedInEmailParser.js', { name: 'EmailParsers/LinkedInEmailParser.js' });
-    archive.file('EmailParsers/MonsterEmailParser.js', { name: 'EmailParsers/MonsterEmailParser.js' });
+    archive.file('emailparsers/index.js', { name: 'emailparsers/index.js' });
+    archive.file('emailparsers/baseemailparser.js', { name: 'emailparsers/baseemailparser.js' });
+    archive.file('emailparsers/diceemailparser.js', { name: 'emailparsers/diceemailparser.js' });
+    archive.file('emailparsers/glassdooremailparser.js', { name: 'emailparsers/glassdooremailparser.js' });
+    archive.file('emailparsers/hiringcafeemailparser.js', { name: 'emailparsers/hiringcafeemailparser.js' });
+    archive.file('emailparsers/indeedemailparser.js', { name: 'emailparsers/indeedemailparser.js' });
+    archive.file('emailparsers/jobrightemailparser.js', { name: 'emailparsers/jobrightemailparser.js' });
+    archive.file('emailparsers/linkedinemailparser.js', { name: 'emailparsers/linkedinemailparser.js' });
+    archive.file('emailparsers/monsteremailparser.js', { name: 'emailparsers/monsteremailparser.js' });
+    archive.file('extensionutils/data.js', { name: 'extensionutils/data.js' });
+    archive.file('extensionutils/utils.js', { name: 'extensionutils/utils.js' });
+    archive.file('extensionutils/emailclient.js', { name: 'extensionutils/emailclient.js' });
     archive.directory('_locales/', '_locales');
     archive.directory('content-scripts/', 'content-scripts');
     archive.directory('images/', 'images');

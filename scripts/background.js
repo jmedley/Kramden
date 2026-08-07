@@ -4,7 +4,7 @@
   without the express written permission of the author.
 */
 
-import SenderData from '../scripts/data.js';
+import SenderData from '../extensionutils/data.js';
 
 const senderData = new SenderData();
 

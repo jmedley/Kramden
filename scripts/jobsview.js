@@ -1,4 +1,4 @@
-/* jobsView.js — renders job rows using the #job-row-template and handles UI events */
+/* jobsview.js — renders job rows using the #job-row-template and handles UI events */
 const tbodySelector = '#section-jobs-list table tbody';
 const templateId = 'job-row-template';
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Jobs } from '../scripts/data.js';
+import { Jobs } from '../extensionutils/data.js';
 
 describe('Jobs', () => {
   describe('add()', () => {

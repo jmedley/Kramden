@@ -3,18 +3,18 @@
   No part of this software may be used, copied, modified, or distributed
   without the express written permission of the author.
 */
-import EmailClient from '../scripts/emailClient.js';
-import getJobs from '../EmailParsers/index.js';
-import renderJobs from '../scripts/jobsView.js';
-import SenderData from '../scripts/data.js';
-import { DayRange } from '../scripts/data.js';
-import { HelpBanner } from '../scripts/data.js';
-import { Installed } from '../scripts/data.js';
-import { JobTitles } from '../scripts/data.js';
-import { Jobs } from '../scripts/data.js';
-import { SortColumn } from '../scripts/data.js';
-import { SortDirection } from '../scripts/data.js';
-import { sortObjects } from '../scripts/utils.js';
+import EmailClient from '../extensionutils/emailclient.js';
+import getJobs from '../emailparsers/index.js';
+import renderJobs from '../scripts/jobsview.js';
+import SenderData from '../extensionutils/data.js';
+import { DayRange } from '../extensionutils/data.js';
+import { HelpBanner } from '../extensionutils/data.js';
+import { Installed } from '../extensionutils/data.js';
+import { JobTitles } from '../extensionutils/data.js';
+import { Jobs } from '../extensionutils/data.js';
+import { SortColumn } from '../extensionutils/data.js';
+import { SortDirection } from '../extensionutils/data.js';
+import { sortObjects } from '../extensionutils/utils.js';
 
 // Data
 const senderData = new SenderData();
