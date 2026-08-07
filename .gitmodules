@@ -1,0 +1,6 @@
+[submodule "emailparsers"]
+	path = emailparsers
+	url = https://github.com/jmedley/EmailParsers.git
+[submodule "extensionutils"]
+	path = extensionutils
+	url = https://github.com/jmedley/ExtensionUtils.git
