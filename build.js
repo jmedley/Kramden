@@ -3,13 +3,18 @@ import { ZipArchive } from 'archiver';
 import packageJson from './package.json' with { type: 'json' };
 import manifestJson from './manifest.json' with { type: 'json' };
 
-function buildExtension(buildType) {
+function buildExtension(buildType = 'test') {
     console.log(`Building extension for ${buildType}...`);
     let output;
-    if (buildType !== 'prod') {
-        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${buildType.toUpperCase()}-${manifestJson.version}.zip`);
-    } else {
-        output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${manifestJson.version}.zip`);
+    switch (buildType) {
+        case 'prod':
+            output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${manifestJson.version}.zip`);
+            break;
+        case 'beta':
+        case 'test':
+        default:
+            output = fs.createWriteStream(`${process.env.npm_package_config_builddir}/kramden-${buildType.toUpperCase()}-${manifestJson.version}.zip`);
+            break;
     }
 
     const archive = new ZipArchive('zip', { zlib: { level: 9 } });
@@ -19,7 +24,7 @@ function buildExtension(buildType) {
     archive.on('warning', (err) => { throw err; });
     archive.pipe(output);
 
-    if (buildType !== 'prod') {
+    if (buildType === 'test') {
         const key = fs.readFileSync('key', 'utf8').trim();
         const manifestWithKey = {};
         for (const [name, value] of Object.entries(manifestJson)) {
@@ -53,5 +58,5 @@ function buildExtension(buildType) {
     archive.finalize();
 };
 
-const buildType = process.argv[2] || 'production';
+const buildType = process.argv[2] || 'test';
 buildExtension(buildType);
