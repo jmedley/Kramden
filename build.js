@@ -3,6 +3,14 @@ import { ZipArchive } from 'archiver';
 import packageJson from './package.json' with { type: 'json' };
 import manifestJson from './manifest.json' with { type: 'json' };
 
+function getLocalizedMessages(buildType) {
+    const messages = JSON.parse(fs.readFileSync('_locales/en/messages.json', 'utf8'));
+    if (buildType === 'test' || buildType === 'beta') {
+        messages.extensionName.message += ` (${buildType.toUpperCase()})`;
+    }
+    return messages;
+}
+
 function buildExtension(buildType = 'test') {
     console.log(`Building extension for ${buildType}...`);
     let output;
@@ -49,7 +57,9 @@ function buildExtension(buildType = 'test') {
     archive.file('extensionutils/data.js', { name: 'extensionutils/data.js' });
     archive.file('extensionutils/utils.js', { name: 'extensionutils/utils.js' });
     archive.file('extensionutils/emailclient.js', { name: 'extensionutils/emailclient.js' });
-    archive.directory('_locales/', '_locales');
+    const messages = getLocalizedMessages(buildType);
+    archive.append(JSON.stringify(messages, null, 4), { name: '_locales/en/messages.json' });
+    archive.directory('_locales/', '_locales', (entry) => entry.name === 'en/messages.json' ? false : entry);
     archive.directory('content-scripts/', 'content-scripts');
     archive.directory('images/', 'images');
     archive.directory('options/', 'options');
