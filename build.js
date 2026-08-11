@@ -42,6 +42,10 @@ function buildExtension(buildType = 'test') {
             }
         }
         archive.append(JSON.stringify(manifestWithKey, null, 4), { name: 'manifest.json' });
+    } else if (buildType === 'beta') {
+        const manifestWithClientId = structuredClone(manifestJson);
+        manifestWithClientId.oauth2.client_id = '652869451301-2bu30an73jm424a08ct7jr783eqhkao6.apps.googleusercontent.com';
+        archive.append(JSON.stringify(manifestWithClientId, null, 4), { name: 'manifest.json' });
     } else {
         archive.file('manifest.json', { name: 'manifest.json' });
     }
