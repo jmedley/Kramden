@@ -17,12 +17,15 @@ const oldSenders = [
 ];
 
 const defaultSenders = [
+    { sender: 'Builtin', address: ['builtin.com'] },
     { sender: 'Dice', address: ['connect.dice.com'] },
     { sender: 'Glassdoor', address: ['glassdoor.com'] },
+    { sender: 'Hiring Cafe', address: ['hiring.cafe'] },
     { sender: 'Indeed', address: ['jobalert.indeed.com'] },
     { sender: 'Indeed', address: ['match.indeed.com'] },
     { sender: 'Jobright', address: ['jobright.ai'] },
-    { sender: 'LinkedIn', address: ['linkedin.com'] }
+    { sender: 'LinkedIn', address: ['linkedin.com'] },
+    { sender: 'Monster', address: ['monster.com'] }
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {

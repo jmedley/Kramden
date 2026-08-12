@@ -59,6 +59,7 @@ function buildExtension(buildType = 'test') {
     archive.file('emailparsers/indeedmatchemailparser.js', { name: 'emailparsers/indeedmatchemailparser.js' });
     archive.file('emailparsers/jobrightemailparser.js', { name: 'emailparsers/jobrightemailparser.js' });
     archive.file('emailparsers/linkedinemailparser.js', { name: 'emailparsers/linkedinemailparser.js' });
+    archive.file('emailparsers/microsoftemailparser.js', { name: 'emailparsers/microsoftemailparser.js' });
     archive.file('emailparsers/monsteremailparser.js', { name: 'emailparsers/monsteremailparser.js' });
     archive.file('extensionutils/data.js', { name: 'extensionutils/data.js' });
     archive.file('extensionutils/utils.js', { name: 'extensionutils/utils.js' });
