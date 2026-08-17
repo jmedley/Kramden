@@ -4,6 +4,7 @@
   without the express written permission of the author.
 */
 import EmailClient from '../extensionutils/emailclient.js';
+import getAuthToken from '../extensionutils/auth.js';
 import getJobs from '../emailparsers/index.js';
 import renderJobs from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
@@ -392,19 +393,4 @@ function evaluateAddressInput() {
   const addressValue = txtSenderEmail.value.trim();
   const addressRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return addressRegex.test(addressValue);
-}
-
-function getAuthToken() {
-  return new Promise((resolve, reject) => {
-    chrome.identity.getAuthToken({ interactive: true }, (token) => {
-      // console.log('Auth token obtained:', token);
-      if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError);
-        reject(chrome.runtime.lastError);
-      } else {
-        // console.log('Auth token obtained successfully:', token);
-        resolve(token);
-      }
-    });
-  });
 }
