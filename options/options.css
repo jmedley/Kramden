@@ -138,9 +138,8 @@ tr {
   color: #1a1a2e;
   display: block;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .location {
