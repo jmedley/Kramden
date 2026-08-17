@@ -273,10 +273,16 @@ tr {
   align-items: flex-start;
 }
 
-#div-add-tracking,
-#div-add-job-title {
+#div-add-tracking {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+#div-add-job-title {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   gap: 12px;
   align-items: end;
 }

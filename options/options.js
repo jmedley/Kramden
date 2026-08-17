@@ -51,6 +51,7 @@ const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
+const btnRefreshJobs2 = document.getElementById('btn-refresh-jobs2');
 const btnShare = document.getElementById('btn-share');
 const shareUrl = 'https://chromewebstore.google.com/detail/job-search-monitor/ddamkhhbmihpacibjimjidchlkkalhnf?authuser=0&hl=en';
 
@@ -303,12 +304,14 @@ btnDialogCancel.addEventListener('click', () => {
 //   setButtonState();
 // });
 
-
-btnRefreshJobs.addEventListener('click', async () => {
+async function refreshJobs() {
   clearJobsList();
   await dayRange.setDays(parseInt(countDaysEl.value, 10));
   await loadDataFromEmails();
-});
+}
+
+btnRefreshJobs.addEventListener('click', async () => refreshJobs());
+btnRefreshJobs2.addEventListener('click', async () => refreshJobs());
 
 btnShare.addEventListener('click', async () => {
   if (navigator.share) {
