@@ -95,6 +95,7 @@ async function loadDataFromEmails() {
   if (slctJobTitles.length > 0) {
     initialHelp.style.display = 'none';
   } else {
+    //User should get a message.
     return;
   }
 
@@ -106,16 +107,18 @@ async function loadDataFromEmails() {
     const authToken = await getAuthToken();
     const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
     const ids = await emailClient.loadIDs();
+    // Becomes a generic, optional filter
     const titleTerms = await jobTitles.getTitles();
     const jobsData = new Jobs();
 
     for (const id of ids) {
       try {
         const message = await emailClient.getMessage(id);
+        // Becomes getMessageData(). Filter should be passed.
         const jobs = getJobs(message);
-        // if (!jobs.jobs.length) {
-        //   console.log(`No jobs found from ${jobs.senderEmail}`);
-        // }
+        if (!jobs) {
+          continue;
+        }
         const filtered = titleTerms.length
           ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
           : jobs.jobs;
