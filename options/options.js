@@ -5,7 +5,7 @@
 */
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
-import getJobs from '../emailparsers/index.js';
+import getMessageData from '../emailparsers/index.js';
 import renderJobs from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
@@ -115,7 +115,7 @@ async function loadDataFromEmails() {
       try {
         const message = await emailClient.getMessage(id);
         // Becomes getMessageData(). Filter should be passed.
-        const jobs = getJobs(message);
+        const jobs = getMessageData(message);
         if (!jobs) {
           continue;
         }
