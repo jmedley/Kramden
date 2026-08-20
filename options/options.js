@@ -5,7 +5,7 @@
 */
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
-import emailManager from '../extensionutils/emailmanager.js';
+import parserManager from '../extensionutils/parsermanager.js';
 import renderJobs from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
@@ -120,7 +120,7 @@ async function loadDataFromEmails() {
         if (!message) {
           continue;
         }
-        const result = emailManager.getMessageData(message);
+        const result = parserManager.getMessageData(message);
         if (!result) {
           continue;
         }
