@@ -5,7 +5,7 @@
 */
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
-import getMessageData from '../emailparsers/index.js';
+import emailManager from '../extensionutils/emailmanager.js';
 import renderJobs from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
@@ -111,23 +111,29 @@ async function loadDataFromEmails() {
     const titleTerms = await jobTitles.getTitles();
     const jobsData = new Jobs();
 
-    for (const id of ids) {
+    const { results: messages, nullIDs } = await emailClient.getMessages(ids);
+    if (nullIDs.length > 0) {
+      console.log(`Failed to retrieve ${nullIDs.length} message(s)`);
+    }
+    for (const message of messages) {
       try {
-        const message = await emailClient.getMessage(id);
-        // Becomes getMessageData(). Filter should be passed.
-        const jobs = getMessageData(message);
-        if (!jobs) {
+        if (!message) {
           continue;
         }
+        const result = emailManager.getMessageData(message);
+        if (!result) {
+          continue;
+        }
+        const jobs = result.messageData;
         const filtered = titleTerms.length
-          ? jobs.jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
-          : jobs.jobs;
+          ? jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
+          : jobs;
         for (const job of filtered) {
-          job.receivedDate = jobs.receivedDate.toLocaleString();
+          job.receivedDate = result.receivedDate.toLocaleString();
         }
         jobsData.add(filtered);
       } catch (err) {
-        console.error(`Error processing email ID ${id}:`, err);
+        console.error('Error processing email message:', err);
       }
     }
 
