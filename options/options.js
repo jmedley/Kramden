@@ -5,7 +5,9 @@
 */
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
-import parserManager from '../extensionutils/parsermanager.js';
+import { ParserManager } from '../extensionutils/parsermanager.js';
+import { PARSERS } from '../emailparsers/index.js';
+import BaseEmailParser from '../emailparsers/baseemailparser.js';
 import renderJobs from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
@@ -18,6 +20,7 @@ import { SortDirection } from '../extensionutils/data.js';
 import { sortObjects } from '../extensionutils/utils.js';
 
 // Data
+const parserManager = new ParserManager(PARSERS, BaseEmailParser);
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
 const dayRange = new DayRange();
