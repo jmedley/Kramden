@@ -1,5 +1,6 @@
 /* jobsview.js — renders job rows using the #job-row-template and handles UI events */
-const tbodySelector = '#section-jobs-list table tbody';
+import { EmailView } from '../extensionutils/emailview.js';
+
 const templateId = 'job-row-template';
 
 function getTemplate() {
@@ -33,35 +34,11 @@ function createRow(job = {}) {
   return tr;
 }
 
-function renderJobs(jobs = []) {
-  const tbody = document.getElementById('body-jobs-list');
-  if (!tbody) return;
-  tbody.innerHTML = '';
-  const frag = document.createDocumentFragment();
-  jobs.forEach((job) => frag.appendChild(createRow(job)));
-  tbody.appendChild(frag);
-}
+const emailView = new EmailView(createRow);
+const renderData = emailView.renderData.bind(emailView);
+const initEventDelegation = emailView.initEventDelegation.bind(emailView);
 
-function handleClick(e) {
-  const btn = e.target.closest('.btn-copy');
-  if (!btn) return;
-  const url = btn.dataset.url || btn.getAttribute('data-url') || '';
-  if (!url) return;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).catch(() => { });
-  }
-  const original = btn.textContent;
-  btn.textContent = 'Copied';
-  setTimeout(() => (btn.textContent = original), 1200);
-}
-
-function initEventDelegation() {
-  const tbody = document.querySelector(tbodySelector);
-  if (!tbody) return;
-  tbody.addEventListener('click', handleClick);
-}
-
-// window.jobsView = { renderJobs, initEventDelegation, createRow };
+// window.jobsView = { renderData, initEventDelegation, createRow };
 export { initEventDelegation, createRow };
-export default renderJobs;
+export default renderData;
 document.addEventListener('DOMContentLoaded', initEventDelegation);

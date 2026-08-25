@@ -8,7 +8,7 @@ import getAuthToken from '../extensionutils/auth.js';
 import { ParserManager } from '../extensionutils/parsermanager.js';
 import { PARSERS } from '../emailparsers/index.js';
 import BaseEmailParser from '../emailparsers/baseemailparser.js';
-import renderJobs from '../scripts/jobsview.js';
+import renderData from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
 import { HelpBanner } from '../extensionutils/data.js';
@@ -144,7 +144,7 @@ async function loadDataFromEmails() {
     const sortTh = currentSortedTh || thReceivedDateEl;
     currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id], currentSortDirection);
     markSortedHeading(sortTh, currentSortDirection);
-    renderJobs(currentJobs);
+    renderData(currentJobs);
 
     if (currentJobs.length === 0) {
       emptyResultsDaysEl.textContent = countDaysEl.value;
@@ -363,7 +363,7 @@ function sortJobsByHeading(th) {
   if (!key || currentJobs.length === 0) return;
   const nextDirection = (th === currentSortedTh && currentSortDirection === 'asc') ? 'desc' : 'asc';
   sortObjects(currentJobs, key, nextDirection);
-  renderJobs(currentJobs);
+  renderData(currentJobs);
   markSortedHeading(th, nextDirection);
 }
 
@@ -378,7 +378,7 @@ function setButtonState() {
 }
 
 function clearJobsList() {
-  document.getElementById('body-jobs-list').replaceChildren();
+  document.getElementById('body-records-list').replaceChildren();
 }
 
 function clearJobTitlesList() {
