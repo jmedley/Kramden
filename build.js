@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { ZipArchive } from 'archiver';
-import packageJson from './package.json' with { type: 'json' };
 import manifestJson from './manifest.json' with { type: 'json' };
 
 function getLocalizedMessages(buildType) {

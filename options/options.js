@@ -3,6 +3,7 @@
   No part of this software may be used, copied, modified, or distributed
   without the express written permission of the author.
 */
+
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
 import { ParserManager } from '../extensionutils/parsermanager.js';
@@ -76,11 +77,6 @@ const jobHeadingSortKeys = {
 
 // Senders Configuration
 const slctTrackedSenders = document.getElementById('select-tracked-senders');
-const btnStopTracking = document.getElementById('btn-stop-tracking');
-const btnRefreshSenders = document.getElementById('btn-refresh-senders');
-const txtSender = document.getElementById('input-sender');
-const txtSenderEmail = document.getElementById('input-sender-email');
-const btnTrackSender = document.getElementById('btn-track-sender');
 
 // Jobs List Configuration
 const slctJobTitles = document.getElementById('select-job-titles');
@@ -169,13 +165,6 @@ async function loadSenderAddresses() {
     option.textContent = `${senderName} (${addressValues})`;
     slctTrackedSenders.appendChild(option);
   }
-
-  // Ensure stop button reflects current selection state on load
-  // if (slctTrackedSenders.options.length === 0) {
-  //   btnStopTracking.disabled = true;
-  // } else {
-  //   btnStopTracking.disabled = slctTrackedSenders.selectedIndex < 0;
-  // }
 }
 
 async function loadJobTitles() {
@@ -249,31 +238,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       slctJobTitles.dispatchEvent(new Event('change'));
     }
   });
-
-  // Enable/disable stop-tracking button based on selection
-  // slctTrackedSenders.addEventListener('change', () => {
-  //   if (slctTrackedSenders.selectedIndex >= 0) {
-  //     btnStopTracking.disabled = false;
-  //   } else {
-  //     btnStopTracking.disabled = true;
-  //   }
-  // });
-
-  // Refresh the tracked address list from storage
-  // btnRefreshSenders.addEventListener('click', async () => {
-  //   await loadSenderAddresses();
-  // });
-
-  // Remove selected address from tracking
-  // btnStopTracking.addEventListener('click', async () => {
-  //   const selectedOption = slctTrackedSenders.options[slctTrackedSenders.selectedIndex];
-  //   if (selectedOption && selectedOption.value) {
-  //     const addresses = selectedOption.value.split(', ').map((e) => e.trim());
-  //     await senderData.remove({ address: addresses });
-  //     slctTrackedSenders.removeChild(selectedOption);
-  //     slctTrackedSenders.dispatchEvent(new Event('change'));
-  //   }
-  // });
 });
 
 btnDismissHelp.addEventListener('click', async () => {
@@ -290,31 +254,6 @@ btnDialogSave.addEventListener('click', async () => {
 btnDialogCancel.addEventListener('click', () => {
   dialogAddJobTitle.close();
 });
-
-// btnTrackSender.addEventListener('click', async () => {
-//   const senderData = {
-//     sender: txtSender.value.trim(),
-//     address: [txtSenderEmail.value.trim()]
-//   };
-//   senderData.add(senderData).then(() => {
-//     // Clear inputs and disable button after successful addition
-//     txtSender.value = '';
-//     txtSenderEmail.value = '';
-//     setButtonState();
-//     loadSenderAddresses(); // Refresh the list to show the newly added sender
-//   })
-//     .catch((err) => {
-//       console.error('Error adding sender:', err);
-//     });
-// });
-
-// txtSenderEmail.addEventListener('input', () => {
-//   setButtonState();
-// });
-
-// txtSender.addEventListener('input', () => {
-//   setButtonState();
-// });
 
 async function refreshJobs() {
   clearJobsList();
@@ -371,12 +310,6 @@ function sortJobsByHeading(th) {
   th.addEventListener('click', () => sortJobsByHeading(th));
 });
 
-function setButtonState() {
-  const isSenderValid = evaluateSenderInput();
-  const isAddressValid = evaluateAddressInput();
-  btnTrackSender.disabled = !(isSenderValid && isAddressValid);
-}
-
 function clearJobsList() {
   document.getElementById('body-records-list').replaceChildren();
 }
@@ -397,15 +330,4 @@ function clearFollowedList() {
 
   // btnStopTracking.disabled = true;
   slctTrackedSenders.dispatchEvent(new Event('change'));
-}
-
-function evaluateSenderInput() {
-  const senderValue = txtSender.value.trim();
-  return senderValue.length > 0;
-}
-
-function evaluateAddressInput() {
-  const addressValue = txtSenderEmail.value.trim();
-  const addressRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return addressRegex.test(addressValue);
 }
