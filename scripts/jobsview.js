@@ -1,3 +1,9 @@
+/*
+  Copyright (c) 2026 Joseph Medley. All rights reserved.
+  No part of this software may be used, copied, modified, or distributed
+  without the express written permission of the author.
+*/
+
 /* jobsview.js — renders job rows using the #job-row-template and handles UI events */
 import { EmailView } from '../extensionutils/emailview.js';
 
