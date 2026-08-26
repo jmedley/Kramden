@@ -25,7 +25,8 @@ const defaultSenders = [
     { sender: 'Indeed', address: ['match.indeed.com'] },
     { sender: 'Jobright', address: ['jobright.ai'] },
     { sender: 'LinkedIn', address: ['linkedin.com'] },
-    { sender: 'Monster', address: ['monster.com'] }
+    { sender: 'Monster', address: ['monster.com'] },
+    { sender: 'ZipRecruiter', address: ['ziprecruiter.com'] }
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {
