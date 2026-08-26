@@ -168,6 +168,18 @@ tr {
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-icon {
+  width: 16px;
+  height: 16px;
+  background: white;
+  padding: 2px;
+  box-sizing: content-box;
+  border-radius: 4px;
 }
 
 .section-header .count {
@@ -257,7 +269,6 @@ tr {
 .btn-copy:hover {
   cursor: pointer;
 }
-
 
 #form-email-tracker,
 #form-job-titles {
