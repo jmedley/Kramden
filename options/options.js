@@ -10,14 +10,14 @@ import ParserManager from '../extensionutils/parsermanager.js';
 import { PARSERS } from '../emailparsers/index.js';
 import BaseEmailParser from '../emailparsers/baseemailparser.js';
 import renderData from '../scripts/jobsview.js';
-import SenderData from '../extensionutils/data.js';
-import { DayRange } from '../extensionutils/data.js';
-import { HelpBanner } from '../extensionutils/data.js';
-import { Installed } from '../extensionutils/data.js';
-import { JobTitles } from '../extensionutils/data.js';
+import SenderData from '../extensionutils/storage.js';
+import { DayRange } from '../extensionutils/storage.js';
+import { HelpBanner } from '../extensionutils/storage.js';
+import { Installed } from '../extensionutils/storage.js';
+import { JobTitles } from '../extensionutils/storage.js';
 import { Jobs } from '../extensionutils/data.js';
-import { SortColumn } from '../extensionutils/data.js';
-import { SortDirection } from '../extensionutils/data.js';
+import { SortColumn } from '../extensionutils/storage.js';
+import { SortDirection } from '../extensionutils/storage.js';
 import { sortObjects } from '../extensionutils/utils.js';
 
 // Data
