@@ -108,7 +108,7 @@ tr {
   border-color: inherit;
 }
 
-.actions {
+.actions-inner {
   white-space: nowrap;
   display: flex;
   gap: 6px;
