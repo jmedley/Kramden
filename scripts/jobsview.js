@@ -44,7 +44,6 @@ const emailView = new EmailView(createRow);
 const renderData = emailView.renderData.bind(emailView);
 const initEventDelegation = emailView.initEventDelegation.bind(emailView);
 
-// window.jobsView = { renderData, initEventDelegation, createRow };
 export { initEventDelegation, createRow };
 export default renderData;
 document.addEventListener('DOMContentLoaded', initEventDelegation);
