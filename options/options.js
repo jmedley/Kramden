@@ -6,7 +6,7 @@
 
 import EmailClient from '../extensionutils/emailclient.js';
 import getAuthToken from '../extensionutils/auth.js';
-import { ParserManager } from '../extensionutils/parsermanager.js';
+import ParserManager from '../extensionutils/parsermanager.js';
 import { PARSERS } from '../emailparsers/index.js';
 import BaseEmailParser from '../emailparsers/baseemailparser.js';
 import renderData from '../scripts/jobsview.js';
