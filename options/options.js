@@ -100,6 +100,7 @@ async function loadDataFromEmails() {
 
   jobsCountEl.style.display = 'none';
   retrievingJobsEl.style.display = 'inline-flex';
+  retrievingJobsEl.closest('.count').classList.add('is-loading');
   emptyResultsHelp.style.display = 'none';
 
   try {
@@ -148,6 +149,7 @@ async function loadDataFromEmails() {
     }
   } finally {
     retrievingJobsEl.style.display = 'none';
+    retrievingJobsEl.closest('.count').classList.remove('is-loading');
     jobsCountEl.style.display = '';
   }
 }

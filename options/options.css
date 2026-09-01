@@ -190,6 +190,10 @@ tr {
   margin-left: auto;
 }
 
+.section-header .count.is-loading {
+  background: #d93025;
+}
+
 #retrieving-jobs {
   display: none;
   align-items: center;
