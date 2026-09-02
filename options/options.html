@@ -105,8 +105,15 @@
               <option value="29">29</option>
               <option value="30">30</option>
               <option value="31">31</option>
-            </select> days</span><span id="last-retrieval">Jobs last retrieved: <time
-              id="last-retrieval-time"></time></span>
+            </select> days. <span id="last-retrieval">Last retrieved: <time
+                id="last-retrieval-time"></time></span></span>
+          <details class="help-details help-details--end">
+            <summary aria-label="What is this section?">?</summary>
+            <div class="help-popover">
+              <p>Page refresh ocurrs every 30 minutes counted from the last page load or click of the Refresh button.
+              </p>
+            </div>
+          </details>
           <button class="btn" id="btn-refresh-jobs" type="button" aria-label="Refresh jobs list">Refresh</button>
         </div>
         <template id="job-row-template">

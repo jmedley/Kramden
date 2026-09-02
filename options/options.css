@@ -485,6 +485,11 @@ tr {
   line-height: 1.4;
 }
 
+.help-details--end .help-popover {
+  left: auto;
+  right: 0;
+}
+
 .help-popover ul {
   padding-left: 18px;
   display: flex;
