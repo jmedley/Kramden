@@ -18,9 +18,9 @@ import { JobTitles } from '../extensionutils/data.js';
 import { Jobs } from '../extensionutils/data.js';
 import { SortColumn } from '../extensionutils/data.js';
 import { SortDirection } from '../extensionutils/data.js';
+import Timer from '../extensionutils/timer.js';
 import { sortObjects } from '../extensionutils/utils.js';
 
-// Data
 const parserManager = new ParserManager(PARSERS, BaseEmailParser);
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
@@ -53,6 +53,7 @@ const emptyResultsHelp = document.getElementById('empty-results-help');
 const emptyResultsDaysEl = document.getElementById('empty-results-days');
 const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
+const lastRetrievalTimeEl = document.getElementById('last-retrieval-time');
 const countDaysEl = document.getElementById('count-days');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
 const btnRefreshJobs2 = document.getElementById('btn-refresh-jobs2');
@@ -147,6 +148,8 @@ async function loadDataFromEmails() {
       emptyResultsDaysEl.textContent = countDaysEl.value;
       emptyResultsHelp.style.display = 'block';
     }
+
+    updateLastRetrievalTime();
   } finally {
     retrievingJobsEl.style.display = 'none';
     retrievingJobsEl.closest('.count').classList.remove('is-loading');
@@ -187,15 +190,7 @@ async function addJob(title) {
   await loadJobTitles();
 }
 
-document.addEventListener("visibilitychange", async () => {
-  if (document.visibilityState === "visible") {
-    clearFollowedList();
-    await loadSenderAddresses();
-    await loadDataFromEmails();
-  }
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
+async function init() {
   if (await helpBanner.isDismissed()) {
     pageHelpBanner.style.display = 'none';
   }
@@ -218,6 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadJobTitles();
   countDaysEl.value = await dayRange.getDays();
   await loadDataFromEmails();
+  refreshTimer.start();
 
   btnRemoveJobTitle.disabled = true;
   btnAddJobTitle.disabled = true;
@@ -240,7 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       slctJobTitles.dispatchEvent(new Event('change'));
     }
   });
-});
+}
 
 btnDismissHelp.addEventListener('click', async () => {
   pageHelpBanner.style.display = 'none';
@@ -261,7 +257,10 @@ async function refreshJobs() {
   clearJobsList();
   await dayRange.setDays(parseInt(countDaysEl.value, 10));
   await loadDataFromEmails();
+  refreshTimer.reset();
 }
+
+const refreshTimer = new Timer(30, refreshJobs);
 
 btnRefreshJobs.addEventListener('click', async () => refreshJobs());
 btnRefreshJobs2.addEventListener('click', async () => refreshJobs());
@@ -287,6 +286,12 @@ btnShare.addEventListener('click', async () => {
   btnShare.textContent = 'Copied';
   setTimeout(() => (btnShare.textContent = original), 1200);
 });
+
+function updateLastRetrievalTime() {
+  const now = new Date();
+  lastRetrievalTimeEl.dateTime = now.toISOString();
+  lastRetrievalTimeEl.textContent = now.toLocaleString();
+}
 
 function markSortedHeading(th, direction = 'asc') {
   if (currentSortedTh) {
@@ -332,4 +337,12 @@ function clearFollowedList() {
 
   // btnStopTracking.disabled = true;
   slctTrackedSenders.dispatchEvent(new Event('change'));
+}
+
+// This module loads as `type="module"`, so it may execute after
+// DOMContentLoaded has already fired. Run the one-time setup either way.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }

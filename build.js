@@ -67,6 +67,7 @@ function buildExtension(buildType = 'test') {
     archive.file('extensionutils/emailclient.js', { name: 'extensionutils/emailclient.js' });
     archive.file('extensionutils/emailview.js', { name: 'extensionutils/emailview.js' });
     archive.file('extensionutils/parsermanager.js', { name: 'extensionutils/parsermanager.js' });
+    archive.file('extensionutils/timer.js', { name: 'extensionutils/timer.js' });
     const messages = getLocalizedMessages(buildType);
     archive.append(JSON.stringify(messages, null, 4), { name: '_locales/en/messages.json' });
     archive.directory('_locales/', '_locales', (entry) => entry.name === 'en/messages.json' ? false : entry);
