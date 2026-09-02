@@ -75,7 +75,7 @@ th {
   max-width: 20%;
 }
 
-th:hover {
+th:not(#th-actions):hover {
   color: #2563eb;
   font-weight: bold;
   cursor: pointer;

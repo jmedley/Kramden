@@ -66,7 +66,6 @@ const thCompanyEl = document.getElementById('th-company');
 const thLocationEl = document.getElementById('th-location');
 const thPayEl = document.getElementById('th-pay');
 const thReceivedDateEl = document.getElementById('th-received-date');
-const thActionsEl = document.getElementById('th-actions');
 
 const jobHeadingSortKeys = {
   'th-job-title': 'jobTitle',
@@ -313,7 +312,7 @@ function sortJobsByHeading(th) {
   markSortedHeading(th, nextDirection);
 }
 
-[thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl, thActionsEl].forEach((th) => {
+[thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl].forEach((th) => {
   th.addEventListener('click', () => sortJobsByHeading(th));
 });
 
