@@ -274,6 +274,29 @@ tr {
   cursor: pointer;
 }
 
+#btn-refresh-jobs2.attention-pulse {
+  outline-style: solid;
+  outline-offset: 0;
+  animation: refresh-jobs-attention 6s ease forwards;
+}
+
+@keyframes refresh-jobs-attention {
+  0% {
+    outline-width: 0;
+    outline-color: rgba(0, 0, 0, 1);
+  }
+
+  33.33% {
+    outline-width: 8px;
+    outline-color: rgba(0, 0, 0, 1);
+  }
+
+  100% {
+    outline-width: 8px;
+    outline-color: rgba(0, 0, 0, 0);
+  }
+}
+
 #form-email-tracker,
 #form-job-titles {
   max-width: 400px;

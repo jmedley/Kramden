@@ -182,6 +182,12 @@ async function loadJobTitles() {
   }
 }
 
+function pulseRefreshJobs2() {
+  btnRefreshJobs2.classList.remove('attention-pulse');
+  void btnRefreshJobs2.offsetWidth; // force reflow so the animation restarts
+  btnRefreshJobs2.classList.add('attention-pulse');
+}
+
 async function addJob(title) {
   await jobTitles.add(title);
   txtJobTitle.value = '';
@@ -221,7 +227,14 @@ async function init() {
     btnAddJobTitle.disabled = txtJobTitle.value.trim().length === 0;
   });
 
-  btnAddJobTitle.addEventListener('click', () => addJob(txtJobTitle.value.trim()));
+  btnAddJobTitle.addEventListener('click', () => {
+    addJob(txtJobTitle.value.trim());
+    pulseRefreshJobs2();
+  });
+
+  btnRefreshJobs2.addEventListener('animationend', () => {
+    btnRefreshJobs2.classList.remove('attention-pulse');
+  });
 
   slctJobTitles.addEventListener('change', () => {
     btnRemoveJobTitle.disabled = slctJobTitles.selectedIndex < 0;
