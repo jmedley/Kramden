@@ -260,7 +260,7 @@ tr {
 
 .btn:disabled {
   background: #c0c0c0;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .btn-donate {
@@ -268,15 +268,19 @@ tr {
   width: fit-content;
 }
 
-.btn-donate:hover {
+.btn-donate:not(:disabled):hover {
   background: #009649;
 }
 
-.btn:hover,
-.btn-open:hover,
-.btn-copy:hover {
+.btn:not(.btn-donate):not(:disabled):hover,
+.btn-open:not(:disabled):hover {
   cursor: pointer;
   background: #2157cc;
+}
+
+.btn-copy:not(:disabled):hover {
+  cursor: pointer;
+  background: #d1d5db;
 }
 
 #btn-refresh-jobs2.attention-pulse {

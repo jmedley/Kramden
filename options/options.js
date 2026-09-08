@@ -246,6 +246,7 @@ async function init() {
       await jobTitles.remove(selectedOption.value);
       slctJobTitles.removeChild(selectedOption);
       slctJobTitles.dispatchEvent(new Event('change'));
+      pulseRefreshJobs2();
     }
   });
 }
