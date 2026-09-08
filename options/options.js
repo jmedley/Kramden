@@ -302,7 +302,7 @@ btnShare.addEventListener('click', async () => {
 function updateLastRetrievalTime() {
   const now = new Date();
   lastRetrievalTimeEl.dateTime = now.toISOString();
-  lastRetrievalTimeEl.textContent = now.toLocaleString();
+  lastRetrievalTimeEl.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 }
 
 function markSortedHeading(th, direction = 'asc') {
