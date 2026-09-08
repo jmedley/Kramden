@@ -19,7 +19,7 @@ import { Jobs } from '../extensionutils/data.js';
 import { SortColumn } from '../extensionutils/data.js';
 import { SortDirection } from '../extensionutils/data.js';
 import Timer from '../extensionutils/timer.js';
-import { sortObjects } from '../extensionutils/utils.js';
+import { sortObjects, DateTimeValue } from '../extensionutils/utils.js';
 
 const parserManager = new ParserManager(PARSERS, BaseEmailParser);
 const senderData = new SenderData();
@@ -129,7 +129,7 @@ async function loadDataFromEmails() {
           ? jobs.filter((j) => titleTerms.some((t) => j.jobTitle?.toLowerCase().includes(t.toLowerCase())))
           : jobs;
         for (const job of filtered) {
-          job.receivedDate = result.receivedDate.toLocaleString();
+          job.receivedDate = new DateTimeValue(result.receivedDate);
         }
         jobsData.add(filtered);
       } catch (err) {
