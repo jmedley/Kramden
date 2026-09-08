@@ -276,6 +276,7 @@ const refreshTimer = new Timer(30, refreshJobs);
 
 btnRefreshJobs.addEventListener('click', async () => refreshJobs());
 btnRefreshJobs2.addEventListener('click', async () => refreshJobs());
+countDaysEl.addEventListener('change', () => refreshJobs());
 
 btnShare.addEventListener('click', async () => {
   if (navigator.share) {
