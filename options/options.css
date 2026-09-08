@@ -108,6 +108,10 @@ tr {
   border-color: inherit;
 }
 
+#body-records-list tr:hover {
+  background: #eaf1ff;
+}
+
 .actions-inner {
   white-space: nowrap;
   display: flex;
