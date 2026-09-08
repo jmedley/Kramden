@@ -276,6 +276,7 @@ tr {
 .btn-open:hover,
 .btn-copy:hover {
   cursor: pointer;
+  background: #2157cc;
 }
 
 #btn-refresh-jobs2.attention-pulse {
