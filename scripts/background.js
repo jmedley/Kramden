@@ -8,14 +8,6 @@ import SenderData from '../extensionutils/data.js';
 
 const senderData = new SenderData();
 
-const oldSenders = [
-    { sender: 'Dice', address: ['dice@connect.dice.com'] },
-    { sender: 'Glassdoor', address: ['noreply@glassdoor.com'] },
-    { sender: 'Indeed', address: ['donotreply@match.indeed.com'] },
-    { sender: 'Jobright', address: ['noreply@jobright.ai'] },
-    { sender: 'LinkedIn', address: ['jobs-noreply@linkedin.com'] }
-];
-
 const defaultSenders = [
     { sender: 'Builtin', address: ['builtin.com'] },
     { sender: 'Dice', address: ['connect.dice.com'] },
@@ -30,10 +22,6 @@ const defaultSenders = [
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {
-    for (let sender of oldSenders) {
-        await senderData.remove(sender);
-    }
-
     for (let sender of defaultSenders) {
         await senderData.add(sender);
     }
