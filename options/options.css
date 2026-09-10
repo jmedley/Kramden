@@ -424,14 +424,17 @@ tr {
   margin: -2px 0 4px;
 }
 
-.page-footer {
+.page-footer,
+#meta-links {
   color: #666;
   font-size: 0.85rem;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.page-footer a {
+.page-footer a,
+#meta-links a {
   color: #2563eb;
   text-decoration: none;
 }
