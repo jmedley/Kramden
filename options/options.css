@@ -231,6 +231,41 @@ tr {
   border-bottom: none;
 }
 
+#section-options .section-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: stretch;
+}
+
+#section-options .section-header {
+  grid-column: 1 / -1;
+}
+
+#section-options .card-content {
+  border-bottom: none;
+  border-right: 1px solid #f0f0f0;
+  min-width: 0;
+}
+
+#section-options .card-content:last-child {
+  border-right: none;
+}
+
+@media (max-width: 700px) {
+  #section-options .section-card {
+    grid-template-columns: 1fr;
+  }
+
+  #section-options .card-content {
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  #section-options .card-content:last-child {
+    border-bottom: none;
+  }
+}
+
 .option-title {
   font-size: 0.92rem;
   font-weight: 600;
@@ -306,13 +341,21 @@ tr {
   }
 }
 
-#form-email-tracker,
-#form-job-titles {
+#form-email-tracker {
   max-width: 400px;
+  --job-action-width: 130px;
+}
+
+#form-job-titles {
+  --job-action-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 #div-tracking,
-#div-job-titles {
+#div-job-titles,
+#div-add-job-title {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -326,19 +369,11 @@ tr {
   align-items: end;
 }
 
-#div-add-job-title {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 12px;
-  align-items: end;
-}
-
 #div-add-tracking {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
 #div-tracked,
-#div-selected-titles,
 #div-sender-email {
   display: flex;
   gap: 10px;
@@ -346,21 +381,31 @@ tr {
   width: 100%;
 }
 
+#div-selected-titles,
+#div-new-job-title {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+}
+
 #div-tracked-actions,
-#div-job-title-actions {
+#div-job-title-actions,
+#div-add-job-title-actions {
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: stretch;
-  width: 130px;
+  width: var(--job-action-width);
 }
 
 #div-tracked-actions .btn,
-#div-job-title-actions .btn {
-  width: 100%;
+#div-job-title-actions .btn,
+#div-add-job-title-actions .btn {
+  width: 120px;
 }
 
-#select-tracked-senders,
+#list-tracked-senders,
 #select-job-titles,
 #input-job-title,
 #input-sender,
@@ -370,9 +415,18 @@ tr {
   padding: 6px;
 }
 
-#select-tracked-senders,
+#list-tracked-senders {
+  list-style: none;
+  margin: 0;
+  overflow-y: auto;
+}
+
+#list-tracked-senders li {
+  padding: 2px 4px;
+}
+
 #select-job-titles {
-  min-width: 630px;
+  min-width: 0;
 }
 
 #input-sender-email,
@@ -381,8 +435,7 @@ tr {
 }
 
 #div-sender,
-#div-sender-email,
-#div-job-title {
+#div-sender-email {
   display: flex;
   flex-direction: column;
   gap: 6px;

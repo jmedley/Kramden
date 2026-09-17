@@ -76,7 +76,7 @@ const jobHeadingSortKeys = {
 };
 
 // Senders Configuration
-const slctTrackedSenders = document.getElementById('select-tracked-senders');
+const listTrackedSenders = document.getElementById('list-tracked-senders');
 
 // Jobs List Configuration
 const slctJobTitles = document.getElementById('select-job-titles');
@@ -162,12 +162,11 @@ async function loadSenderAddresses() {
 
   // Each email entry is expected to carry an array of email addresses.
   for (const entry of addresses) {
-    const option = document.createElement('option');
+    const li = document.createElement('li');
     const addressValues = entry.address.join(', ');
     const senderName = entry.sender ?? entry.name ?? '';
-    option.value = addressValues;
-    option.textContent = `${senderName} (${addressValues})`;
-    slctTrackedSenders.appendChild(option);
+    li.textContent = `${senderName} (${addressValues})`;
+    listTrackedSenders.appendChild(li);
   }
 }
 
@@ -345,12 +344,7 @@ function clearJobTitlesList() {
 }
 
 function clearFollowedList() {
-  while (slctTrackedSenders.options.length > 0) {
-    slctTrackedSenders.remove(0);
-  }
-
-  // btnStopTracking.disabled = true;
-  slctTrackedSenders.dispatchEvent(new Event('change'));
+  listTrackedSenders.replaceChildren();
 }
 
 // This module loads as `type="module"`, so it may execute after

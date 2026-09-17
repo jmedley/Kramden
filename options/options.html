@@ -161,7 +161,7 @@
           <div class="section-header">
             <h2>Options</h2>
           </div>
-          <div class="card-content">
+          <div class="card-content" id="card-content-options">
             <form id="form-job-titles" novalidate>
               <div id="div-job-titles">
                 <div class="option-title">
@@ -184,27 +184,31 @@
                   <div id="div-job-title-actions">
                     <button class="btn" id="btn-remove-job-title" type="button" disabled
                       aria-label="Remove selected job title">Remove</button>
+                    <button type="button" class="btn" id="btn-refresh-jobs2" aria-label="Refresh jobs list">Refresh jobs
+                      list</button>
                   </div>
                 </div>
               </div>
               <div id="div-add-job-title">
-                <div id="div-job-title">
+                <div class="option-title">
                   <label for="input-job-title">Add a job title</label>
+                </div>
+                <div id="div-new-job-title">
                   <input type="text" id="input-job-title" placeholder="Enter a job title" spellcheck="false"
                     aria-label="Job title to track" />
+                  <div id="div-add-job-title-actions">
+                    <button type="button" class="btn" id="btn-add-job-title" disabled>Add</button>
+                  </div>
                 </div>
-                <button type="button" class="btn" id="btn-add-job-title" disabled>Add</button>
-                <button type="button" class="btn" id="btn-refresh-jobs2" aria-label="Refresh jobs list">Refresh jobs
-                  list</button>
               </div>
             </form>
           </div>
-          <div class="card-content">
-            <form id="form-email-tracker" novalidate>
+          <div class="card-content" id="card-content-email-tracker">
+            <div id="form-email-tracker">
               <div id="div-tracking">
                 <div class="option-title">
-                  <label for="select-tracked-senders">Tracked Senders</label>
-                  <details class="help-details">
+                  <label for="list-tracked-senders">Tracked Senders</label>
+                  <details class="help-details help-details--end">
                     <summary aria-label="What is this section?">?</summary>
                     <div class="help-popover">
                       <p>These are the Gmail addresses the dashboard scans for job postings.</p>
@@ -212,33 +216,12 @@
                   </details>
                 </div>
                 <div id="div-tracked">
-                  <select id="select-tracked-senders" name="followed-emails" size="8">
-                    <!-- Options will be populated by JavaScript -->
-                  </select>
-                  <!-- <div id="div-tracked-actions">
-                    <button class="btn" id="btn-stop-tracking" type="button" disabled
-                      aria-label="Stop tracking selected email">Stop
-                      tracking</button>
-                    <button class="btn" id="btn-refresh-senders" type="button"
-                      aria-label="Refresh tracked senders list">Refresh senders</button>
-                  </div> -->
+                  <ul id="list-tracked-senders" aria-label="Tracked senders">
+                    <!-- List items will be populated by JavaScript -->
+                  </ul>
                 </div>
-                <!-- <div id="div-add-tracking">
-                  <div id="div-sender">
-                    <label for="input-sender">Sender</label>
-                    <input type="text" id="input-sender" placeholder="Sender" autocomplete="url" spellcheck="false"
-                      aria-label="Sender to track" />
-                  </div>
-                  <div id="div-sender-email">
-                    <label for="input-sender-email">Email</label>
-                    <input type="email" id="input-sender-email" placeholder="name@example.com" autocomplete="email"
-                      spellcheck="false" aria-label="Email to track" />
-                  </div>
-                  <button type="button" class="btn" id="btn-track-sender" disabled>Track</button>
-                  <span class="error-msg" id="error">Enter a valid email</span>
-                </div> -->
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>
