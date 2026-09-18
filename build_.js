@@ -52,13 +52,19 @@ const buildDir = path.resolve(
 /* ------------------------------------------------------------------ helpers */
 
 function getLocalizedMessages(buildType) {
-    const messages = JSON.parse(
-        fs.readFileSync(path.join(__dirname, '_locales/en/messages.json'), 'utf8')
-    );
-    if (buildType === 'test' || buildType === 'beta') {
-        messages.extensionName.message += ` (${buildType.toUpperCase()}) ${Date.now()}`;
-    }
-    return messages;
+    const localesDir = path.join(__dirname, '_locales');
+    return fs
+        .readdirSync(localesDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => {
+            const messages = JSON.parse(
+                fs.readFileSync(path.join(localesDir, entry.name, 'messages.json'), 'utf8')
+            );
+            if (buildType === 'test' || buildType === 'beta') {
+                messages.extensionName.message += ` (${buildType.toUpperCase()}) ${Date.now()}`;
+            }
+            return { locale: entry.name, messages };
+        });
 }
 
 function getManifest(buildType) {
@@ -208,14 +214,16 @@ async function buildExtension(buildType = 'test') {
     archive.file(path.join(__dirname, 'options/options.css'), { name: 'options/options.css' });
 
     // Locales: copy the tree verbatim (preserving directory structure and any
-    // additional locale folders), skipping en/messages.json, which is appended
-    // below with the test/beta name transform. Mirrors build.js.
+    // additional locale folders), skipping each locale's messages.json, which
+    // is appended below with the test/beta name transform. Mirrors build.js.
     archive.directory(path.join(__dirname, '_locales') + '/', '_locales', (entry) =>
-        entry.name === 'en/messages.json' ? false : entry
+        entry.name.endsWith('/messages.json') ? false : entry
     );
-    archive.append(JSON.stringify(getLocalizedMessages(buildType), null, 4), {
-        name: '_locales/en/messages.json',
-    });
+    for (const { locale, messages } of getLocalizedMessages(buildType)) {
+        archive.append(JSON.stringify(messages, null, 4), {
+            name: `_locales/${locale}/messages.json`,
+        });
+    }
 
     // Static asset directories
     archive.directory(path.join(__dirname, 'images') + '/', 'images');
