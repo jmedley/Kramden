@@ -31,11 +31,16 @@ function createRow(job = {}) {
   if (locationEl) locationEl.textContent = job.location || 'Not provided';
   if (payEl) payEl.textContent = job.pay || 'Not provided';
   if (receivedDateEl) receivedDateEl.textContent = job.receivedDate ? job.receivedDate.toLocaleString() : 'Not provided';
+  const jobContext = job.company ? `${job.jobTitle || 'job'} at ${job.company}` : (job.jobTitle || 'job');
   if (anchor) {
     anchor.href = job.applyLink || '#';
     anchor.target = '_blank';
+    anchor.setAttribute('aria-label', `Open job posting: ${jobContext}`);
   }
-  if (btnCopy) btnCopy.dataset.url = job.applyLink || '';
+  if (btnCopy) {
+    btnCopy.dataset.url = job.applyLink || '';
+    btnCopy.setAttribute('aria-label', `Copy link for: ${jobContext}`);
+  }
 
   return tr;
 }

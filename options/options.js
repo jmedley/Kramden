@@ -92,7 +92,6 @@ const btnDialogCancel = document.getElementById('btn-dialog-cancel');
 
 async function loadDataFromEmails() {
   if (slctJobTitles.length > 0) {
-    initialHelp.style.display = 'none';
   } else {
     //User should get a message.
     return;
@@ -228,6 +227,7 @@ async function init() {
 
   btnAddJobTitle.addEventListener('click', () => {
     addJob(txtJobTitle.value.trim());
+    initialHelp.style.display = 'none';
     pulseRefreshJobs2();
   });
 
@@ -297,7 +297,11 @@ btnShare.addEventListener('click', async () => {
   }
   const original = btnShare.textContent;
   btnShare.textContent = 'Copied';
-  setTimeout(() => (btnShare.textContent = original), 1200);
+  btnShare.setAttribute('aria-label', 'Copied');
+  setTimeout(() => {
+    btnShare.textContent = original;
+    btnShare.setAttribute('aria-label', 'Share this extension');
+  }, 1200);
 });
 
 function updateLastRetrievalTime() {
@@ -309,8 +313,10 @@ function updateLastRetrievalTime() {
 function markSortedHeading(th, direction = 'asc') {
   if (currentSortedTh) {
     currentSortedTh.classList.remove('th-sorted', 'sort-asc', 'sort-desc');
+    currentSortedTh.setAttribute('aria-sort', 'none');
   }
   th.classList.add('th-sorted', `sort-${direction}`);
+  th.setAttribute('aria-sort', direction === 'asc' ? 'ascending' : 'descending');
   currentSortedTh = th;
   currentSortDirection = direction;
   sortColumn.setColumn(th.id);
@@ -327,7 +333,14 @@ function sortJobsByHeading(th) {
 }
 
 [thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl].forEach((th) => {
+  th.setAttribute('tabindex', '0');
   th.addEventListener('click', () => sortJobsByHeading(th));
+  th.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      sortJobsByHeading(th);
+    }
+  });
 });
 
 function clearJobsList() {
