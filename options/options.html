@@ -16,71 +16,71 @@
   <main>
 
     <div id="page-help-banner" class="help-banner" role="note">
-      <p>Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the "Tracked Senders"
+      <p data-i18n="helpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the "Tracked Senders"
         section, and filters them by the job titles you're interested in. A job is shown if its title contains any of
         the words in your tracked job titles. Matching is done without regard to letter case. For example, "software
         engineer" also matches "Senior Software Engineer".</p>
-      <button type="button" id="btn-dismiss-help" class="btn-dismiss" aria-label="Dismiss help">&times;</button>
+      <button type="button" id="btn-dismiss-help" class="btn-dismiss" data-i18n-aria-label="dismissHelpAriaLabel" aria-label="Dismiss help">&times;</button>
     </div>
 
     <div id="meta-links" class="meta-links">
       <a href="https://jmedley.github.io/JobSearchMonitor/release-notes" id="link-release-notes" target="_blank"
-        rel="noopener">Release notes</a> |
-      <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="link-report-bug" target="_blank" rel="noopener">Report a
+        rel="noopener" data-i18n="releaseNotesLinkText">Release notes</a> |
+      <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="link-report-bug" target="_blank" rel="noopener" data-i18n="reportBugLinkText">Report a
         bug</a>
     </div>
 
-    <dialog id="dialog-add-job-title" aria-label="Add a job title">
-      <p>Add a job title to start seeing matching postings. You can add more titles later using the Job Titles section,
+    <dialog id="dialog-add-job-title" data-i18n-aria-label="addJobTitleDialogAriaLabel" aria-label="Add a job title">
+      <p data-i18n="addJobTitleDialogText">Add a job title to start seeing matching postings. You can add more titles later using the Job Titles section,
         located at the bottom of the page.</p>
-      <label for="input-dialog-job-title">Job title</label>
+      <label for="input-dialog-job-title" data-i18n="jobTitleLabel">Job title</label>
       <input type="text" id="input-dialog-job-title" placeholder="Job title" spellcheck="false"
-        aria-label="Job titles to track" />
+        data-i18n-placeholder="jobTitlePlaceholder" data-i18n-aria-label="jobTitlesToTrackAriaLabel" aria-label="Job titles to track" />
       <div class="dialog-actions">
-        <button type="button" class="btn" id="btn-dialog-save">Save</button>
-        <button type="button" class="btn" id="btn-dialog-cancel">Cancel</button>
+        <button type="button" class="btn" id="btn-dialog-save" data-i18n="saveButtonText">Save</button>
+        <button type="button" class="btn" id="btn-dialog-cancel" data-i18n="cancelButtonText">Cancel</button>
       </div>
     </dialog>
 
-    <section id="section-records-list" aria-label="section-records-list">
-      <span class="help" id="initial-help">Add at least one job title under 'Options' to start seeing jobs.</span>
-      <p class="help" id="empty-results-help" role="status" aria-live="polite">No jobs matched your tracked senders and titles in the last <span
-          id="empty-results-days"></span> days. Try widening the day range or adding more job titles.</p>
+    <section id="section-records-list" data-i18n-aria-label="recordsListSectionAriaLabel" aria-label="section-records-list">
+      <span class="help" id="initial-help" data-i18n="initialHelpText">Add at least one job title under 'Options' to start seeing jobs.</span>
+      <p class="help" id="empty-results-help" role="status" aria-live="polite"><span data-i18n="emptyResultsHelpPrefix">No jobs matched your tracked senders and titles in the last</span> <span
+          id="empty-results-days"></span> <span data-i18n="emptyResultsHelpSuffix">days. Try widening the day range or adding more job titles.</span></p>
       <div class="section-card">
         <div class="section-header">
-          <h2 id="app-name"><img class="app-icon" src="../images/kramden-16.png" alt="Jobs" /> Jobs</h2>
+          <h2 id="app-name"><img class="app-icon" src="../images/kramden-16.png" data-i18n-alt="jobsIconAlt" alt="Jobs" /> <span data-i18n="jobsHeading">Jobs</span></h2>
           <details class="help-details">
-            <summary aria-label="Click for information about the Jobs list.">?</summary>
+            <summary data-i18n-aria-label="jobsListHelpAriaLabel" aria-label="Click for information about the Jobs list.">?</summary>
             <div class="help-popover">
               <ul>
-                <li><strong>Days:</strong> how many days back (1&ndash;31) to search your inbox. The last selected value
-                  is remembered.</li>
-                <li><strong>Refresh:</strong> re-scans Gmail using your current job titles and day range. The
-                  first time, Google will ask you to sign in to grant access.</li>
-                <li><strong>Sorting:</strong> click a column header to sort. Click again to reverse. Your column and
-                  sort direction are remembered.</li>
-                <li><strong>Open / Copy links:</strong> "Open" opens the job posting in a new tab; "Copy link" copies
-                  the apply URL to your clipboard.</li>
+                <li><strong data-i18n="helpPopoverDaysLabel">Days:</strong> <span data-i18n="helpPopoverDaysText">how many days back (1&ndash;31) to search your inbox. The last selected value
+                  is remembered.</span></li>
+                <li><strong data-i18n="helpPopoverRefreshLabel">Refresh:</strong> <span data-i18n="helpPopoverRefreshText">re-scans Gmail using your current job titles and day range. The
+                  first time, Google will ask you to sign in to grant access.</span></li>
+                <li><strong data-i18n="helpPopoverSortingLabel">Sorting:</strong> <span data-i18n="helpPopoverSortingText">click a column header to sort. Click again to reverse. Your column and
+                  sort direction are remembered.</span></li>
+                <li><strong data-i18n="helpPopoverOpenCopyLabel">Open / Copy links:</strong> <span data-i18n="helpPopoverOpenCopyText">"Open" opens the job posting in a new tab; "Copy link" copies
+                  the apply URL to your clipboard.</span></li>
               </ul>
             </div>
           </details>
           <a class="btn btn-donate" id="btn-donate" href="https://donate.stripe.com/7sYcN70Hk00w34T1h57ok00"
-            target="_blank" rel="noopener">Tip jar</a>
+            target="_blank" rel="noopener" data-i18n="tipJarLinkText">Tip jar</a>
 
           <details class="help-details">
-            <summary aria-label="Click for information about the Tip jar button.">?</summary>
+            <summary data-i18n-aria-label="tipJarHelpAriaLabel" aria-label="Click for information about the Tip jar button.">?</summary>
             <div class="help-popover">
-              <p>You don't need to pay. Tipping will help us keep the lights on. Pay as much or as little as you like.
+              <p data-i18n="tipJarHelpText">You don't need to pay. Tipping will help us keep the lights on. Pay as much or as little as you like.
                 Even $1 is appreciated.
               </p>
             </div>
           </details>
 
-          <button class="btn" id="btn-share" type="button" aria-label="Share this extension" aria-live="polite">Share</button>
+          <button class="btn" id="btn-share" type="button" data-i18n="shareButtonText" data-i18n-aria-label="shareButtonAriaLabel" aria-label="Share this extension" aria-live="polite">Share</button>
 
           <span class="count" role="status" aria-live="polite" aria-atomic="true"><span id="count-jobs"></span><span id="retrieving-jobs"><span class="spinner"
-                aria-hidden="true"></span>Retrieving jobs</span> jobs found in emails from the last <select
-              id="count-days" aria-label="Number of days to search">
+                aria-hidden="true"></span><span data-i18n="retrievingJobsText">Retrieving jobs</span></span> <span data-i18n="jobsFoundPrefixText">jobs found in emails from the last</span> <select
+              id="count-days" data-i18n-aria-label="daysToSearchAriaLabel" aria-label="Number of days to search">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -112,13 +112,13 @@
               <option value="29">29</option>
               <option value="30">30</option>
               <option value="31">31</option>
-            </select> days. <span id="last-retrieval">Last refreshed: <time
+            </select> <span data-i18n="daysSuffixText">days.</span> <span id="last-retrieval"><span data-i18n="lastRefreshedText">Last refreshed:</span> <time
                 id="last-retrieval-time"></time></span></span>
-          <button class="btn" id="btn-refresh-jobs" type="button" aria-label="Refresh jobs list">Refresh</button>
+          <button class="btn" id="btn-refresh-jobs" type="button" data-i18n="refreshButtonText" data-i18n-aria-label="refreshJobsListAriaLabel" aria-label="Refresh jobs list">Refresh</button>
           <details class="help-details help-details--end">
-            <summary aria-label="Click for information about the Refresh button">?</summary>
+            <summary data-i18n-aria-label="refreshHelpAriaLabel" aria-label="Click for information about the Refresh button">?</summary>
             <div class="help-popover">
-              <p>Page refresh ocurrs every 30 minutes counted from the "Last refreshed" time or click of the Refresh
+              <p data-i18n="refreshHelpText">Page refresh ocurrs every 30 minutes counted from the "Last refreshed" time or click of the Refresh
                 button.
               </p>
             </div>
@@ -133,8 +133,8 @@
             <td class="received-date"></td>
             <td class="actions">
               <div class="actions-inner">
-                <a class="btn-open" href="#" target="_blank">Open</a>
-                <button class="btn-copy" type="button" data-url="" aria-live="polite">Copy link</button>
+                <a class="btn-open" href="#" target="_blank" data-i18n="openLinkText">Open</a>
+                <button class="btn-copy" type="button" data-url="" aria-live="polite" data-i18n="copyLinkButtonText">Copy link</button>
               </div>
             </td>
           </tr>
@@ -142,12 +142,12 @@
         <table>
           <thead>
             <tr>
-              <th id="th-job-title" aria-sort="none">Job Title</th>
-              <th id="th-company" aria-sort="none">Company</th>
-              <th id="th-location" aria-sort="none">Location</th>
-              <th id="th-pay" aria-sort="none">Pay</th>
-              <th id="th-received-date" aria-sort="none">Date Received</th>
-              <th id="th-actions">Actions</th>
+              <th id="th-job-title" aria-sort="none" data-i18n="jobTitleColumnHeader">Job Title</th>
+              <th id="th-company" aria-sort="none" data-i18n="companyColumnHeader">Company</th>
+              <th id="th-location" aria-sort="none" data-i18n="locationColumnHeader">Location</th>
+              <th id="th-pay" aria-sort="none" data-i18n="payColumnHeader">Pay</th>
+              <th id="th-received-date" aria-sort="none" data-i18n="dateReceivedColumnHeader">Date Received</th>
+              <th id="th-actions" data-i18n="actionsColumnHeader">Actions</th>
             </tr>
           </thead>
           <tbody id="body-records-list">
@@ -159,46 +159,46 @@
       <section id="section-options" aria-label="Email tracker">
         <div class="section-card">
           <div class="section-header">
-            <h2>Options</h2>
+            <h2 data-i18n="optionsHeading">Options</h2>
           </div>
           <div class="card-content" id="card-content-options">
             <form id="form-job-titles" novalidate>
               <div id="div-job-titles">
                 <div class="option-title">
-                  <label for="select-job-titles">Job Titles</label>
+                  <label for="select-job-titles" data-i18n="jobTitlesLabel">Job Titles</label>
                   <details class="help-details">
-                    <summary aria-label="Click for information about the Job titles list and related controls.">?
+                    <summary data-i18n-aria-label="jobTitlesHelpAriaLabel" aria-label="Click for information about the Job titles list and related controls.">?
                     </summary>
                     <div class="help-popover">
-                      <p>A job is shown if its title contains any of the words in your tracked job titles. Matching is
+                      <p data-i18n="jobTitlesHelpText1">A job is shown if its title contains any of the words in your tracked job titles. Matching is
                         done without
                         regard to letter case. For example, "software engineer" also matches "Senior Software
                         Engineer".</p>
-                      <p>Select a title and click <strong>Remove</strong> to stop tracking it.</p>
+                      <p><span data-i18n="jobTitlesHelpText2Prefix">Select a title and click</span> <strong data-i18n="removeButtonText">Remove</strong> <span data-i18n="jobTitlesHelpText2Suffix">to stop tracking it.</span></p>
                     </div>
                   </details>
                 </div>
                 <div id="div-selected-titles">
-                  <select id="select-job-titles" name="job-titles" size="8" aria-label="Job titles to track">
+                  <select id="select-job-titles" name="job-titles" size="8" data-i18n-aria-label="jobTitlesToTrackAriaLabel" aria-label="Job titles to track">
                     <!-- Options will be populated by JavaScript -->
                   </select>
                   <div id="div-job-title-actions">
                     <button class="btn" id="btn-remove-job-title" type="button" disabled
-                      aria-label="Remove selected job title">Remove</button>
-                    <button type="button" class="btn" id="btn-refresh-jobs2" aria-label="Refresh jobs list">Refresh jobs
+                      data-i18n="removeButtonText" data-i18n-aria-label="removeJobTitleAriaLabel" aria-label="Remove selected job title">Remove</button>
+                    <button type="button" class="btn" id="btn-refresh-jobs2" data-i18n="refreshJobsListButtonText" data-i18n-aria-label="refreshJobsListAriaLabel" aria-label="Refresh jobs list">Refresh jobs
                       list</button>
                   </div>
                 </div>
               </div>
               <div id="div-add-job-title">
                 <div class="option-title">
-                  <label for="input-job-title">Add a job title</label>
+                  <label for="input-job-title" data-i18n="addJobTitleLabel">Add a job title</label>
                 </div>
                 <div id="div-new-job-title">
                   <input type="text" id="input-job-title" placeholder="Enter a job title" spellcheck="false"
-                    aria-label="Job title to track" />
+                    data-i18n-placeholder="enterJobTitlePlaceholder" data-i18n-aria-label="jobTitleToTrackAriaLabel" aria-label="Job title to track" />
                   <div id="div-add-job-title-actions">
-                    <button type="button" class="btn" id="btn-add-job-title" disabled>Add</button>
+                    <button type="button" class="btn" id="btn-add-job-title" disabled data-i18n="addButtonText">Add</button>
                   </div>
                 </div>
               </div>
@@ -208,18 +208,18 @@
             <div id="form-email-tracker">
               <div id="div-tracking">
                 <div class="option-title">
-                  <label for="list-tracked-senders">Tracked Senders</label>
+                  <label for="list-tracked-senders" data-i18n="trackedSendersLabel">Tracked Senders</label>
                   <details class="help-details help-details--end">
-                    <summary aria-label="Click for information about the Tracked Senders list.">?</summary>
+                    <summary data-i18n-aria-label="trackedSendersHelpAriaLabel" aria-label="Click for information about the Tracked Senders list.">?</summary>
                     <div class="help-popover">
-                      <p>These are the Gmail addresses the dashboard scans for job postings.</p>
+                      <p data-i18n="trackedSendersHelpText">These are the Gmail addresses the dashboard scans for job postings.</p>
                     </div>
                   </details>
                 </div>
                 <div id="div-tracked">
-                  <p>Are we missing a sender? <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" target="_blank"
-                      rel="noopener">Let us know</a>.</p>
-                  <ul id="list-tracked-senders" aria-label="Tracked senders">
+                  <p><span data-i18n="missingSenderText">Are we missing a sender?</span> <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" target="_blank"
+                      rel="noopener" data-i18n="letUsKnowLinkText">Let us know</a>.</p>
+                  <ul id="list-tracked-senders" data-i18n-aria-label="trackedSendersListAriaLabel" aria-label="Tracked senders">
                     <!-- List items will be populated by JavaScript -->
                   </ul>
                 </div>
@@ -231,8 +231,8 @@
 
       <footer class="page-footer">
         <a href="https://jmedley.github.io/JobSearchMonitor/release-notes" id="link-release-notes" target="_blank"
-          rel="noopener">Release notes</a> |
-        <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="link-report-bug" target="_blank" rel="noopener">Report a
+          rel="noopener" data-i18n="releaseNotesLinkText">Release notes</a> |
+        <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="link-report-bug" target="_blank" rel="noopener" data-i18n="reportBugLinkText">Report a
           bug</a>
       </footer>
 

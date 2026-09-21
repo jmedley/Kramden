@@ -4,5 +4,206 @@
     },
     "extensionDescription": {
         "message": "Monitoriza tu bandeja de entrada para ver oportunidades de empleo en tiempo real."
+    },
+    "helpBannerText": {
+        "message": "Job Search Monitor analiza tu bandeja de entrada de Gmail en busca de ofertas de empleo de los remitentes indicados en la sección \"Remitentes rastreados\" y las filtra según los puestos de trabajo que te interesan. Se muestra un empleo si su título contiene alguna de las palabras de tus puestos rastreados. La coincidencia no distingue entre mayúsculas y minúsculas. Por ejemplo, \"ingeniero de software\" también coincide con \"Ingeniero de Software Senior\"."
+    },
+    "dismissHelpAriaLabel": {
+        "message": "Cerrar ayuda"
+    },
+    "releaseNotesLinkText": {
+        "message": "Notas de la versión"
+    },
+    "reportBugLinkText": {
+        "message": "Reportar un error"
+    },
+    "addJobTitleDialogAriaLabel": {
+        "message": "Agregar un puesto de trabajo"
+    },
+    "addJobTitleDialogText": {
+        "message": "Agrega un puesto de trabajo para empezar a ver ofertas coincidentes. Puedes agregar más puestos más adelante en la sección Puestos de Trabajo, ubicada en la parte inferior de la página."
+    },
+    "jobTitleLabel": {
+        "message": "Puesto de trabajo"
+    },
+    "jobTitlePlaceholder": {
+        "message": "Puesto de trabajo"
+    },
+    "jobTitlesToTrackAriaLabel": {
+        "message": "Puestos de trabajo a rastrear"
+    },
+    "saveButtonText": {
+        "message": "Guardar"
+    },
+    "cancelButtonText": {
+        "message": "Cancelar"
+    },
+    "recordsListSectionAriaLabel": {
+        "message": "section-records-list"
+    },
+    "initialHelpText": {
+        "message": "Agrega al menos un puesto de trabajo en 'Opciones' para empezar a ver empleos."
+    },
+    "emptyResultsHelpPrefix": {
+        "message": "Ningún empleo coincidió con tus remitentes y puestos rastreados en los últimos"
+    },
+    "emptyResultsHelpSuffix": {
+        "message": "días. Intenta ampliar el rango de días o agregar más puestos de trabajo."
+    },
+    "jobsIconAlt": {
+        "message": "Empleos"
+    },
+    "jobsHeading": {
+        "message": "Empleos"
+    },
+    "jobsListHelpAriaLabel": {
+        "message": "Haz clic para obtener información sobre la lista de empleos."
+    },
+    "helpPopoverDaysLabel": {
+        "message": "Días:"
+    },
+    "helpPopoverDaysText": {
+        "message": "cuántos días hacia atrás (1 a 31) se buscará en tu bandeja de entrada. Se recuerda el último valor seleccionado."
+    },
+    "helpPopoverRefreshLabel": {
+        "message": "Actualizar:"
+    },
+    "helpPopoverRefreshText": {
+        "message": "vuelve a analizar Gmail usando tus puestos de trabajo y rango de días actuales. La primera vez, Google te pedirá iniciar sesión para otorgar acceso."
+    },
+    "helpPopoverSortingLabel": {
+        "message": "Orden:"
+    },
+    "helpPopoverSortingText": {
+        "message": "haz clic en el encabezado de una columna para ordenar. Vuelve a hacer clic para invertir el orden. Se recuerdan la columna y la dirección de orden."
+    },
+    "helpPopoverOpenCopyLabel": {
+        "message": "Enlaces Abrir / Copiar:"
+    },
+    "helpPopoverOpenCopyText": {
+        "message": "\"Abrir\" abre la oferta de empleo en una pestaña nueva; \"Copiar enlace\" copia la URL de solicitud a tu portapapeles."
+    },
+    "tipJarLinkText": {
+        "message": "Caja de propinas"
+    },
+    "tipJarHelpAriaLabel": {
+        "message": "Haz clic para obtener información sobre el botón de la caja de propinas."
+    },
+    "tipJarHelpText": {
+        "message": "No es necesario pagar. Las propinas nos ayudan a mantener el proyecto en marcha. Paga tanto o tan poco como quieras. Incluso $1 es muy apreciado."
+    },
+    "shareButtonText": {
+        "message": "Compartir"
+    },
+    "shareButtonAriaLabel": {
+        "message": "Compartir esta extensión"
+    },
+    "retrievingJobsText": {
+        "message": "Obteniendo empleos"
+    },
+    "jobsFoundPrefixText": {
+        "message": "empleos encontrados en correos de los últimos"
+    },
+    "daysToSearchAriaLabel": {
+        "message": "Número de días a buscar"
+    },
+    "daysSuffixText": {
+        "message": "días."
+    },
+    "lastRefreshedText": {
+        "message": "Última actualización:"
+    },
+    "refreshButtonText": {
+        "message": "Actualizar"
+    },
+    "refreshJobsListAriaLabel": {
+        "message": "Actualizar lista de empleos"
+    },
+    "refreshHelpAriaLabel": {
+        "message": "Haz clic para obtener información sobre el botón Actualizar"
+    },
+    "refreshHelpText": {
+        "message": "La página se actualiza cada 30 minutos, contados desde la hora de \"Última actualización\" o desde que se hace clic en el botón Actualizar."
+    },
+    "openLinkText": {
+        "message": "Abrir"
+    },
+    "copyLinkButtonText": {
+        "message": "Copiar enlace"
+    },
+    "jobTitleColumnHeader": {
+        "message": "Puesto de Trabajo"
+    },
+    "companyColumnHeader": {
+        "message": "Empresa"
+    },
+    "locationColumnHeader": {
+        "message": "Ubicación"
+    },
+    "payColumnHeader": {
+        "message": "Salario"
+    },
+    "dateReceivedColumnHeader": {
+        "message": "Fecha de Recepción"
+    },
+    "actionsColumnHeader": {
+        "message": "Acciones"
+    },
+    "optionsHeading": {
+        "message": "Opciones"
+    },
+    "jobTitlesLabel": {
+        "message": "Puestos de Trabajo"
+    },
+    "jobTitlesHelpAriaLabel": {
+        "message": "Haz clic para obtener información sobre la lista de puestos de trabajo y sus controles."
+    },
+    "jobTitlesHelpText1": {
+        "message": "Se muestra un empleo si su título contiene alguna de las palabras de tus puestos rastreados. La coincidencia no distingue entre mayúsculas y minúsculas. Por ejemplo, \"ingeniero de software\" también coincide con \"Ingeniero de Software Senior\"."
+    },
+    "jobTitlesHelpText2Prefix": {
+        "message": "Selecciona un puesto y haz clic en"
+    },
+    "jobTitlesHelpText2Suffix": {
+        "message": "para dejar de rastrearlo."
+    },
+    "removeButtonText": {
+        "message": "Eliminar"
+    },
+    "removeJobTitleAriaLabel": {
+        "message": "Eliminar el puesto de trabajo seleccionado"
+    },
+    "refreshJobsListButtonText": {
+        "message": "Actualizar lista de empleos"
+    },
+    "addJobTitleLabel": {
+        "message": "Agregar un puesto de trabajo"
+    },
+    "enterJobTitlePlaceholder": {
+        "message": "Ingresa un puesto de trabajo"
+    },
+    "jobTitleToTrackAriaLabel": {
+        "message": "Puesto de trabajo a rastrear"
+    },
+    "addButtonText": {
+        "message": "Agregar"
+    },
+    "trackedSendersLabel": {
+        "message": "Remitentes Rastreados"
+    },
+    "trackedSendersHelpAriaLabel": {
+        "message": "Haz clic para obtener información sobre la lista de remitentes rastreados."
+    },
+    "trackedSendersHelpText": {
+        "message": "Estas son las direcciones de Gmail que el panel analiza en busca de ofertas de empleo."
+    },
+    "missingSenderText": {
+        "message": "¿Falta algún remitente?"
+    },
+    "letUsKnowLinkText": {
+        "message": "Avísanos"
+    },
+    "trackedSendersListAriaLabel": {
+        "message": "Remitentes rastreados"
     }
 }

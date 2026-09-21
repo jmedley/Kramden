@@ -193,7 +193,39 @@ async function addJob(title) {
   await loadJobTitles();
 }
 
+function localizePage() {
+  document.title = chrome.i18n.getMessage('extensionName');
+
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18n);
+    if (message) el.textContent = message;
+  });
+
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18nAriaLabel);
+    if (message) el.setAttribute('aria-label', message);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18nPlaceholder);
+    if (message) el.setAttribute('placeholder', message);
+  });
+
+  document.querySelectorAll('[data-i18n-alt]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18nAlt);
+    if (message) el.setAttribute('alt', message);
+  });
+
+  const jobRowTemplate = document.getElementById('job-row-template');
+  jobRowTemplate.content.querySelectorAll('[data-i18n]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18n);
+    if (message) el.textContent = message;
+  });
+}
+
 async function init() {
+  localizePage();
+
   if (await helpBanner.isDismissed()) {
     pageHelpBanner.style.display = 'none';
   }
