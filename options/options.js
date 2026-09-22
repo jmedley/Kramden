@@ -21,7 +21,7 @@ import { SortDirection } from '../extensionutils/data.js';
 import Timer from '../extensionutils/timer.js';
 import { sortObjects, DateTimeValue } from '../extensionutils/utils.js';
 
-const parserManager = new ParserManager(PARSERS, BaseEmailParser);
+const parserManager = new ParserManager(PARSERS, BaseEmailParser, chrome.i18n);
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
 const dayRange = new DayRange();
