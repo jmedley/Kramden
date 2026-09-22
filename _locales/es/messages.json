@@ -102,7 +102,7 @@
         "message": "Obteniendo empleos"
     },
     "jobsFoundPrefixText": {
-        "message": "empleos encontrados en correos de los últimos"
+        "message": "empleos encontrados en los últimos"
     },
     "daysToSearchAriaLabel": {
         "message": "Número de días a buscar"
