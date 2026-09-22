@@ -5,17 +5,11 @@
     "extensionDescription": {
         "message": "Monitor your inbox for open jobs in real time."
     },
-    "helpBannerText": {
-        "message": "Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the \"Tracked Senders\" section, and filters them by the job titles you're interested in. A job is shown if its title contains any of the words in your tracked job titles. Matching is done without regard to letter case. For example, \"software engineer\" also matches \"Senior Software Engineer\"."
+    "actionsColumnHeader": {
+        "message": "Actions"
     },
-    "dismissHelpAriaLabel": {
-        "message": "Dismiss help"
-    },
-    "releaseNotesLinkText": {
-        "message": "Release notes"
-    },
-    "reportBugLinkText": {
-        "message": "Report a bug"
+    "addButtonText": {
+        "message": "Add"
     },
     "addJobTitleDialogAriaLabel": {
         "message": "Add a job title"
@@ -23,26 +17,29 @@
     "addJobTitleDialogText": {
         "message": "Add a job title to start seeing matching postings. You can add more titles later using the Job Titles section, located at the bottom of the page."
     },
-    "jobTitleLabel": {
-        "message": "Job title"
-    },
-    "jobTitlePlaceholder": {
-        "message": "Job title"
-    },
-    "jobTitlesToTrackAriaLabel": {
-        "message": "Job titles to track"
-    },
-    "saveButtonText": {
-        "message": "Save"
+    "addJobTitleLabel": {
+        "message": "Add a job title"
     },
     "cancelButtonText": {
         "message": "Cancel"
     },
-    "recordsListSectionAriaLabel": {
-        "message": "section-records-list"
+    "companyColumnHeader": {
+        "message": "Company"
     },
-    "initialHelpText": {
-        "message": "Add at least one job title under 'Options' to start seeing jobs."
+    "copyLinkButtonText": {
+        "message": "Copy link"
+    },
+    "dateReceivedColumnHeader": {
+        "message": "Date Received"
+    },
+    "daysSuffixText": {
+        "message": "days."
+    },
+    "daysToSearchAriaLabel": {
+        "message": "Number of days to search"
+    },
+    "dismissHelpAriaLabel": {
+        "message": "Dismiss help"
     },
     "emptyResultsHelpPrefix": {
         "message": "No jobs matched your tracked senders and titles in the last"
@@ -50,20 +47,23 @@
     "emptyResultsHelpSuffix": {
         "message": "days. Try widening the day range or adding more job titles."
     },
-    "jobsIconAlt": {
-        "message": "Jobs"
+    "enterJobTitlePlaceholder": {
+        "message": "Enter a job title"
     },
-    "jobsHeading": {
-        "message": "Jobs"
-    },
-    "jobsListHelpAriaLabel": {
-        "message": "Click for information about the Jobs list."
+    "helpBannerText": {
+        "message": "Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the \"Tracked Senders\" section, and filters them by the job titles you're interested in. A job is shown if its title contains any of the words in your tracked job titles. Matching is done without regard to letter case. For example, \"software engineer\" also matches \"Senior Software Engineer\"."
     },
     "helpPopoverDaysLabel": {
         "message": "Days:"
     },
     "helpPopoverDaysText": {
         "message": "how many days back (1–31) to search your inbox. The last selected value is remembered."
+    },
+    "helpPopoverOpenCopyLabel": {
+        "message": "Open / Copy links:"
+    },
+    "helpPopoverOpenCopyText": {
+        "message": "\"Open\" opens the job posting in a new tab; \"Copy link\" copies the apply URL to your clipboard."
     },
     "helpPopoverRefreshLabel": {
         "message": "Refresh:"
@@ -77,83 +77,20 @@
     "helpPopoverSortingText": {
         "message": "click a column header to sort. Click again to reverse. Your column and sort direction are remembered."
     },
-    "helpPopoverOpenCopyLabel": {
-        "message": "Open / Copy links:"
-    },
-    "helpPopoverOpenCopyText": {
-        "message": "\"Open\" opens the job posting in a new tab; \"Copy link\" copies the apply URL to your clipboard."
-    },
-    "tipJarLinkText": {
-        "message": "Tip jar"
-    },
-    "tipJarHelpAriaLabel": {
-        "message": "Click for information about the Tip jar button."
-    },
-    "tipJarHelpText": {
-        "message": "You don't need to pay. Tipping will help us keep the lights on. Pay as much or as little as you like. Even $1 is appreciated."
-    },
-    "shareButtonText": {
-        "message": "Share"
-    },
-    "shareButtonAriaLabel": {
-        "message": "Share this extension"
-    },
-    "retrievingJobsText": {
-        "message": "Retrieving jobs"
-    },
-    "jobsFoundPrefixText": {
-        "message": "jobs found in emails from the last"
-    },
-    "daysToSearchAriaLabel": {
-        "message": "Number of days to search"
-    },
-    "daysSuffixText": {
-        "message": "days."
-    },
-    "lastRefreshedText": {
-        "message": "Last refreshed:"
-    },
-    "refreshButtonText": {
-        "message": "Refresh"
-    },
-    "refreshJobsListAriaLabel": {
-        "message": "Refresh jobs list"
-    },
-    "refreshHelpAriaLabel": {
-        "message": "Click for information about the Refresh button"
-    },
-    "refreshHelpText": {
-        "message": "Page refresh ocurrs every 30 minutes counted from the \"Last refreshed\" time or click of the Refresh button."
-    },
-    "openLinkText": {
-        "message": "Open"
-    },
-    "copyLinkButtonText": {
-        "message": "Copy link"
+    "initialHelpText": {
+        "message": "Add at least one job title under 'Options' to start seeing jobs."
     },
     "jobTitleColumnHeader": {
         "message": "Job Title"
     },
-    "companyColumnHeader": {
-        "message": "Company"
+    "jobTitleLabel": {
+        "message": "Job title"
     },
-    "locationColumnHeader": {
-        "message": "Location"
+    "jobTitlePlaceholder": {
+        "message": "Job title"
     },
-    "payColumnHeader": {
-        "message": "Pay"
-    },
-    "dateReceivedColumnHeader": {
-        "message": "Date Received"
-    },
-    "actionsColumnHeader": {
-        "message": "Actions"
-    },
-    "optionsHeading": {
-        "message": "Options"
-    },
-    "jobTitlesLabel": {
-        "message": "Job Titles"
+    "jobTitleToTrackAriaLabel": {
+        "message": "Job title to track"
     },
     "jobTitlesHelpAriaLabel": {
         "message": "Click for information about the Job titles list and related controls."
@@ -167,29 +104,101 @@
     "jobTitlesHelpText2Suffix": {
         "message": "to stop tracking it."
     },
+    "jobTitlesLabel": {
+        "message": "Job Titles"
+    },
+    "jobTitlesToTrackAriaLabel": {
+        "message": "Job titles to track"
+    },
+    "jobsFoundPrefixText": {
+        "message": "jobs found in emails from the last"
+    },
+    "jobsHeading": {
+        "message": "Jobs"
+    },
+    "jobsIconAlt": {
+        "message": "Jobs"
+    },
+    "jobsListHelpAriaLabel": {
+        "message": "Click for information about the Jobs list."
+    },
+    "lastRefreshedText": {
+        "message": "Last refreshed:"
+    },
+    "letUsKnowLinkText": {
+        "message": "Let us know"
+    },
+    "locationColumnHeader": {
+        "message": "Location"
+    },
+    "missingSenderText": {
+        "message": "Are we missing a sender?"
+    },
+    "notProvidedDate": {
+        "message": "Not provided"
+    },
+    "notProvidedPay": {
+        "message": "Not provided"
+    },
+    "openLinkText": {
+        "message": "Open"
+    },
+    "optionsHeading": {
+        "message": "Options"
+    },
+    "payColumnHeader": {
+        "message": "Pay"
+    },
+    "recordsListSectionAriaLabel": {
+        "message": "section-records-list"
+    },
+    "refreshButtonText": {
+        "message": "Refresh"
+    },
+    "refreshHelpAriaLabel": {
+        "message": "Click for information about the Refresh button"
+    },
+    "refreshHelpText": {
+        "message": "Page refresh ocurrs every 30 minutes counted from the \"Last refreshed\" time or click of the Refresh button."
+    },
+    "refreshJobsListAriaLabel": {
+        "message": "Refresh jobs list"
+    },
+    "refreshJobsListButtonText": {
+        "message": "Refresh jobs list"
+    },
+    "releaseNotesLinkText": {
+        "message": "Release notes"
+    },
     "removeButtonText": {
         "message": "Remove"
     },
     "removeJobTitleAriaLabel": {
         "message": "Remove selected job title"
     },
-    "refreshJobsListButtonText": {
-        "message": "Refresh jobs list"
+    "reportBugLinkText": {
+        "message": "Report a bug"
     },
-    "addJobTitleLabel": {
-        "message": "Add a job title"
+    "retrievingJobsText": {
+        "message": "Retrieving jobs"
     },
-    "enterJobTitlePlaceholder": {
-        "message": "Enter a job title"
+    "saveButtonText": {
+        "message": "Save"
     },
-    "jobTitleToTrackAriaLabel": {
-        "message": "Job title to track"
+    "shareButtonAriaLabel": {
+        "message": "Share this extension"
     },
-    "addButtonText": {
-        "message": "Add"
+    "shareButtonText": {
+        "message": "Share"
     },
-    "trackedSendersLabel": {
-        "message": "Tracked Senders"
+    "tipJarHelpAriaLabel": {
+        "message": "Click for information about the Tip jar button."
+    },
+    "tipJarHelpText": {
+        "message": "You don't need to pay. Tipping will help us keep the lights on. Pay as much or as little as you like. Even $1 is appreciated."
+    },
+    "tipJarLinkText": {
+        "message": "Tip jar"
     },
     "trackedSendersHelpAriaLabel": {
         "message": "Click for information about the Tracked Senders list."
@@ -197,11 +206,8 @@
     "trackedSendersHelpText": {
         "message": "These are the Gmail addresses the dashboard scans for job postings."
     },
-    "missingSenderText": {
-        "message": "Are we missing a sender?"
-    },
-    "letUsKnowLinkText": {
-        "message": "Let us know"
+    "trackedSendersLabel": {
+        "message": "Tracked Senders"
     },
     "trackedSendersListAriaLabel": {
         "message": "Tracked senders"
