@@ -5,6 +5,7 @@ package-lock.json
 # Project
 build/
 key
+CopilotKit/
 
 # VS Code
 Kramden.code-workspace
