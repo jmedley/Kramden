@@ -11,6 +11,7 @@ import { PARSERS } from '../emailparsers/index.js';
 import BaseEmailParser from '../emailparsers/baseemailparser.js';
 import renderData from '../scripts/jobsview.js';
 import SenderData from '../extensionutils/data.js';
+import { ColumnWidths } from '../extensionutils/data.js';
 import { DayRange } from '../extensionutils/data.js';
 import { HelpBanner } from '../extensionutils/data.js';
 import { Installed } from '../extensionutils/data.js';
@@ -27,6 +28,7 @@ const jobTitles = new JobTitles();
 const dayRange = new DayRange();
 const sortColumn = new SortColumn();
 const sortDirection = new SortDirection();
+const columnWidths = new ColumnWidths();
 const helpBanner = new HelpBanner();
 const installedData = new Installed();
 let addresses;
@@ -61,11 +63,14 @@ const btnShare = document.getElementById('btn-share');
 const shareUrl = 'https://chromewebstore.google.com/detail/job-search-monitor/ddamkhhbmihpacibjimjidchlkkalhnf?authuser=0&hl=en';
 
 // Job List Headings
+const jobsTableEl = document.getElementById('jobs-table');
+const jobRowTemplate = document.getElementById('job-row-template');
 const thJobTitleEl = document.getElementById('th-job-title');
 const thCompanyEl = document.getElementById('th-company');
 const thLocationEl = document.getElementById('th-location');
 const thPayEl = document.getElementById('th-pay');
 const thReceivedDateEl = document.getElementById('th-received-date');
+const thActionsEl = document.getElementById('th-actions');
 
 const jobHeadingSortKeys = {
   'th-job-title': 'jobTitle',
@@ -216,7 +221,6 @@ function localizePage() {
     if (message) el.setAttribute('alt', message);
   });
 
-  const jobRowTemplate = document.getElementById('job-row-template');
   jobRowTemplate.content.querySelectorAll('[data-i18n]').forEach((el) => {
     const message = chrome.i18n.getMessage(el.dataset.i18n);
     if (message) el.textContent = message;
@@ -225,6 +229,9 @@ function localizePage() {
 
 async function init() {
   localizePage();
+  MIN_ACTIONS_WIDTH = measureMinActionsWidth() || MIN_ACTIONS_WIDTH;
+  await restoreColumnWidths();
+  jobsTableEl.classList.remove('col-widths-pending');
 
   if (await helpBanner.isDismissed()) {
     pageHelpBanner.style.display = 'none';
@@ -364,9 +371,17 @@ function sortJobsByHeading(th) {
   markSortedHeading(th, nextDirection);
 }
 
+let resizeJustEnded = false;
+
 [thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl].forEach((th) => {
   th.setAttribute('tabindex', '0');
-  th.addEventListener('click', () => sortJobsByHeading(th));
+  th.addEventListener('click', () => {
+    if (resizeJustEnded) {
+      resizeJustEnded = false;
+      return;
+    }
+    sortJobsByHeading(th);
+  });
   th.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -374,6 +389,150 @@ function sortJobsByHeading(th) {
     }
   });
 });
+
+// Column resizing: each th (but the first) carries a draggable separator on
+// its left edge (options.css `th:not(:first-child)::before`), 7px wide
+// (-3px to +4px from the border), which resizes the column to its left
+// while distributing the opposite change equally across the columns to its
+// right, so the table's total width (and therefore the sum of column
+// widths) never drifts from the section-card's content width.
+const MIN_COL_WIDTH = 60;
+const RESIZE_HANDLE_HITBOX = 4;
+const allHeadingEls = [thJobTitleEl, thCompanyEl, thLocationEl, thPayEl, thReceivedDateEl, thActionsEl];
+// Overwritten in init() with a measurement of the actual (localized)
+// Open/Copy-link buttons; this is only a fallback.
+let MIN_ACTIONS_WIDTH = 160;
+let resizeState = null;
+
+function getMinWidth(th) {
+  return th === thActionsEl ? MIN_ACTIONS_WIDTH : MIN_COL_WIDTH;
+}
+
+// Measures the Actions column's real minimum width from the localized
+// job-row template so it stays correct in every locale, without depending
+// on any job rows actually being rendered yet.
+function measureMinActionsWidth() {
+  const actionsCell = jobRowTemplate.content.querySelector('td.actions');
+  if (!actionsCell) return 0;
+  const wrapper = document.createElement('table');
+  wrapper.style.cssText = 'position:absolute; visibility:hidden; left:-9999px; width:auto;';
+  const tr = document.createElement('tr');
+  tr.appendChild(actionsCell.cloneNode(true));
+  wrapper.appendChild(tr);
+  document.body.appendChild(wrapper);
+  const width = Math.ceil(tr.firstElementChild.getBoundingClientRect().width);
+  document.body.removeChild(wrapper);
+  return width;
+}
+
+function onResizeMouseMove(e) {
+  if (!resizeState) return;
+  const { leftTh, leftStart, rightThs, rightStarts, startX } = resizeState;
+  const rawDelta = e.clientX - startX;
+  const n = rightThs.length;
+  const lowerBound = MIN_COL_WIDTH - leftStart;
+  let upperBound = Infinity;
+  rightThs.forEach((t, i) => {
+    upperBound = Math.min(upperBound, n * (rightStarts[i] - getMinWidth(t)));
+  });
+  const delta = Math.min(Math.max(rawDelta, lowerBound), upperBound);
+  leftTh.style.width = `${leftStart + delta}px`;
+  rightThs.forEach((t, i) => {
+    t.style.width = `${rightStarts[i] - delta / n}px`;
+  });
+}
+
+async function onResizeMouseUp() {
+  if (!resizeState) return;
+  resizeState = null;
+  resizeJustEnded = true;
+  document.body.style.userSelect = '';
+  document.body.style.cursor = '';
+  const widths = {};
+  allHeadingEls.forEach((th) => {
+    widths[th.id] = th.getBoundingClientRect().width;
+  });
+  await columnWidths.setWidths(widths);
+}
+
+document.addEventListener('mousemove', onResizeMouseMove);
+document.addEventListener('mouseup', onResizeMouseUp);
+
+allHeadingEls.slice(1).forEach((th) => {
+  th.addEventListener('mousedown', (e) => {
+    const rect = th.getBoundingClientRect();
+    if (Math.abs(e.clientX - rect.left) > RESIZE_HANDLE_HITBOX) return;
+    e.preventDefault();
+    const idx = allHeadingEls.indexOf(th);
+    const rightThs = allHeadingEls.slice(idx);
+    resizeState = {
+      leftTh: allHeadingEls[idx - 1],
+      leftStart: allHeadingEls[idx - 1].getBoundingClientRect().width,
+      rightThs,
+      rightStarts: rightThs.map((t) => t.getBoundingClientRect().width),
+      startX: e.clientX,
+    };
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'col-resize';
+  });
+});
+
+// Rescales all column widths proportionally to fit the table's current
+// rendered width, clamping each column at its minimum (Actions gets its own,
+// larger floor) and redistributing any resulting deficit across the
+// non-clamped columns. Used after restoring stored widths (which may have
+// been saved at a different window size) and on window resize.
+function normalizeColumnWidths() {
+  const target = jobsTableEl.clientWidth;
+  const current = allHeadingEls.map((th) => th.getBoundingClientRect().width);
+  const total = current.reduce((a, b) => a + b, 0);
+  if (!target || Math.abs(total - target) < 1) return;
+
+  const mins = allHeadingEls.map(getMinWidth);
+  let scaled = current.map((w) => (w * target) / total);
+  let deficit = 0;
+  const flexible = [];
+  scaled = scaled.map((w, i) => {
+    if (w < mins[i]) {
+      deficit += mins[i] - w;
+      return mins[i];
+    }
+    flexible.push(i);
+    return w;
+  });
+  if (deficit > 0 && flexible.length) {
+    const flexTotal = flexible.reduce((s, i) => s + scaled[i], 0);
+    flexible.forEach((i) => {
+      scaled[i] -= deficit * (scaled[i] / flexTotal);
+    });
+  }
+  allHeadingEls.forEach((th, i) => {
+    th.style.width = `${scaled[i]}px`;
+  });
+}
+
+let resizeNormalizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeNormalizeTimer);
+  resizeNormalizeTimer = setTimeout(async () => {
+    normalizeColumnWidths();
+    const widths = {};
+    allHeadingEls.forEach((th) => {
+      widths[th.id] = th.getBoundingClientRect().width;
+    });
+    await columnWidths.setWidths(widths);
+  }, 200);
+});
+
+async function restoreColumnWidths() {
+  const widths = await columnWidths.getWidths();
+  allHeadingEls.forEach((th) => {
+    if (typeof widths[th.id] === 'number') {
+      th.style.width = `${widths[th.id]}px`;
+    }
+  });
+  normalizeColumnWidths();
+}
 
 function clearJobsList() {
   document.getElementById('body-records-list').replaceChildren();

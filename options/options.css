@@ -47,6 +47,10 @@ table {
   border-collapse: collapse;
 }
 
+table.col-widths-pending {
+  visibility: hidden;
+}
+
 tbody {
   display: table-row-group;
   vertical-align: middle;
@@ -59,7 +63,6 @@ td {
   border-bottom: 1px solid #f0f2f5;
   font-size: 0.88rem;
   vertical-align: middle;
-  max-width: 20%;
 }
 
 th {
@@ -72,24 +75,30 @@ th {
   padding: 10px 28px 10px 16px;
   text-align: left;
   border-bottom: 1px solid #e8eaed;
-  max-width: 20%;
 }
 
 th:not(:first-child)::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 55%;
-  width: 1px;
-  background: #d0d3d9;
+  left: -3px;
+  top: 0;
+  height: 100%;
+  width: 7px;
+  background-image: linear-gradient(to right, transparent 3px, #d0d3d9 3px, #d0d3d9 4px, transparent 4px);
+  background-repeat: no-repeat;
+  background-size: 100% 55%;
+  background-position: center;
+  cursor: col-resize;
 }
 
 th:not(#th-actions):hover {
   color: #2563eb;
   font-weight: bold;
   cursor: pointer;
+}
+
+#th-actions {
+  width: 160px;
 }
 
 th.th-sorted {
@@ -126,7 +135,9 @@ tr {
 .actions-inner {
   white-space: nowrap;
   display: flex;
+  justify-content: center;
   gap: 6px;
+  width: 100%;
 }
 
 .btn-copy {
