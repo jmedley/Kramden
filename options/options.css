@@ -340,13 +340,13 @@ tr {
   background: #d1d5db;
 }
 
-#btn-refresh-jobs2.attention-pulse {
+.attention-pulse {
   outline-style: solid;
   outline-offset: 0;
-  animation: refresh-jobs-attention 6s ease forwards;
+  animation: attention-pulse 6s ease forwards;
 }
 
-@keyframes refresh-jobs-attention {
+@keyframes attention-pulse {
   0% {
     outline-width: 0;
     outline-color: rgba(0, 0, 0, 1);

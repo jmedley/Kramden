@@ -185,10 +185,28 @@ async function loadJobTitles() {
   }
 }
 
-function pulseRefreshJobs2() {
-  btnRefreshJobs2.classList.remove('attention-pulse');
-  void btnRefreshJobs2.offsetWidth; // force reflow so the animation restarts
-  btnRefreshJobs2.classList.add('attention-pulse');
+const attentionPulseElements = new WeakSet();
+
+function pulseAttention(elementOrId) {
+  const el = typeof elementOrId === 'string'
+    ? document.getElementById(elementOrId)
+    : elementOrId;
+
+  if (!el) {
+    console.warn(`pulseAttention: element not found for "${elementOrId}"`);
+    return;
+  }
+
+  if (!attentionPulseElements.has(el)) {
+    el.addEventListener('animationend', () => {
+      el.classList.remove('attention-pulse');
+    });
+    attentionPulseElements.add(el);
+  }
+
+  el.classList.remove('attention-pulse');
+  void el.offsetWidth; // force reflow so the animation restarts
+  el.classList.add('attention-pulse');
 }
 
 async function addJob(title) {
@@ -267,11 +285,7 @@ async function init() {
   btnAddJobTitle.addEventListener('click', () => {
     addJob(txtJobTitle.value.trim());
     initialHelp.style.display = 'none';
-    pulseRefreshJobs2();
-  });
-
-  btnRefreshJobs2.addEventListener('animationend', () => {
-    btnRefreshJobs2.classList.remove('attention-pulse');
+    pulseAttention('btn-refresh-jobs2');
   });
 
   slctJobTitles.addEventListener('change', () => {
@@ -284,7 +298,7 @@ async function init() {
       await jobTitles.remove(selectedOption.value);
       slctJobTitles.removeChild(selectedOption);
       slctJobTitles.dispatchEvent(new Event('change'));
-      pulseRefreshJobs2();
+      pulseAttention('btn-refresh-jobs2');
     }
   });
 }
