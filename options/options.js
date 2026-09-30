@@ -301,6 +301,8 @@ async function init() {
       pulseAttention('btn-refresh-jobs2');
     }
   });
+
+  pulseAttention('btn-share');
 }
 
 btnDismissHelp.addEventListener('click', async () => {

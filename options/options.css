@@ -349,17 +349,17 @@ tr {
 @keyframes attention-pulse {
   0% {
     outline-width: 0;
-    outline-color: rgba(0, 0, 0, 1);
+    outline-color: rgba(33, 87, 204, 1);
   }
 
   33.33% {
     outline-width: 8px;
-    outline-color: rgba(0, 0, 0, 1);
+    outline-color: rgba(33, 87, 204, 1);
   }
 
   100% {
     outline-width: 8px;
-    outline-color: rgba(0, 0, 0, 0);
+    outline-color: rgba(33, 87, 204, 0);
   }
 }
 
