@@ -19,6 +19,7 @@ import { JobTitles } from '../extensionutils/data.js';
 import { Jobs } from '../extensionutils/data.js';
 import { SortColumn } from '../extensionutils/data.js';
 import { SortDirection } from '../extensionutils/data.js';
+import { SwitchToNewTab } from '../extensionutils/data.js';
 import Timer from '../extensionutils/timer.js';
 import { sortObjects, DateTimeValue } from '../extensionutils/utils.js';
 
@@ -30,6 +31,7 @@ const sortColumn = new SortColumn();
 const sortDirection = new SortDirection();
 const columnWidths = new ColumnWidths();
 const helpBanner = new HelpBanner();
+const switchToNewTab = new SwitchToNewTab();
 const installedData = new Installed();
 let addresses;
 let currentJobs = [];
@@ -40,6 +42,9 @@ let currentSortDirection = 'asc';
 // Page Help
 const pageHelpBanner = document.getElementById('page-help-banner');
 const btnDismissHelp = document.getElementById('btn-dismiss-help');
+
+// Options
+const chkSwitchToNewTab = document.getElementById('checkbox-switch-to-new-tab');
 
 // Help Popovers
 const helpDetailsElements = document.querySelectorAll('.help-details');
@@ -272,6 +277,8 @@ async function init() {
   await loadSenderAddresses();
   await loadJobTitles();
   countDaysEl.value = await dayRange.getDays();
+  chkSwitchToNewTab.checked = await switchToNewTab.get();
+  chkSwitchToNewTab.addEventListener('change', () => switchToNewTab.set(chkSwitchToNewTab.checked));
   await loadDataFromEmails();
   refreshTimer.start();
 

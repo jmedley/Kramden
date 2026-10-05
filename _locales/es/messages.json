@@ -191,6 +191,9 @@
     "shareButtonText": {
         "message": "Compartir"
     },
+    "switchToNewTabOnOpenLabel": {
+        "message": "Cambiar a la pestaña nueva al abrir"
+    },
     "tipJarHelpAriaLabel": {
         "message": "Haz clic para obtener información sobre el botón de la caja de propinas."
     },

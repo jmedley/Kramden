@@ -191,6 +191,9 @@
     "shareButtonText": {
         "message": "Share"
     },
+    "switchToNewTabOnOpenLabel": {
+        "message": "Switch to new tab on open"
+    },
     "tipJarHelpAriaLabel": {
         "message": "Click for information about the Tip jar button."
     },

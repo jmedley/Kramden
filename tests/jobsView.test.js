@@ -88,4 +88,33 @@ describe('jobsView', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://a');
     expect(btn.textContent).toBe('Copied');
   });
+
+  describe('Open link', () => {
+    beforeEach(() => {
+      document.body.insertAdjacentHTML('beforeend',
+        '<input type="checkbox" id="checkbox-switch-to-new-tab" checked />');
+      globalThis.chrome = { tabs: { create: vi.fn() } };
+      renderData([{ jobTitle: 'A', applyLink: 'https://a/' }]);
+      initEventDelegation();
+    });
+
+    const click = () => {
+      const evt = new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 });
+      document.querySelector('.btn-open').dispatchEvent(evt);
+      return evt;
+    };
+
+    it('leaves default behavior when the checkbox is checked', () => {
+      const evt = click();
+      expect(evt.defaultPrevented).toBe(false);
+      expect(chrome.tabs.create).not.toHaveBeenCalled();
+    });
+
+    it('opens a background tab when the checkbox is unchecked', () => {
+      document.getElementById('checkbox-switch-to-new-tab').checked = false;
+      const evt = click();
+      expect(evt.defaultPrevented).toBe(true);
+      expect(chrome.tabs.create).toHaveBeenCalledWith({ url: 'https://a/', active: false });
+    });
+  });
 });

@@ -273,6 +273,15 @@ tr {
   border-right: none;
 }
 
+#section-options #card-content-email-tracker {
+  border-right: none;
+}
+
+#section-options #card-content-tbd {
+  grid-column: 1 / -1;
+  border-top: 1px solid #f0f0f0;
+}
+
 @media (max-width: 700px) {
   #section-options .section-card {
     grid-template-columns: 1fr;
