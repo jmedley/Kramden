@@ -188,6 +188,9 @@
     "shareButtonAriaLabel": {
         "message": "Share this extension"
     },
+    "otherOptionsLabel": {
+        "message": "Other options"
+    },
     "shareButtonText": {
         "message": "Share"
     },

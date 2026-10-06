@@ -273,6 +273,13 @@ tr {
   border-right: none;
 }
 
+#section-options #card-content-other-options {
+  grid-column: 1 / -1;
+  flex-direction: column;
+  gap: 5px;
+  border-top: 1px solid #f0f2f5;
+}
+
 #section-options #card-content-email-tracker {
   border-right: none;
 }
