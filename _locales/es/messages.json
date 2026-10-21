@@ -113,6 +113,12 @@
     "jobsFoundPrefixText": {
         "message": "empleos encontrados en los últimos"
     },
+    "jobsSubheaderText": {
+        "message": "Lorem ipsum dolor"
+    },
+    "subheaderColumnAriaLabel": {
+        "message": "Columna de la tabla"
+    },
     "jobsHeading": {
         "message": "Empleos"
     },

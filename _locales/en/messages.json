@@ -113,6 +113,12 @@
     "jobsFoundPrefixText": {
         "message": "jobs found in emails from the last"
     },
+    "jobsSubheaderText": {
+        "message": "Lorem ipsum dolor"
+    },
+    "subheaderColumnAriaLabel": {
+        "message": "Table column"
+    },
     "jobsHeading": {
         "message": "Jobs"
     },

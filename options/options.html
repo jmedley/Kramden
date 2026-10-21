@@ -150,6 +150,19 @@
             </div>
           </details>
         </div>
+        <div class="section-subheader">
+          <span data-i18n="jobsSubheaderText">Search</span>
+          <select id="subheader-column" data-i18n-aria-label="subheaderColumnAriaLabel" aria-label="Table column">
+            <option value="th-job-title" data-i18n="jobTitleColumnHeader">Job Title</option>
+            <option value="th-company" data-i18n="companyColumnHeader">Company</option>
+            <option value="th-location" data-i18n="locationColumnHeader">Location</option>
+            <option value="th-pay" data-i18n="payColumnHeader">Pay</option>
+          </select>
+          <span>for:</span>
+          <input type="text" id="subheader-search" placeholder="Search jobs" spellcheck="false"
+            data-i18n-placeholder="searchJobsPlaceholder" data-i18n-aria-label="searchJobsAriaLabel"
+            aria-label="Search jobs" />
+        </div>
         <template id="job-row-template">
           <tr>
             <td><span class="job-title"></span></td>
