@@ -276,6 +276,9 @@ async function init() {
 
   await loadSenderAddresses();
   await loadJobTitles();
+  if ((await jobTitles.getTitles()).length > 0) {
+    initialHelp.style.display = 'none';
+  }
   countDaysEl.value = await dayRange.getDays();
   chkSwitchToNewTab.checked = await switchToNewTab.get();
   chkSwitchToNewTab.addEventListener('change', () => switchToNewTab.set(chkSwitchToNewTab.checked));
