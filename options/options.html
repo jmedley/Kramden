@@ -56,7 +56,7 @@
     </dialog>
 
     <section id="section-records-list" data-i18n-aria-label="recordsListSectionAriaLabel"
-      aria-label="section-records-list">
+      aria-label="Jobs list">
       <span class="help" id="initial-help" data-i18n="initialHelpText">Add at least one job title under 'Options' to
         start seeing jobs.</span>
       <p class="help" id="empty-results-help" role="status" aria-live="polite"><span
@@ -226,8 +226,7 @@
                     <button class="btn" id="btn-remove-job-title" type="button" disabled data-i18n="removeButtonText"
                       data-i18n-aria-label="removeJobTitleAriaLabel"
                       aria-label="Remove selected job title">Remove</button>
-                    <button type="button" class="btn" id="btn-refresh-jobs2" data-i18n="refreshJobsListButtonText"
-                      data-i18n-aria-label="refreshJobsListAriaLabel" aria-label="Refresh jobs list">Refresh jobs
+                    <button type="button" class="btn" id="btn-refresh-jobs2" data-i18n="refreshJobsListButtonText">Refresh jobs
                       list</button>
                   </div>
                 </div>
@@ -252,7 +251,7 @@
             <div id="form-email-tracker">
               <div id="div-tracking">
                 <div class="option-title">
-                  <label for="list-tracked-senders" data-i18n="trackedSendersLabel">Tracked Senders</label>
+                  <span id="label-tracked-senders" data-i18n="trackedSendersLabel">Tracked Senders</span>
                   <details class="help-details help-details--end">
                     <summary data-i18n-aria-label="trackedSendersHelpAriaLabel"
                       aria-label="Click for information about the Tracked Senders list.">?</summary>
@@ -266,8 +265,7 @@
                   <p><span data-i18n="missingSenderText">Are we missing a sender?</span> <a
                       href="https://forms.gle/qwxS3dNFG8s5hgYx9" target="_blank" rel="noopener"
                       data-i18n="letUsKnowLinkText">Let us know</a>.</p>
-                  <ul id="list-tracked-senders" data-i18n-aria-label="trackedSendersListAriaLabel"
-                    aria-label="Tracked senders">
+                  <ul id="list-tracked-senders" aria-labelledby="label-tracked-senders">
                     <!-- List items will be populated by JavaScript -->
                   </ul>
                 </div>
