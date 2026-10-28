@@ -592,6 +592,12 @@ tr {
   line-height: 1.4;
 }
 
+.attention-banner {
+  background: #fdecec;
+  border-color: #f5c2c2;
+  display: none;
+}
+
 .btn-dismiss {
   background: transparent;
   border: none;

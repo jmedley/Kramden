@@ -16,13 +16,21 @@
   <main>
 
     <div id="page-help-banner" class="help-banner" role="note">
-      <p data-i18n="helpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the senders listed
+      <p data-i18n="pageHelpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the senders
+        listed
         in the "Tracked Senders"
         section, and filters them by the job titles you're interested in. A job is shown if its title contains any of
         the words in your tracked job titles. Matching is done without regard to letter case. For example, "software
         engineer" also matches "Senior Software Engineer".</p>
       <button type="button" id="btn-dismiss-help" class="btn-dismiss" data-i18n-aria-label="dismissHelpAriaLabel"
         aria-label="Dismiss help">&times;</button>
+    </div>
+
+    <div id="no-subscriptions-help-banner" class="help-banner attention-banner" role="note" style="display: none;">
+      <p data-i18n="noSubscriptionsHelpBannerText">No emails were found for the items under "Tracked Senders". Either,
+        you have not subscribed to any of the senders or you have not yet received an email from one of the senders.</p>
+      <button type="button" id="btn-dismiss-no-subscriptions-help" class="btn-dismiss"
+        data-i18n-aria-label="dismissHelpAriaLabel" aria-label="Dismiss help">&times;</button>
     </div>
 
     <div id="meta-links" class="meta-links">

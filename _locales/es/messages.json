@@ -50,8 +50,11 @@
     "enterJobTitlePlaceholder": {
         "message": "Ingresa un puesto de trabajo"
     },
-    "helpBannerText": {
+    "pageHelpBannerText": {
         "message": "Job Search Monitor analiza tu bandeja de entrada de Gmail en busca de ofertas de empleo de los remitentes indicados en la sección \"Remitentes rastreados\" y las filtra según los puestos de trabajo que te interesan. Se muestra un empleo si su título contiene alguna de las palabras de tus puestos rastreados. La coincidencia no distingue entre mayúsculas y minúsculas. Por ejemplo, \"ingeniero de software\" también coincide con \"Ingeniero de Software Senior\"."
+    },
+    "noSubscriptionsHelpBannerText": {
+        "message": "Aún no tienes suscripciones. Suscríbete a un correo de alguna de las empresas que aparecen en \"Remitentes rastreados\" para empezar a ver ofertas de empleo de tu bandeja de entrada de Gmail."
     },
     "helpPopoverDaysLabel": {
         "message": "Días:"

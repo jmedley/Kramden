@@ -56,6 +56,7 @@ helpDetailsElements.forEach((details) => {
 
 // Jobs List
 const initialHelp = document.getElementById('initial-help');
+const noSubscriptionsBanner = document.getElementById('no-subscriptions-help-banner');
 const emptyResultsHelp = document.getElementById('empty-results-help');
 const emptyResultsDaysEl = document.getElementById('empty-results-days');
 const jobsCountEl = document.getElementById('count-jobs');
@@ -101,12 +102,6 @@ const btnDialogSave = document.getElementById('btn-dialog-save');
 const btnDialogCancel = document.getElementById('btn-dialog-cancel');
 
 async function loadDataFromEmails() {
-  if (slctJobTitles.length > 0) {
-  } else {
-    //User should get a message.
-    return;
-  }
-
   jobsCountEl.style.display = 'none';
   retrievingJobsEl.style.display = 'inline-flex';
   retrievingJobsEl.closest('.count').classList.add('is-loading');
@@ -116,6 +111,7 @@ async function loadDataFromEmails() {
     const authToken = await getAuthToken();
     const emailClient = new EmailClient(authToken, addresses, false, parseInt(countDaysEl.value, 10));
     const ids = await emailClient.loadIDs();
+    noSubscriptionsBanner.style.display = ids.length === 0 ? 'flex' : 'none';
     // Becomes a generic, optional filter
     const titleTerms = await jobTitles.getTitles();
     const jobsData = new Jobs();
@@ -307,13 +303,17 @@ async function init() {
     if (selectedOption && selectedOption.value) {
       await jobTitles.remove(selectedOption.value);
       slctJobTitles.removeChild(selectedOption);
-      slctJobTitles.dispatchEvent(new Event('change'));
+          slctJobTitles.dispatchEvent(new Event('change'));
       pulseAttention('btn-refresh-jobs2');
     }
   });
 
   pulseAttention('btn-share');
 }
+
+document.getElementById('btn-dismiss-no-subscriptions-help').addEventListener('click', () => {
+  noSubscriptionsBanner.style.display = 'none';
+});
 
 btnDismissHelp.addEventListener('click', async () => {
   pageHelpBanner.style.display = 'none';
