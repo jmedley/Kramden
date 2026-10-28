@@ -50,8 +50,11 @@
     "enterJobTitlePlaceholder": {
         "message": "Enter a job title"
     },
-    "helpBannerText": {
+    "pageHelpBannerText": {
         "message": "Job Search Monitor scans your Gmail inbox for job postings from the senders listed in the \"Tracked Senders\" section, and filters them by the job titles you're interested in. A job is shown if its title contains any of the words in your tracked job titles. Matching is done without regard to letter case. For example, \"software engineer\" also matches \"Senior Software Engineer\"."
+    },
+    "noSubscriptionsHelpBannerText": {
+        "message": "You have no subscriptions yet. Subscribe to an email for one of the companies listed under \"Tracked Senders\" to start seeing job postings from your Gmail inbox."
     },
     "helpPopoverDaysLabel": {
         "message": "Days:"
