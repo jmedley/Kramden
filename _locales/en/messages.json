@@ -226,5 +226,33 @@
     },
     "trackedSendersListAriaLabel": {
         "message": "Tracked senders"
+    },
+    "jobsLoadedStatus": {
+        "message": "$COUNT$ jobs loaded",
+        "placeholders": {
+            "count": {
+                "content": "$1"
+            }
+        }
+    },
+    "sortedByStatus": {
+        "message": "Sorted by $COLUMN$, $DIRECTION$",
+        "placeholders": {
+            "column": {
+                "content": "$1"
+            },
+            "direction": {
+                "content": "$2"
+            }
+        }
+    },
+    "linkCopiedStatus": {
+        "message": "Link copied"
+    },
+    "ascendingText": {
+        "message": "ascending"
+    },
+    "descendingText": {
+        "message": "descending"
     }
 }

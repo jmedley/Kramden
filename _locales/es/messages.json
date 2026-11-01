@@ -226,5 +226,33 @@
     },
     "trackedSendersListAriaLabel": {
         "message": "Remitentes rastreados"
+    },
+    "jobsLoadedStatus": {
+        "message": "$COUNT$ empleos cargados",
+        "placeholders": {
+            "count": {
+                "content": "$1"
+            }
+        }
+    },
+    "sortedByStatus": {
+        "message": "Ordenado por $COLUMN$, $DIRECTION$",
+        "placeholders": {
+            "column": {
+                "content": "$1"
+            },
+            "direction": {
+                "content": "$2"
+            }
+        }
+    },
+    "linkCopiedStatus": {
+        "message": "Enlace copiado"
+    },
+    "ascendingText": {
+        "message": "ascendente"
+    },
+    "descendingText": {
+        "message": "descendente"
     }
 }

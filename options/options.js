@@ -63,6 +63,11 @@ const jobsCountEl = document.getElementById('count-jobs');
 const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const lastRetrievalTimeEl = document.getElementById('last-retrieval-time');
 const countDaysEl = document.getElementById('count-days');
+const countEl = jobsCountEl.closest('.count');
+const countPrefixEl = document.getElementById('count-prefix');
+const countDaysSuffixEl = document.getElementById('count-days-suffix');
+const lastRetrievalLabelEl = document.getElementById('last-retrieval-label');
+const jobsStatusEl = document.getElementById('jobs-status');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
 const btnRefreshJobs2 = document.getElementById('btn-refresh-jobs2');
 const btnShare = document.getElementById('btn-share');
@@ -105,6 +110,7 @@ async function loadDataFromEmails() {
   jobsCountEl.style.display = 'none';
   retrievingJobsEl.style.display = 'inline-flex';
   retrievingJobsEl.closest('.count').classList.add('is-loading');
+  updateCountLabel();
   emptyResultsHelp.style.display = 'none';
 
   try {
@@ -147,6 +153,7 @@ async function loadDataFromEmails() {
     currentJobs = sortObjects(jobsData.jobs, jobHeadingSortKeys[sortTh.id], currentSortDirection);
     markSortedHeading(sortTh, currentSortDirection);
     renderData(currentJobs);
+    announce(chrome.i18n.getMessage('jobsLoadedStatus', String(currentJobs.length)));
 
     if (currentJobs.length === 0) {
       emptyResultsDaysEl.textContent = countDaysEl.value;
@@ -158,6 +165,7 @@ async function loadDataFromEmails() {
     retrievingJobsEl.style.display = 'none';
     retrievingJobsEl.closest('.count').classList.remove('is-loading');
     jobsCountEl.style.display = '';
+    updateCountLabel();
   }
 }
 
@@ -341,7 +349,10 @@ const refreshTimer = new Timer(30, refreshJobs);
 
 btnRefreshJobs.addEventListener('click', async () => refreshJobs());
 btnRefreshJobs2.addEventListener('click', async () => refreshJobs());
-countDaysEl.addEventListener('change', () => refreshJobs());
+countDaysEl.addEventListener('change', () => {
+  updateCountLabel();
+  refreshJobs();
+});
 
 btnShare.addEventListener('click', async () => {
   if (navigator.share) {
@@ -375,6 +386,28 @@ function updateLastRetrievalTime() {
   lastRetrievalTimeEl.textContent = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 }
 
+// Rows are rebuilt wholesale, so tell screen readers what changed via the hidden status region.
+function announce(message) {
+  jobsStatusEl.textContent = '';
+  setTimeout(() => { jobsStatusEl.textContent = message; }, 50);
+}
+
+// The count line is built from several elements, so give screen readers the whole sentence.
+function updateCountLabel() {
+  const isLoading = countEl.classList.contains('is-loading');
+  const parts = isLoading
+    ? [chrome.i18n.getMessage('retrievingJobsText')]
+    : [
+        jobsCountEl.textContent,
+        countPrefixEl.textContent,
+        countDaysEl.value,
+        countDaysSuffixEl.textContent,
+        lastRetrievalTimeEl.textContent && lastRetrievalLabelEl.textContent,
+        lastRetrievalTimeEl.textContent,
+      ];
+  countEl.setAttribute('aria-label', parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim());
+}
+
 function markSortedHeading(th, direction = 'asc') {
   if (currentSortedTh) {
     currentSortedTh.classList.remove('th-sorted', 'sort-asc', 'sort-desc');
@@ -395,6 +428,10 @@ function sortJobsByHeading(th) {
   sortObjects(currentJobs, key, nextDirection);
   renderData(currentJobs);
   markSortedHeading(th, nextDirection);
+  announce(chrome.i18n.getMessage('sortedByStatus', [
+    th.textContent.trim(),
+    chrome.i18n.getMessage(nextDirection === 'asc' ? 'ascendingText' : 'descendingText'),
+  ]));
 }
 
 let resizeJustEnded = false;

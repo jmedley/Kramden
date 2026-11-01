@@ -6,7 +6,7 @@ describe('jobsView', () => {
     document.body.innerHTML = `
       <template id="job-row-template">
         <tr>
-          <td><span class="job-title"></span></td>
+          <td role="rowheader"><span class="job-title"></span></td>
           <td class="company"></td>
           <td class="location"></td>
           <td class="pay"></td>
@@ -43,6 +43,10 @@ describe('jobsView', () => {
     expect(row.querySelector('.received-date').textContent).toBe(receivedDate.toLocaleString());
     expect(row.querySelector('.btn-open').getAttribute('href')).toBe('https://example.test/job/1');
     expect(row.querySelector('.btn-copy').dataset.url).toBe('https://example.test/job/1');
+
+    const context = `Staff Technical Writer at Pinecone, Location: Remote, Pay: $180K–$230K, Date received: ${receivedDate.toLocaleString()}`;
+    expect(row.querySelector('.btn-open').getAttribute('aria-label')).toBe(`Open job posting: ${context}`);
+    expect(row.querySelector('.btn-copy').getAttribute('aria-label')).toBe(`Copy link for: ${context}`);
   });
 
   it('createRow falls back to defaults for missing fields', () => {
@@ -53,6 +57,10 @@ describe('jobsView', () => {
     expect(row.querySelector('.received-date').textContent).toBe('Not provided');
     expect(row.querySelector('.btn-open').getAttribute('href')).toBe('#');
     expect(row.querySelector('.btn-copy').dataset.url).toBe('');
+
+    const context = 'job, Location: Not provided, Pay: Not provided, Date received: Not provided';
+    expect(row.querySelector('.btn-open').getAttribute('aria-label')).toBe(`Open job posting: ${context}`);
+    expect(row.querySelector('.btn-copy').getAttribute('aria-label')).toBe(`Copy link for: ${context}`);
   });
 
   it('renderData (via the EmailView instance) appends rows to the records tbody', () => {

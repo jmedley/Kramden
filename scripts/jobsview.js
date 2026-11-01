@@ -28,10 +28,14 @@ function createRow(job = {}) {
 
   if (titleEl) titleEl.textContent = job.jobTitle || '';
   if (companyEl) companyEl.textContent = job.company || '';
-  if (locationEl) locationEl.textContent = job.location || 'Not provided';
-  if (payEl) payEl.textContent = job.pay || 'Not provided';
-  if (receivedDateEl) receivedDateEl.textContent = job.receivedDate ? job.receivedDate.toLocaleString() : 'Not provided';
-  const jobContext = job.company ? `${job.jobTitle || 'job'} at ${job.company}` : (job.jobTitle || 'job');
+  const location = job.location || 'Not provided';
+  const pay = job.pay || 'Not provided';
+  const receivedDate = job.receivedDate ? job.receivedDate.toLocaleString() : 'Not provided';
+  if (locationEl) locationEl.textContent = location;
+  if (payEl) payEl.textContent = pay;
+  if (receivedDateEl) receivedDateEl.textContent = receivedDate;
+  const titleAndCompany = job.company ? `${job.jobTitle || 'job'} at ${job.company}` : (job.jobTitle || 'job');
+  const jobContext = `${titleAndCompany}, Location: ${location}, Pay: ${pay}, Date received: ${receivedDate}`;
   if (anchor) {
     anchor.href = job.applyLink || '#';
     anchor.target = '_blank';
