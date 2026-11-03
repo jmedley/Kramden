@@ -238,6 +238,11 @@ function localizePage() {
     if (message) el.setAttribute('aria-label', message);
   });
 
+  document.querySelectorAll('[data-i18n-aria-description]').forEach((el) => {
+    const message = chrome.i18n.getMessage(el.dataset.i18nAriaDescription);
+    if (message) el.setAttribute('aria-description', message);
+  });
+
   document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
     const message = chrome.i18n.getMessage(el.dataset.i18nPlaceholder);
     if (message) el.setAttribute('placeholder', message);
@@ -614,6 +619,62 @@ function clearFollowedList() {
   listTrackedSenders.replaceChildren();
 }
 
+// Two-level keyboard navigation: the cards are the only tab stops. Enter on a
+// card makes its children tabbable; Escape returns focus to the card.
+const CARD_CHILD_SELECTOR = 'a[href], button, input, select, textarea, summary, [tabindex]';
+
+function setCardChildrenTabbable(card, tabbable) {
+  card.querySelectorAll(CARD_CHILD_SELECTOR).forEach((el) => {
+    if (tabbable) {
+      if ('origTabindex' in el.dataset) {
+        if (el.dataset.origTabindex) el.setAttribute('tabindex', el.dataset.origTabindex);
+        else el.removeAttribute('tabindex');
+        delete el.dataset.origTabindex;
+      }
+    } else if (!('origTabindex' in el.dataset)) {
+      el.dataset.origTabindex = el.getAttribute('tabindex') ?? '';
+      el.setAttribute('tabindex', '-1');
+    }
+  });
+}
+
+function initCardNavigation() {
+  ['jobs-list-card', 'options-card'].forEach((id) => {
+    const card = document.getElementById(id);
+    const setExpanded = (expanded) => {
+      card.setAttribute('aria-expanded', String(expanded));
+      setCardChildrenTabbable(card, expanded);
+    };
+    setExpanded(false);
+
+    // Content rendered later (job rows, sender list) starts out untabbable.
+    new MutationObserver(() => {
+      if (card.getAttribute('aria-expanded') !== 'true') setCardChildrenTabbable(card, false);
+    }).observe(card, { childList: true, subtree: true });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target === card) {
+        e.preventDefault();
+        setExpanded(true);
+        const first = card.querySelector(CARD_CHILD_SELECTOR);
+        if (first) first.focus();
+      } else if (e.key === 'Escape' && e.target !== card) {
+        const openDetails = e.target.closest('details[open]');
+        if (openDetails) return;
+        e.preventDefault();
+        e.stopPropagation();
+        setExpanded(false);
+        card.focus();
+      }
+    });
+
+    // Mouse users clicking into a child shouldn't be left with a half-state.
+    card.addEventListener('focusin', (e) => {
+      if (e.target !== card && card.getAttribute('aria-expanded') !== 'true') setExpanded(true);
+    });
+  });
+}
+
 // This module loads as `type="module"`, so it may execute after
 // DOMContentLoaded has already fired. Run the one-time setup either way.
 if (document.readyState === 'loading') {
@@ -621,3 +682,4 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+initCardNavigation();

@@ -15,8 +15,8 @@
 <body>
   <main>
 
-    <div id="page-help-banner" class="help-banner" role="note">
-      <p tabindex="0" data-i18n="pageHelpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the
+    <div id="page-help-banner" class="help-banner" role="note" tabindex="0">
+      <p data-i18n="pageHelpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the
         senders
         listed
         in the "Tracked Senders"
@@ -25,14 +25,6 @@
         engineer" also matches "Senior Software Engineer".</p>
       <button type="button" id="btn-dismiss-help" class="btn-dismiss" data-i18n-aria-label="dismissHelpAriaLabel"
         aria-label="Dismiss help">&times;</button>
-    </div>
-
-    <div id="no-subscriptions-help-banner" class="help-banner attention-banner" role="note" style="display: none;">
-      <p tabindex="0" data-i18n="noSubscriptionsHelpBannerText">No emails were found for the items under "Tracked
-        Senders". Either,
-        you have not subscribed to any of the senders or you have not yet received an email from one of the senders.</p>
-      <button type="button" id="btn-dismiss-no-subscriptions-help" class="btn-dismiss"
-        data-i18n-aria-label="dismissHelpAriaLabel" aria-label="Dismiss help">&times;</button>
     </div>
 
     <div id="meta-links" class="meta-links">
@@ -64,7 +56,15 @@
           data-i18n="emptyResultsHelpPrefix">No jobs matched your tracked senders and titles in the last</span> <span
           id="empty-results-days"></span> <span data-i18n="emptyResultsHelpSuffix">days. Try widening the day range or
           adding more job titles.</span></p>
-      <div class="section-card">
+      <div class="section-card" id="jobs-list-card" role="group" tabindex="0" aria-labelledby="app-name"
+        data-i18n-aria-description="cardEnterHint">
+      <div id="no-subscriptions-help-banner" class="help-banner attention-banner" role="note" style="display: none;">
+        <p data-i18n="noSubscriptionsHelpBannerText">No emails were found for the items under "Tracked
+          Senders". Either,
+          you have not subscribed to any of the senders or you have not yet received an email from one of the senders.</p>
+        <button type="button" id="btn-dismiss-no-subscriptions-help" class="btn-dismiss"
+          data-i18n-aria-label="dismissHelpAriaLabel" aria-label="Dismiss help">&times;</button>
+      </div>
         <div class="section-header">
           <h2 id="app-name"><img class="app-icon" src="../images/kramden-16.png" data-i18n-alt="jobsIconAlt"
               alt="Jobs" /> <span data-i18n="jobsHeading">Jobs</span></h2>
@@ -107,7 +107,7 @@
             data-i18n-aria-label="shareButtonAriaLabel" aria-label="Share this extension"
             aria-live="polite">Share</button>
 
-          <span class="count" tabindex="0" role="status" aria-live="polite" aria-atomic="true"><span
+          <span class="count" role="status" aria-live="polite" aria-atomic="true"><span
               id="count-jobs"></span><span id="retrieving-jobs"><span class="spinner" aria-hidden="true"></span><span
                 data-i18n="retrievingJobsText">Retrieving jobs</span></span> <span id="count-prefix"
               data-i18n="jobsFoundPrefixText">jobs
@@ -170,8 +170,7 @@
             <td class="actions">
               <div class="actions-inner">
                 <a class="btn-open" href="#" target="_blank" data-i18n="openLinkText">Open</a>
-                <button class="btn-copy" type="button" data-url=""
-                  data-i18n="copyLinkButtonText">Copy link</button>
+                <button class="btn-copy" type="button" data-url="" data-i18n="copyLinkButtonText">Copy link</button>
               </div>
             </td>
           </tr>
@@ -184,8 +183,9 @@
               <th id="th-company" scope="col" aria-sort="none" data-i18n="companyColumnHeader">Company</th>
               <th id="th-location" scope="col" aria-sort="none" data-i18n="locationColumnHeader">Location</th>
               <th id="th-pay" scope="col" aria-sort="none" data-i18n="payColumnHeader">Pay</th>
-              <th id="th-received-date" scope="col" aria-sort="none" data-i18n="dateReceivedColumnHeader">Date Received</th>
-              <th id="th-actions" scope="col" tabindex="0" data-i18n="actionsColumnHeader">Actions</th>
+              <th id="th-received-date" scope="col" aria-sort="none" data-i18n="dateReceivedColumnHeader">Date Received
+              </th>
+              <th id="th-actions" scope="col" data-i18n="actionsColumnHeader">Actions</th>
             </tr>
           </thead>
           <tbody id="body-records-list">
@@ -193,11 +193,13 @@
           </tbody>
         </table>
       </div>
+    </section>
 
-      <section id="section-options" aria-label="Email tracker">
-        <div class="section-card">
+      <section id="section-options">
+        <div class="section-card" id="options-card" role="group" tabindex="0" aria-labelledby="options-heading"
+          data-i18n-aria-description="cardEnterHint">
           <div class="section-header">
-            <h2 data-i18n="optionsHeading">Options</h2>
+            <h2 id="options-heading" data-i18n="optionsHeading">Options</h2>
           </div>
           <div class="card-content" id="card-content-options">
             <form id="form-job-titles" novalidate>

@@ -680,3 +680,9 @@ tr {
   white-space: nowrap;
   border: 0;
 }
+
+#page-help-banner:focus-visible,
+.section-card:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

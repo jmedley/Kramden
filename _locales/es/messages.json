@@ -38,6 +38,9 @@
     "daysToSearchAriaLabel": {
         "message": "Número de días a buscar"
     },
+    "cardEnterHint": {
+        "message": "Pulse Intro para interactuar con esta sección, Escape para salir"
+    },
     "dismissHelpAriaLabel": {
         "message": "Cerrar ayuda"
     },

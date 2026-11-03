@@ -38,6 +38,9 @@
     "daysToSearchAriaLabel": {
         "message": "Number of days to search"
     },
+    "cardEnterHint": {
+        "message": "Press Enter to interact with this section, Escape to leave it"
+    },
     "dismissHelpAriaLabel": {
         "message": "Dismiss help"
     },
