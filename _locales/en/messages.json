@@ -42,7 +42,7 @@
         "message": "Press Enter to interact with this section, Escape to leave it"
     },
     "dismissHelpAriaLabel": {
-        "message": "Dismiss help"
+        "message": "Dismiss note"
     },
     "emptyResultsHelpPrefix": {
         "message": "No jobs matched your tracked senders and titles in the last"

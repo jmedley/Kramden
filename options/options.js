@@ -49,6 +49,9 @@ const chkSwitchToNewTab = document.getElementById('checkbox-switch-to-new-tab');
 // Help Popovers
 const helpDetailsElements = document.querySelectorAll('.help-details');
 helpDetailsElements.forEach((details) => {
+  details.addEventListener('toggle', () => {
+    details.querySelector('summary').setAttribute('aria-expanded', details.open);
+  });
   details.addEventListener('pointerleave', () => {
     details.removeAttribute('open');
   });
