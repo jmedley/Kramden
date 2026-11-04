@@ -108,11 +108,11 @@
             data-i18n-aria-label="shareButtonAriaLabel" aria-label="Share this extension"
             aria-live="polite">Share</button>
 
-          <span class="count" role="status" aria-live="polite" aria-atomic="true"><span id="count-jobs"></span><span
+          <span class="count" role="status" aria-live="polite" aria-atomic="true"><span id="count-jobs-label"
+              data-i18n="jobsFoundLabel">Jobs found:</span> <span id="count-jobs"></span><span
               id="retrieving-jobs"><span class="spinner" aria-hidden="true"></span><span
-                data-i18n="retrievingJobsText">Retrieving jobs</span></span> <span id="count-prefix"
-              data-i18n="jobsFoundPrefixText">jobs
-              found in emails from the last</span> <select id="count-days" data-i18n-aria-label="daysToSearchAriaLabel"
+                data-i18n="retrievingJobsText">Retrieving jobs</span></span> <span id="count-days-label"
+              data-i18n="daysSearchedLabel">Days searched:</span> <select id="count-days" data-i18n-aria-label="daysToSearchAriaLabel"
               aria-label="Number of days to search">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -145,8 +145,7 @@
               <option value="29">29</option>
               <option value="30">30</option>
               <option value="31">31</option>
-            </select> <span id="count-days-suffix" data-i18n="daysSuffixText">days.</span> <span
-              id="last-retrieval"><span id="last-retrieval-label" data-i18n="lastRefreshedText">Last refreshed:</span>
+            </select> <span id="last-retrieval"><span id="last-retrieval-label" data-i18n="lastRefreshedText">Last refreshed:</span>
               <time id="last-retrieval-time"></time></span></span>
           <button class="btn" id="btn-refresh-jobs" type="button" data-i18n="refreshButtonText"
             data-i18n-aria-label="refreshJobsListAriaLabel" aria-label="Refresh jobs list">Refresh</button>

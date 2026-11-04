@@ -32,9 +32,6 @@
     "dateReceivedColumnHeader": {
         "message": "Fecha de Recepción"
     },
-    "daysSuffixText": {
-        "message": "días."
-    },
     "daysToSearchAriaLabel": {
         "message": "Número de días a buscar"
     },
@@ -116,8 +113,11 @@
     "jobTitlesToTrackAriaLabel": {
         "message": "Puestos de trabajo a rastrear"
     },
-    "jobsFoundPrefixText": {
-        "message": "empleos encontrados en los últimos"
+    "jobsFoundLabel": {
+        "message": "Empleos encontrados:"
+    },
+    "daysSearchedLabel": {
+        "message": "Días buscados:"
     },
     "jobsHeading": {
         "message": "Empleos"

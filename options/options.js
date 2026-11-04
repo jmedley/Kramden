@@ -67,8 +67,8 @@ const retrievingJobsEl = document.getElementById('retrieving-jobs');
 const lastRetrievalTimeEl = document.getElementById('last-retrieval-time');
 const countDaysEl = document.getElementById('count-days');
 const countEl = jobsCountEl.closest('.count');
-const countPrefixEl = document.getElementById('count-prefix');
-const countDaysSuffixEl = document.getElementById('count-days-suffix');
+const countJobsLabelEl = document.getElementById('count-jobs-label');
+const countDaysLabelEl = document.getElementById('count-days-label');
 const lastRetrievalLabelEl = document.getElementById('last-retrieval-label');
 const jobsStatusEl = document.getElementById('jobs-status');
 const btnRefreshJobs = document.getElementById('btn-refresh-jobs');
@@ -406,10 +406,10 @@ function updateCountLabel() {
   const parts = isLoading
     ? [chrome.i18n.getMessage('retrievingJobsText')]
     : [
+        countJobsLabelEl.textContent,
         jobsCountEl.textContent,
-        countPrefixEl.textContent,
+        countDaysLabelEl.textContent,
         countDaysEl.value,
-        countDaysSuffixEl.textContent,
         lastRetrievalTimeEl.textContent && lastRetrievalLabelEl.textContent,
         lastRetrievalTimeEl.textContent,
       ];
