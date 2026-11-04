@@ -32,14 +32,14 @@
     "dateReceivedColumnHeader": {
         "message": "Date Received"
     },
-    "daysSuffixText": {
-        "message": "days."
-    },
     "daysToSearchAriaLabel": {
         "message": "Number of days to search"
     },
+    "cardEnterHint": {
+        "message": "Press Enter to interact with this section, Escape to leave it"
+    },
     "dismissHelpAriaLabel": {
-        "message": "Dismiss help"
+        "message": "Dismiss note"
     },
     "emptyResultsHelpPrefix": {
         "message": "No jobs matched your tracked senders and titles in the last"
@@ -113,8 +113,11 @@
     "jobTitlesToTrackAriaLabel": {
         "message": "Job titles to track"
     },
-    "jobsFoundPrefixText": {
-        "message": "jobs found in emails from the last"
+    "jobsFoundLabel": {
+        "message": "Jobs found:"
+    },
+    "daysSearchedLabel": {
+        "message": "Days searched:"
     },
     "jobsSubheaderText": {
         "message": "Lorem ipsum dolor"

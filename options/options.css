@@ -259,6 +259,25 @@ tr {
   background: #d93025;
 }
 
+#count-days-label::before,
+#last-retrieval::before {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 1.1em;
+  margin: 0 8px 0 4px;
+  background: #d0d3d9;
+  vertical-align: middle;
+}
+
+#count-jobs-label {
+  margin-right: 2px;
+}
+
+.section-header .count.is-loading #count-jobs-label {
+  display: none;
+}
+
 #retrieving-jobs {
   display: none;
   align-items: center;
@@ -718,4 +737,10 @@ tr {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+#page-help-banner:focus-visible,
+.section-card:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
