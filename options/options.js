@@ -23,6 +23,7 @@ import { SwitchToNewTab } from '../extensionutils/data.js';
 import Timer from '../extensionutils/timer.js';
 import { sortObjects, DateTimeValue } from '../extensionutils/utils.js';
 
+//
 const parserManager = new ParserManager(PARSERS, BaseEmailParser, chrome.i18n);
 const senderData = new SenderData();
 const jobTitles = new JobTitles();
@@ -319,7 +320,7 @@ async function init() {
     if (selectedOption && selectedOption.value) {
       await jobTitles.remove(selectedOption.value);
       slctJobTitles.removeChild(selectedOption);
-          slctJobTitles.dispatchEvent(new Event('change'));
+      slctJobTitles.dispatchEvent(new Event('change'));
       pulseAttention('btn-refresh-jobs2');
     }
   });
@@ -406,13 +407,13 @@ function updateCountLabel() {
   const parts = isLoading
     ? [chrome.i18n.getMessage('retrievingJobsText')]
     : [
-        countJobsLabelEl.textContent,
-        jobsCountEl.textContent,
-        countDaysLabelEl.textContent,
-        countDaysEl.value,
-        lastRetrievalTimeEl.textContent && lastRetrievalLabelEl.textContent,
-        lastRetrievalTimeEl.textContent,
-      ];
+      countJobsLabelEl.textContent,
+      jobsCountEl.textContent,
+      countDaysLabelEl.textContent,
+      countDaysEl.value,
+      lastRetrievalTimeEl.textContent && lastRetrievalLabelEl.textContent,
+      lastRetrievalTimeEl.textContent,
+    ];
   countEl.setAttribute('aria-label', parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim());
 }
 
