@@ -14,7 +14,7 @@
 
 <body>
   <main>
-
+    <!-- Page help banner -->
     <div id="page-help-banner" class="help-banner" role="note" tabindex="0">
       <p data-i18n="pageHelpBannerText">Job Search Monitor scans your Gmail inbox for job postings from the
         senders
@@ -27,6 +27,7 @@
         aria-label="Dismiss note">&times;</button>
     </div>
 
+    <!-- Meta links -->
     <div id="meta-links" class="meta-links">
       <a href="https://jmedley.github.io/JobSearchMonitor/release-notes" id="link-release-notes" target="_blank"
         rel="noopener" data-i18n="releaseNotesLinkText">Release notes</a> |
@@ -35,6 +36,7 @@
         bug</a>
     </div>
 
+    <!-- Add job title dialog -->
     <dialog id="dialog-add-job-title" data-i18n-aria-label="addJobTitleDialogAriaLabel" aria-label="Add a job title">
       <p data-i18n="addJobTitleDialogText">Add a job title to start seeing matching postings. You can add more titles
         later using the Job Titles section,
@@ -49,15 +51,21 @@
       </div>
     </dialog>
 
+    <!-- Jobs list section -->
     <section id="section-records-list" data-i18n-aria-label="recordsListSectionAriaLabel" aria-label="Jobs list">
+
       <span class="help" id="initial-help" data-i18n="initialHelpText">Add at least one job title under 'Options' to
         start seeing jobs.</span>
+
       <p class="help" id="empty-results-help" role="status" aria-live="polite"><span
           data-i18n="emptyResultsHelpPrefix">No jobs matched your tracked senders and titles in the last</span> <span
           id="empty-results-days"></span> <span data-i18n="emptyResultsHelpSuffix">days. Try widening the day range or
           adding more job titles.</span></p>
+
+      <!-- Jobs list card -->
       <div class="section-card" id="jobs-list-card" role="group" tabindex="0" aria-labelledby="app-name"
         data-i18n-aria-description="cardEnterHint">
+
         <div id="no-subscriptions-help-banner" class="help-banner attention-banner" role="note" style="display: none;">
           <p data-i18n="noSubscriptionsHelpBannerText">No emails were found for the items under "Tracked
             Senders". Either,
@@ -66,6 +74,8 @@
           <button type="button" id="btn-dismiss-no-subscriptions-help" class="btn-dismiss"
             data-i18n-aria-label="dismissHelpAriaLabel" aria-label="Dismiss help">&times;</button>
         </div>
+
+        <!-- Jobs list header -->
         <div class="section-header">
           <h2 id="app-name"><img class="app-icon" src="../images/kramden-16.png" data-i18n-alt="jobsIconAlt"
               alt="Jobs" /> <span data-i18n="jobsHeading">Jobs</span></h2>
@@ -161,21 +171,8 @@
             </div>
           </details>
         </div>
-        <div class="section-subheader">
-          <span data-i18n="jobsSubheaderText">Search</span>
-          <select id="subheader-column" data-i18n-aria-label="subheaderColumnAriaLabel" aria-label="Table column">
-            <option value="th-job-title" data-i18n="jobTitleColumnHeader">Job Title</option>
-            <option value="th-company" data-i18n="companyColumnHeader">Company</option>
-            <option value="th-location" data-i18n="locationColumnHeader">Location</option>
-            <option value="th-pay" data-i18n="payColumnHeader">Pay</option>
-          </select>
-          <span>for:</span>
-          <input type="text" id="subheader-search" placeholder="Search jobs" spellcheck="false"
-            data-i18n-placeholder="searchJobsPlaceholder" data-i18n-aria-label="searchJobsAriaLabel"
-            aria-label="Search jobs" />
-          <button class="btn" id="btn-clear" type="button" data-i18n="clearButtonText"
-            data-i18n-aria-label="clearButtonAriaLabel" aria-label="Clear search" aria-live="polite">Clear</button>
-        </div>
+
+        <!-- Jobs list table -->
         <template id="job-row-template">
           <tr>
             <td role="rowheader"><span class="job-title"></span></td>
@@ -191,6 +188,8 @@
             </td>
           </tr>
         </template>
+
+        <!-- Jobs list table -->
         <div id="jobs-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
         <table id="jobs-table" class="col-widths-pending" aria-labelledby="app-name">
           <thead>
@@ -211,6 +210,7 @@
       </div>
     </section>
 
+    <!-- Options section -->
     <section id="section-options">
       <div class="section-card" id="options-card" role="group" tabindex="0" aria-labelledby="options-heading"
         data-i18n-aria-description="cardEnterHint">
