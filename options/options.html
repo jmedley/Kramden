@@ -118,46 +118,59 @@
             data-i18n-aria-label="shareButtonAriaLabel" aria-label="Share this extension"
             aria-live="polite">Share</button>
 
-          <span class="count" role="status" aria-live="polite" aria-atomic="true"><span id="count-jobs-label"
-              data-i18n="jobsFoundLabel">Jobs found:</span> <span id="count-jobs"></span><span
-              id="retrieving-jobs"><span class="spinner" aria-hidden="true"></span><span
-                data-i18n="retrievingJobsText">Retrieving jobs</span></span> <span id="count-days-label"
-              data-i18n="daysSearchedLabel">Days searched:</span> <select id="count-days"
-              data-i18n-aria-label="daysToSearchAriaLabel" aria-label="Number of days to search">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              <option value="22">22</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-              <option value="27">27</option>
-              <option value="28">28</option>
-              <option value="29">29</option>
-              <option value="30">30</option>
-              <option value="31">31</option>
-            </select> <span id="last-retrieval"><span id="last-retrieval-label" data-i18n="lastRefreshedText">Last
-                refreshed:</span>
-              <time id="last-retrieval-time"></time></span></span>
+          <span class="count" role="status">
+            <span tabindex="0">
+              <span id="count-jobs-label" data-i18n="jobsFoundLabel">Jobs found:</span>
+              <span id="count-jobs"></span>
+            </span>
+            <span id="retrieving-jobs">
+              <span class="spinner" aria-hidden="true"></span>
+              <span data-i18n="retrievingJobsText">Retrieving jobs</span>
+            </span>
+            <span tabindex="0">
+              <span id="count-days-label" data-i18n="daysSearchedLabel">Days searched:</span>
+              <select id="count-days" data-i18n-aria-label="daysToSearchAriaLabel"
+                aria-label="Number of days to search">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select>
+            </span>
+            <span tabindex="0">
+              <span id="last-retrieval"><span id="last-retrieval-label" data-i18n="lastRefreshedText">Last
+                  refreshed:</span>
+                <time id="last-retrieval-time"></time>
+              </span>
+            </span>
+          </span>
           <button class="btn" id="btn-refresh-jobs" type="button" data-i18n="refreshButtonText"
             data-i18n-aria-label="refreshJobsListAriaLabel" aria-label="Refresh jobs list">Refresh</button>
           <details class="help-details help-details--end">
@@ -172,7 +185,7 @@
           </details>
         </div>
 
-        <!-- Jobs list table -->
+        <!-- Job row template -->
         <template id="job-row-template">
           <tr>
             <td role="rowheader"><span class="job-title"></span></td>
@@ -305,9 +318,9 @@
     </section>
 
     <footer class="page-footer">
-      <a href="https://jmedley.github.io/JobSearchMonitor/release-notes" id="link-release-notes" target="_blank"
+      <a href="https://jmedley.github.io/JobSearchMonitor/release-notes" id="footer-link-release-notes" target="_blank"
         rel="noopener" data-i18n="releaseNotesLinkText">Release notes</a> |
-      <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="link-report-bug" target="_blank" rel="noopener"
+      <a href="https://forms.gle/qwxS3dNFG8s5hgYx9" id="footer-link-report-bug" target="_blank" rel="noopener"
         data-i18n="reportBugLinkText">Report a
         bug</a>
     </footer>
